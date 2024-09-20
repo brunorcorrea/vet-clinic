@@ -1,0 +1,7 @@
+Existem alguns erros no diagrama de classes:
+
+Faturamento:
+    - Não possui propriedade 'id';
+    - Possui erroneamente um atributo Cliente, o nome correto seria Proprietário;
+    - Propriedade 'status' é do tipo String, mas deveria ser do tipo StatusPagamento;
+
