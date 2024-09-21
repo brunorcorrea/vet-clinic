@@ -1,5 +1,6 @@
 package org.example.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Historico {
@@ -10,6 +11,7 @@ public class Historico {
     private List<String> doencas;
     private String peso;
     private List<String> observacoes;
+    private LocalDateTime dataHora;
 
     public void registrar() {
         //TODO implement this method

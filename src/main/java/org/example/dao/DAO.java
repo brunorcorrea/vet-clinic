@@ -124,6 +124,14 @@ public abstract class DAO {
             executeUpdate(stmt);
 
             stmt = DAO.getConnection().prepareStatement("""
+                        CREATE TABLE IF NOT EXISTS veterinario(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            nome VARCHAR,
+                        );
+                    """);
+            executeUpdate(stmt);
+
+            stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS agendamento(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             dataHora VARCHAR,
@@ -136,7 +144,32 @@ public abstract class DAO {
                         );
                     """);
             executeUpdate(stmt);
-//TODO agendamento depende de veterinario e veterinario depende de agendamento, como resolver?
+
+            stmt = DAO.getConnection().prepareStatement("""
+                        CREATE TABLE IF NOT EXISTS historico(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            idPaciente INTEGER,
+                            vacinas VARCHAR,
+                            doencas VARCHAR,
+                            peso REAL,
+                            observacoes VARCHAR,
+                            dataHora VARCHAR,
+                            FOREIGN KEY (idPaciente) REFERENCES paciente(id)
+                        );
+                    """);
+            executeUpdate(stmt);
+
+            stmt = DAO.getConnection().prepareStatement("""
+                        CREATE TABLE IF NOT EXISTS receitaMedica(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            idPaciente INTEGER,
+                            medicamentos VARCHAR,
+                            dataEmissao VARCHAR,
+                            observacoes VARCHAR,
+                            FOREIGN KEY (idPaciente) REFERENCES paciente(id)
+                        );
+                    """);
+            executeUpdate(stmt);
 
             return true;
         } catch (SQLException ex) {

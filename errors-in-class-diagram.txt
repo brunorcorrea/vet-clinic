@@ -16,3 +16,6 @@ Produto:
 
 Agendamento:
     - Não possui propriedade 'veterinario';
+
+Historico:
+    - Não possui propriedade 'dataHora';
