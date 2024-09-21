@@ -6,6 +6,7 @@ public class Agendamento {
 
     private int id;
     private Paciente paciente;
+    private Veterinario veterinario;
     private LocalDateTime dataHora;
     private String servico;
     private StatusAgendamento status;
@@ -40,6 +41,14 @@ public class Agendamento {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Veterinario getVeterinario() {
+        return veterinario;
+    }
+
+    public void setVeterinario(Veterinario veterinario) {
+        this.veterinario = veterinario;
     }
 
     public LocalDateTime getDataHora() {

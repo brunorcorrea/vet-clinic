@@ -5,6 +5,7 @@ public class Proprietario {
     private int id;
     private String cpf;
     private String nomeCompleto;
+    private String telefone;
     private String endereco;
 
     public void cadastrar() {
@@ -45,6 +46,15 @@ public class Proprietario {
 
     public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
+    }
+
+    public String getTelefone() {
+
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getEndereco() {

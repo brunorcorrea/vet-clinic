@@ -13,3 +13,6 @@ Veterinario:
 
 Produto:
     - Não possui método 'listar';
+
+Agendamento:
+    - Não possui propriedade 'veterinario';
