@@ -8,6 +8,15 @@ public class Veterinario {
     private List<Agendamento> agendamentos;
     private String nome;
 
+    public Veterinario() {
+    }
+
+    public Veterinario(int id, List<Agendamento> agendamentos, String nome) {
+        this.id = id;
+        this.agendamentos = agendamentos;
+        this.nome = nome;
+    }
+
     public void cadastrar() {
         //TODO implement this method
     }

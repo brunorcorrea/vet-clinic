@@ -9,17 +9,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AgendamentoDAO {
+public class AgendamentoDAO extends DAO {
+    private static AgendamentoDAO instance;
 
-    private Connection connection;
+    private AgendamentoDAO() {
+        getConnection();
+        createTable();
+    }
 
-    public AgendamentoDAO(Connection connection) {
-        this.connection = connection;
+    public static AgendamentoDAO getInstance() {
+        return (instance == null ? (instance = new AgendamentoDAO()) : instance);
     }
 
     public void cadastrar(Agendamento agendamento) throws SQLException {
-        String sql = "INSERT INTO agendamentos (paciente_id, data_hora, servico, status) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        String sql = "INSERT INTO agendamentos (idPaciente, dataHora, servico, status) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, agendamento.getPaciente().getId());
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataHora()));
             stmt.setString(3, agendamento.getServico());
@@ -30,7 +34,7 @@ public class AgendamentoDAO {
 
     public void excluir(int id) throws SQLException {
         String sql = "DELETE FROM agendamentos WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
@@ -38,7 +42,7 @@ public class AgendamentoDAO {
 
     public void editar(Agendamento agendamento) throws SQLException {
         String sql = "UPDATE agendamentos SET paciente_id = ?, data_hora = ?, servico = ?, status = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, agendamento.getPaciente().getId());
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataHora()));
             stmt.setString(3, agendamento.getServico());
@@ -51,7 +55,7 @@ public class AgendamentoDAO {
     public List<Agendamento> listar() throws SQLException {
         List<Agendamento> agendamentos = new ArrayList<>();
         String sql = "SELECT * FROM agendamentos";
-        try (Statement stmt = connection.createStatement();
+        try (Statement stmt = DAO.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Agendamento agendamento = new Agendamento();
@@ -70,7 +74,7 @@ public class AgendamentoDAO {
     private Paciente buscarPacientePorId(int id) {
         Paciente paciente = new Paciente();
         String sql = "SELECT * FROM pacientes WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {

@@ -19,3 +19,6 @@ Agendamento:
 
 Historico:
     - Não possui propriedade 'dataHora';
+
+Paciente:
+    - Não possui propriedade 'foto';

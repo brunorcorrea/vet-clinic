@@ -9,6 +9,21 @@ public class Paciente {
     private String raca;
     private String coloracao;
     private String especie;
+    private byte[] foto;
+
+    public Paciente() {
+    }
+
+    public Paciente(int id, String nome, EstadoCastracao estadoCastracao, int idade, String raca, String coloracao, String especie, byte[] foto) {
+        this.id = id;
+        this.nome = nome;
+        this.estadoCastracao = estadoCastracao;
+        this.idade = idade;
+        this.raca = raca;
+        this.coloracao = coloracao;
+        this.especie = especie;
+        this.foto = foto;
+    }
 
     public void cadastrar() {
         //TODO implement this method
@@ -80,5 +95,13 @@ public class Paciente {
 
     public void setEspecie(String especie) {
         this.especie = especie;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

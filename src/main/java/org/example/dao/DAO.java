@@ -62,7 +62,7 @@ public abstract class DAO {
         }
     }
 
-    protected final boolean createTables() {
+    protected final boolean createTable() {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("""
@@ -82,7 +82,7 @@ public abstract class DAO {
                             idProprietario VARCHAR,
                             valorTotal REAL,
                             status VARCHAR,
-                            dataVencimento VARCHAR,
+                            dataVencimento INTEGER,
                             FOREIGN KEY (idProprietario) REFERENCES proprietario(id)
                         );
                     """);
@@ -134,7 +134,7 @@ public abstract class DAO {
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS agendamento(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            dataHora VARCHAR,
+                            dataHora INTEGER,
                             servico VARCHAR,
                             status VARCHAR,
                             idVeterinario INTEGER,
@@ -153,7 +153,7 @@ public abstract class DAO {
                             doencas VARCHAR,
                             peso REAL,
                             observacoes VARCHAR,
-                            dataHora VARCHAR,
+                            dataHora INTEGER,
                             FOREIGN KEY (idPaciente) REFERENCES paciente(id)
                         );
                     """);
@@ -164,7 +164,7 @@ public abstract class DAO {
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             idPaciente INTEGER,
                             medicamentos VARCHAR,
-                            dataEmissao VARCHAR,
+                            dataEmissao INTEGER,
                             observacoes VARCHAR,
                             FOREIGN KEY (idPaciente) REFERENCES paciente(id)
                         );
