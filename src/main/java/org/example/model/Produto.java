@@ -19,5 +19,39 @@ public class Produto {
         //TODO implement this method
     }
 
-    //TODO should have a listar method?
+    public void listar() {
+        //TODO implement this method
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
 }

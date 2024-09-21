@@ -5,3 +5,11 @@ Faturamento:
     - Possui erroneamente um atributo Cliente, o nome correto seria Proprietário;
     - Propriedade 'status' é do tipo String, mas deveria ser do tipo StatusPagamento;
 
+Estoque:
+    - Não possui propriedade 'id';
+
+Veterinario:
+    - Possui um atributo 'agendamento', porém isso indica que um veterinário pode realizar apenas um agendamento;
+
+Produto:
+    - Não possui método 'listar';
