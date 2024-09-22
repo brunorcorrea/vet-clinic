@@ -12,7 +12,7 @@ import java.util.List;
 public class AgendamentoDAO extends DAO {
     private static AgendamentoDAO instance;
 
-    private AgendamentoDAO() {
+    AgendamentoDAO() {
         getConnection();
         createTable();
     }

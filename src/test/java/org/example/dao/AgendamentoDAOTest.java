@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.model.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -10,6 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AgendamentoDAOTest {
+
+
+    @BeforeEach
+    void setUp() {
+        DAO.getConnection();
+        AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+        agendamentoDAO.createTable();
+    }
 
     @Test
     void getInstance() {
