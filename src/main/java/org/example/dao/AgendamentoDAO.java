@@ -1,9 +1,6 @@
 package org.example.dao;
 
-import org.example.model.Agendamento;
-import org.example.model.EstadoCastracao;
-import org.example.model.Paciente;
-import org.example.model.StatusAgendamento;
+import org.example.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,18 +19,19 @@ public class AgendamentoDAO extends DAO {
     }
 
     public void cadastrar(Agendamento agendamento) throws SQLException {
-        String sql = "INSERT INTO agendamentos (idPaciente, dataHora, servico, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO agendamento (idPaciente, dataHora, servico, status, idVeterinario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, agendamento.getPaciente().getId());
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataHora()));
             stmt.setString(3, agendamento.getServico());
             stmt.setString(4, agendamento.getStatus().name());
+            stmt.setInt(5, agendamento.getVeterinario().getId());
             stmt.executeUpdate();
         }
     }
 
     public void excluir(int id) throws SQLException {
-        String sql = "DELETE FROM agendamentos WHERE id = ?";
+        String sql = "DELETE FROM agendamento WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -41,7 +39,7 @@ public class AgendamentoDAO extends DAO {
     }
 
     public void editar(Agendamento agendamento) throws SQLException {
-        String sql = "UPDATE agendamentos SET paciente_id = ?, data_hora = ?, servico = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE agendamento SET idPaciente = ?, dataHora = ?, servico = ?, status = ? WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, agendamento.getPaciente().getId());
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataHora()));
@@ -54,15 +52,17 @@ public class AgendamentoDAO extends DAO {
 
     public List<Agendamento> listar() throws SQLException {
         List<Agendamento> agendamentos = new ArrayList<>();
-        String sql = "SELECT * FROM agendamentos";
+        String sql = "SELECT * FROM agendamento";
         try (Statement stmt = DAO.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Agendamento agendamento = new Agendamento();
                 agendamento.setId(rs.getInt("id"));
-
-                agendamento.setPaciente(buscarPacientePorId(rs.getInt("paciente_id")));
-                agendamento.setDataHora(rs.getTimestamp("data_hora").toLocalDateTime());
+                Veterinario veterinario = buscarVeterinarioPorId(rs.getInt("idVeterinario"));
+                veterinario.getAgendamentos().add(agendamento);
+                agendamento.setVeterinario(veterinario);
+                agendamento.setPaciente(buscarPacientePorId(rs.getInt("idPaciente")));
+                agendamento.setDataHora(rs.getTimestamp("dataHora").toLocalDateTime());
                 agendamento.setServico(rs.getString("servico"));
                 agendamento.setStatus(StatusAgendamento.valueOf(rs.getString("status")));
                 agendamentos.add(agendamento);
@@ -73,7 +73,7 @@ public class AgendamentoDAO extends DAO {
 
     private Paciente buscarPacientePorId(int id) {
         Paciente paciente = new Paciente();
-        String sql = "SELECT * FROM pacientes WHERE id = ?";
+        String sql = "SELECT * FROM paciente WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -84,7 +84,7 @@ public class AgendamentoDAO extends DAO {
                     paciente.setEspecie(rs.getString("especie"));
                     paciente.setIdade(rs.getInt("idade"));
                     paciente.setRaca(rs.getString("raca"));
-                    paciente.setEstadoCastracao(EstadoCastracao.valueOf(rs.getString("estado_castracao")));
+                    paciente.setEstadoCastracao(EstadoCastracao.valueOf(rs.getString("estadoCastracao")));
                 }
             }
         } catch (SQLException e) {
@@ -92,5 +92,23 @@ public class AgendamentoDAO extends DAO {
         }
 
         return paciente;
+    }
+
+    private Veterinario buscarVeterinarioPorId(int id) {
+        Veterinario veterinario = new Veterinario();
+        String sql = "SELECT * FROM veterinario WHERE id = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    veterinario.setId(rs.getInt("id"));
+                    veterinario.setNome(rs.getString("nome"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return veterinario;
     }
 }

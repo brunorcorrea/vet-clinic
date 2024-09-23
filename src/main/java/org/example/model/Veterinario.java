@@ -18,19 +18,15 @@ public class Veterinario {
     }
 
     public void cadastrar() {
-        //TODO implement this method
     }
 
     public void excluir() {
-        //TODO implement this method
     }
 
     public void editar() {
-        //TODO implement this method
     }
 
     public void agendar() {
-        //TODO implement this method
     }
 
     public int getId() {
@@ -42,7 +38,7 @@ public class Veterinario {
     }
 
     public List<Agendamento> getAgendamentos() {
-        return agendamentos;
+        return agendamentos != null ? agendamentos : (agendamentos = List.of());
     }
 
     public void setAgendamentos(List<Agendamento> agendamentos) {

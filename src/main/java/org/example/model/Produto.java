@@ -8,19 +8,15 @@ public class Produto {
     private double preco;
 
     public void cadastrar() {
-        //TODO implement this method
     }
 
     public void excluir() {
-        //TODO implement this method
     }
 
     public void editar() {
-        //TODO implement this method
     }
 
     public void listar() {
-        //TODO implement this method
     }
 
     public int getId() {

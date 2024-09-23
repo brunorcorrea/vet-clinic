@@ -12,19 +12,15 @@ public class ReceitaMedica {
     private List<String> observacoes;
 
     public void cadastrar() {
-        //TODO implement this method
     }
 
     public void excluir() {
-        //TODO implement this method
     }
 
     public void visualizar() {
-        //TODO implement this method
     }
 
     public void imprimir() {
-        //TODO implement this method
     }
 
     public int getId() {

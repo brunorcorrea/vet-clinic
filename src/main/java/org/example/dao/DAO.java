@@ -54,7 +54,6 @@ public abstract class DAO {
         try {
             PreparedStatement stmt;
 
-            // Tabela proprietario
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS proprietario(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,7 +65,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela faturamento
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS faturamento(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,7 +77,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela paciente
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS paciente(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,12 +85,12 @@ public abstract class DAO {
                             idade INTEGER,
                             raca VARCHAR,
                             coloracao VARCHAR,
-                            especie VARCHAR
+                            especie VARCHAR,
+                            foto BLOB
                         );
                     """);
             executeUpdate(stmt);
 
-            // Tabela produto
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS produto(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,7 +101,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela estoque
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS estoque(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -117,7 +113,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela veterinario
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS veterinario(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -126,7 +121,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela agendamento
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS agendamento(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -141,7 +135,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela historico
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS historico(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -156,7 +149,6 @@ public abstract class DAO {
                     """);
             executeUpdate(stmt);
 
-            // Tabela receitaMedica
             stmt = DAO.getConnection().prepareStatement("""
                         CREATE TABLE IF NOT EXISTS receitaMedica(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,

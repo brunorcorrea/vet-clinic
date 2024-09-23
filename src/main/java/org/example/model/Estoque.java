@@ -9,11 +9,9 @@ public class Estoque {
     private boolean necessitaReposicao;
 
     public void atualizar() {
-        //TODO implement this method
     }
 
     public void verificar() {
-        //TODO implement this method
     }
 
     public int getId() {

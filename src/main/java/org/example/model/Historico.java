@@ -14,11 +14,9 @@ public class Historico {
     private LocalDateTime dataHora;
 
     public void registrar() {
-        //TODO implement this method
     }
 
     public void visualizar() {
-        //TODO implement this method
     }
 
     public int getId() {
@@ -67,5 +65,13 @@ public class Historico {
 
     public void setObservacoes(List<String> observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 }
