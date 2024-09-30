@@ -13,7 +13,7 @@ public class Main {
         }
 
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Main View");
+            JFrame frame = new JFrame("Vet Clinic - O melhor software de gestão de clínicas veterinárias!");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setContentPane(new MainView().getMainPanel());
             frame.pack();
