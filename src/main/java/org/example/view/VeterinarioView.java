@@ -14,6 +14,7 @@ public class VeterinarioView {
     private JButton adicionarVeterinarioButton;
     private JTextField nomeVeterinarioTextField;
     private JButton removerVeterinarioButton;
+    private JLabel nomeLabel;
 
     public VeterinarioView() {
         adicionarVeterinarioButton.addActionListener(e -> {
