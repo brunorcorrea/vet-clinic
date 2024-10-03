@@ -50,27 +50,29 @@ public class VeterinarioView {
                 JOptionPane.showMessageDialog(null, "Selecione pelo menos um veterinário para remover");
                 return;
             }
+            int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) veterinário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                for (int i : rowIndex) {
+                    Veterinario veterinario = new Veterinario();
+                    veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
 
-            for (int i : rowIndex) {
-                Veterinario veterinario = new Veterinario();
-                veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
-
-                try {
-                    veterinarioController.removerVeterinario(veterinario);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                    try {
+                        veterinarioController.removerVeterinario(veterinario);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                    }
                 }
-            }
 
-            List<Veterinario> veterinarios;
-            try {
-                veterinarios = veterinarioController.listarVeterinarios();
-            } catch (Exception ex) {
-                veterinarios = new ArrayList<>();
-                JOptionPane.showMessageDialog(null, "Erro ao listar veterinários: " + ex.getMessage());
-            }
+                List<Veterinario> veterinarios;
+                try {
+                    veterinarios = veterinarioController.listarVeterinarios();
+                } catch (Exception ex) {
+                    veterinarios = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null, "Erro ao listar veterinários: " + ex.getMessage());
+                }
 
-            veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
+                veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
+            }
         });
 
         List<Veterinario> veterinarios;

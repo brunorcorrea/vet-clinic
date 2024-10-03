@@ -37,6 +37,17 @@ public class MainView {
                 }
             }
         });
+        proprietariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame proprietarioFrame = new JFrame("Vet Clinic - Proprietários");
+                proprietarioFrame.setContentPane(new ProprietarioView().getMainPanel());
+                proprietarioFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                proprietarioFrame.pack();
+                proprietarioFrame.setLocationRelativeTo(null);
+                proprietarioFrame.setVisible(true);
+            }
+        });
     }
 
     public JPanel getMainPanel() {
