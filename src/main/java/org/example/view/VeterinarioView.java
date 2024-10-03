@@ -12,12 +12,12 @@ public class VeterinarioView {
     private JPanel mainPanel;
     private JTable veterinarioTable;
     private JButton adicionarVeterinarioButton;
-    private JTextField textFieldNomeVeterinario;
+    private JTextField nomeVeterinarioTextField;
     private JButton removerVeterinarioButton;
 
     public VeterinarioView() {
         adicionarVeterinarioButton.addActionListener(e -> {
-            String nomeVeterinario = textFieldNomeVeterinario.getText().trim();
+            String nomeVeterinario = nomeVeterinarioTextField.getText().trim();
             if (nomeVeterinario.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Nome do veterinário não pode ser vazio");
                 return;
@@ -28,7 +28,7 @@ public class VeterinarioView {
 
             try {
                 veterinarioController.adicionarVeterinario(veterinario);
-                textFieldNomeVeterinario.setText("");
+                nomeVeterinarioTextField.setText("");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao adicionar veterinário: " + ex.getMessage());
             }
