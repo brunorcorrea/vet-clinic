@@ -1,18 +1,38 @@
 package org.example.controller;
 
+import org.example.dao.VeterinarioDAO;
 import org.example.model.Veterinario;
 
-import java.util.Collections;
+import java.sql.SQLException;
 import java.util.List;
 
 public class VeterinarioController {
 
-    public VeterinarioController() {
+    private static VeterinarioController instance;
 
+    private VeterinarioController() {
     }
 
-    public List<Veterinario> listarVeterinarios() {
-//        return null; //TODO search in VeterinarioDAO
-        return List.of(new Veterinario(1, Collections.emptyList(), "Bruno"));
+    public static VeterinarioController getInstance() {
+        if (instance == null) {
+            instance = new VeterinarioController();
+        }
+        return instance;
+    }
+
+    public List<Veterinario> listarVeterinarios() throws SQLException {
+        return VeterinarioDAO.getInstance().listar();
+    }
+
+    public void adicionarVeterinario(Veterinario veterinario) throws SQLException {
+        VeterinarioDAO.getInstance().cadastrar(veterinario);
+    }
+
+    public void editarVeterinario(Veterinario veterinario) throws SQLException {
+        VeterinarioDAO.getInstance().editar(veterinario);
+    }
+
+    public void removerVeterinario(Veterinario veterinario) throws SQLException {
+        VeterinarioDAO.getInstance().excluir(veterinario.getId());
     }
 }
