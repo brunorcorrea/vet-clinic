@@ -77,7 +77,7 @@ public class ProprietarioView {
 
                 int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
                 if (response == JOptionPane.YES_OPTION) {
-                    for (int i = selectedRows.length - 1; i >= 0; i--) {
+                    for (int i : selectedRows) {
                         Proprietario proprietario = new Proprietario();
                         proprietario.setId((Integer) proprietarioTable.getValueAt(i, 0));
 

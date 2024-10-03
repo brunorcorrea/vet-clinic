@@ -45,14 +45,14 @@ public class VeterinarioView {
             veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
         });
         removerVeterinarioButton.addActionListener(e -> {
-            int[] rowIndex = veterinarioTable.getSelectedRows();
-            if (rowIndex.length == 0) {
+            int[] selectedRows = veterinarioTable.getSelectedRows();
+            if (selectedRows.length == 0) {
                 JOptionPane.showMessageDialog(null, "Selecione pelo menos um veterinário para remover");
                 return;
             }
             int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) veterinário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (response == JOptionPane.YES_OPTION) {
-                for (int i : rowIndex) {
+                for (int i : selectedRows) {
                     Veterinario veterinario = new Veterinario();
                     veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
 
