@@ -46,10 +46,23 @@ public class ProprietarioView {
 
                 try {
                     ProprietarioController.getInstance().adicionarProprietario(proprietario);
-                    JOptionPane.showMessageDialog(null, "Proprietário cadastrado com sucesso!");
+                    cpfTextField.setText("");
+                    nomeCompletoTextField.setText("");
+                    telefoneTextField.setText("");
+                    enderecoTextField.setText("");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao cadastrar proprietário: " + ex.getMessage());
                 }
+
+                List<Proprietario> proprietarios;
+                try {
+                    proprietarios = proprietarioController.listarProprietarios();
+                } catch (Exception ex) {
+                    proprietarios = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + ex.getMessage());
+                }
+
+                proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
             }
         });
         removerProprietarioButton.addActionListener(new ActionListener() {
@@ -65,7 +78,9 @@ public class ProprietarioView {
                 int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
                 if (response == JOptionPane.YES_OPTION) {
                     for (int i = selectedRows.length - 1; i >= 0; i--) {
-                        Proprietario proprietario = (Proprietario) proprietarioTable.getValueAt(selectedRows[i], 0);
+                        Proprietario proprietario = new Proprietario();
+                        proprietario.setId((Integer) proprietarioTable.getValueAt(i, 0));
+
                         try {
                             ProprietarioController.getInstance().removerProprietario(proprietario);
                         } catch (Exception ex) {
@@ -75,6 +90,15 @@ public class ProprietarioView {
                     JOptionPane.showMessageDialog(null, "Proprietário(s) removidos(s) com sucesso!");
                 }
 
+                List<Proprietario> proprietarios;
+                try {
+                    proprietarios = proprietarioController.listarProprietarios();
+                } catch (Exception ex) {
+                    proprietarios = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + ex.getMessage());
+                }
+
+                proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
             }
         });
 

@@ -62,7 +62,7 @@ public class ProprietarioDAO extends DAO {
                 Proprietario proprietario = new Proprietario();
                 proprietario.setId(rs.getInt("id"));
                 proprietario.setCpf(rs.getString("cpf"));
-                proprietario.setNomeCompleto(rs.getString("nome_completo"));
+                proprietario.setNomeCompleto(rs.getString("nomeCompleto"));
                 proprietario.setTelefone(rs.getString("telefone"));
                 proprietario.setEndereco(rs.getString("endereco"));
                 proprietarios.add(proprietario);
@@ -81,7 +81,7 @@ public class ProprietarioDAO extends DAO {
                     proprietario = new Proprietario();
                     proprietario.setId(rs.getInt("id"));
                     proprietario.setCpf(rs.getString("cpf"));
-                    proprietario.setNomeCompleto(rs.getString("nome_completo"));
+                    proprietario.setNomeCompleto(rs.getString("nomeCompleto"));
                     proprietario.setTelefone(rs.getString("telefone"));
                     proprietario.setEndereco(rs.getString("endereco"));
                 }
