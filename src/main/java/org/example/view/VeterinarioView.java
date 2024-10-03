@@ -44,19 +44,21 @@ public class VeterinarioView {
             veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
         });
         removerVeterinarioButton.addActionListener(e -> {
-            int rowIndex = veterinarioTable.getSelectedRow();
-            if (rowIndex == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione um veterinário para remover");
+            int[] rowIndex = veterinarioTable.getSelectedRows();
+            if (rowIndex.length == 0) {
+                JOptionPane.showMessageDialog(null, "Selecione pelo menos um veterinário para remover");
                 return;
             }
 
-            Veterinario veterinario = new Veterinario();
-            veterinario.setId((int) veterinarioTable.getValueAt(rowIndex, 0));
+            for (int i : rowIndex) {
+                Veterinario veterinario = new Veterinario();
+                veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
 
-            try {
-                veterinarioController.removerVeterinario(veterinario);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                try {
+                    veterinarioController.removerVeterinario(veterinario);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                }
             }
 
             List<Veterinario> veterinarios;
