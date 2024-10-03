@@ -12,12 +12,13 @@ public class VeterinarioView {
     private JPanel mainPanel;
     private JTable veterinarioTable;
     private JButton adicionarVeterinarioButton;
-    private JTextField textFieldNomeVeterinario;
+    private JTextField nomeVeterinarioTextField;
     private JButton removerVeterinarioButton;
+    private JLabel nomeLabel;
 
     public VeterinarioView() {
         adicionarVeterinarioButton.addActionListener(e -> {
-            String nomeVeterinario = textFieldNomeVeterinario.getText().trim();
+            String nomeVeterinario = nomeVeterinarioTextField.getText().trim();
             if (nomeVeterinario.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Nome do veterinário não pode ser vazio");
                 return;
@@ -28,7 +29,7 @@ public class VeterinarioView {
 
             try {
                 veterinarioController.adicionarVeterinario(veterinario);
-                textFieldNomeVeterinario.setText("");
+                nomeVeterinarioTextField.setText("");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao adicionar veterinário: " + ex.getMessage());
             }
@@ -44,30 +45,34 @@ public class VeterinarioView {
             veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
         });
         removerVeterinarioButton.addActionListener(e -> {
-            int rowIndex = veterinarioTable.getSelectedRow();
-            if (rowIndex == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione um veterinário para remover");
+            int[] rowIndex = veterinarioTable.getSelectedRows();
+            if (rowIndex.length == 0) {
+                JOptionPane.showMessageDialog(null, "Selecione pelo menos um veterinário para remover");
                 return;
             }
+            int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) veterinário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                for (int i : rowIndex) {
+                    Veterinario veterinario = new Veterinario();
+                    veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
 
-            Veterinario veterinario = new Veterinario();
-            veterinario.setId((int) veterinarioTable.getValueAt(rowIndex, 0));
+                    try {
+                        veterinarioController.removerVeterinario(veterinario);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                    }
+                }
 
-            try {
-                veterinarioController.removerVeterinario(veterinario);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                List<Veterinario> veterinarios;
+                try {
+                    veterinarios = veterinarioController.listarVeterinarios();
+                } catch (Exception ex) {
+                    veterinarios = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null, "Erro ao listar veterinários: " + ex.getMessage());
+                }
+
+                veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
             }
-
-            List<Veterinario> veterinarios;
-            try {
-                veterinarios = veterinarioController.listarVeterinarios();
-            } catch (Exception ex) {
-                veterinarios = new ArrayList<>();
-                JOptionPane.showMessageDialog(null, "Erro ao listar veterinários: " + ex.getMessage());
-            }
-
-            veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
         });
 
         List<Veterinario> veterinarios;
