@@ -7,9 +7,6 @@ import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @author Prof. Dr. Plinio Vilela - prvilela@unicamp.br
- */
 public class ProprietarioTableModel extends GenericTableModel {
 
     ProprietarioController proprietarioController = ProprietarioController.getInstance();

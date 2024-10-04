@@ -48,6 +48,23 @@ public class MainView {
                 proprietarioFrame.setVisible(true);
             }
         });
+        faturamentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        pacientesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame pacienteFrame = new JFrame("Vet Clinic - Pacientes");
+                pacienteFrame.setContentPane(new PacienteView().getMainPanel());
+                pacienteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                pacienteFrame.pack();
+                pacienteFrame.setLocationRelativeTo(null);
+                pacienteFrame.setVisible(true);
+            }
+        });
     }
 
     public JPanel getMainPanel() {
