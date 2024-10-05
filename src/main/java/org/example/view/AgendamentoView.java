@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.controller.AgendamentoController;
 import org.example.controller.PacienteController;
 import org.example.controller.VeterinarioController;
+import org.example.model.Agendamento;
 import org.example.model.Paciente;
 import org.example.model.StatusAgendamento;
 import org.example.model.Veterinario;
@@ -64,6 +65,16 @@ public class AgendamentoView {
 
             }
         });
+
+        List<Agendamento> agendamentos;
+        try {
+            agendamentos = agendamentoController.listarAgendamentos();
+        } catch (Exception e) {
+            agendamentos = new ArrayList<>();
+            JOptionPane.showMessageDialog(null, "Erro ao listar agendamentos: " + e.getMessage());
+        }
+
+        agendamentoTable.setModel(new AgendamentoTableModel(agendamentos));
     }
 
     public JPanel getMainPanel() {
