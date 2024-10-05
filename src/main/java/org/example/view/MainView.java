@@ -12,7 +12,7 @@ public class MainView {
     private JButton estoqueButton;
     private JButton receitasMedicasButton;
     private JButton proprietariosButton;
-    private JButton faturamentosButton;
+    private JButton faturasButton;
     private JButton sairButton;
 
     public MainView() {
@@ -48,10 +48,15 @@ public class MainView {
                 proprietarioFrame.setVisible(true);
             }
         });
-        faturamentosButton.addActionListener(new ActionListener() {
+        faturasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JFrame faturaFrame = new JFrame("Vet Clinic - Faturas");
+                faturaFrame.setContentPane(new FaturaView().getMainPanel());
+                faturaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                faturaFrame.pack();
+                faturaFrame.setLocationRelativeTo(null);
+                faturaFrame.setVisible(true);
             }
         });
         pacientesButton.addActionListener(new ActionListener() {
@@ -74,6 +79,28 @@ public class MainView {
                 agendamentoFrame.pack();
                 agendamentoFrame.setLocationRelativeTo(null);
                 agendamentoFrame.setVisible(true);
+            }
+        });
+        receitasMedicasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame receitaMedicaFrame = new JFrame("Vet Clinic - Receitas Médicas");
+                receitaMedicaFrame.setContentPane(new ReceitaMedicaView().getMainPanel());
+                receitaMedicaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                receitaMedicaFrame.pack();
+                receitaMedicaFrame.setLocationRelativeTo(null);
+                receitaMedicaFrame.setVisible(true);
+            }
+        });
+        estoqueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame estoqueFrame = new JFrame("Vet Clinic - Estoque");
+                estoqueFrame.setContentPane(new EstoqueView().getMainPanel());
+                estoqueFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                estoqueFrame.pack();
+                estoqueFrame.setLocationRelativeTo(null);
+                estoqueFrame.setVisible(true);
             }
         });
     }
