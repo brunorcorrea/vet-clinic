@@ -27,18 +27,6 @@ public class Paciente {
         this.proprietario = proprietario;
     }
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void editar() {
-    }
-
-    public void listar() {
-    }
-
     public int getId() {
         return id;
     }

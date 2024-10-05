@@ -17,18 +17,6 @@ public class Veterinario {
         this.nome = nome;
     }
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void editar() {
-    }
-
-    public void agendar() {
-    }
-
     public int getId() {
         return id;
     }
