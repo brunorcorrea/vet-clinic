@@ -23,7 +23,7 @@ public class PacienteDAO extends DAO {
     }
 
     public void cadastrar(Paciente paciente) throws SQLException {
-        String sql = "INSERT INTO paciente (nome, estadoCastracao, idade, raca, coloracao, especie, foto) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO paciente (nome, estadoCastracao, idade, raca, coloracao, especie, idProprietario, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setString(1, paciente.getNome());
             stmt.setString(2, paciente.getEstadoCastracao().name());
@@ -31,7 +31,8 @@ public class PacienteDAO extends DAO {
             stmt.setString(4, paciente.getRaca());
             stmt.setString(5, paciente.getColoracao());
             stmt.setString(6, paciente.getEspecie());
-            stmt.setBytes(7, paciente.getFoto());
+            stmt.setInt(7, paciente.getProprietario().getId());
+            stmt.setBytes(8, paciente.getFoto());
             stmt.executeUpdate();
         }
     }
@@ -61,7 +62,7 @@ public class PacienteDAO extends DAO {
 
     public List<Paciente> listar() throws SQLException {
         List<Paciente> pacientes = new ArrayList<>();
-        String sql = "SELECT * FROM paciente";
+        String sql = "SELECT * FROM paciente JOIN proprietario ON paciente.idProprietario = proprietario.id";
         try (Statement stmt = DAO.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -74,6 +75,7 @@ public class PacienteDAO extends DAO {
                 paciente.setColoracao(rs.getString("coloracao"));
                 paciente.setEspecie(rs.getString("especie"));
                 paciente.setFoto(rs.getBytes("foto"));
+                paciente.setProprietario(ProprietarioDAO.getInstance().buscarPorId(rs.getInt("idProprietario")));
                 pacientes.add(paciente);
             }
         }

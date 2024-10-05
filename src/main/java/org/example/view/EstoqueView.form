@@ -42,7 +42,7 @@
                   <text value="Nome:"/>
                 </properties>
               </component>
-              <component id="2d16f" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="2d16f" class="javax.swing.JTextField" binding="nomeTextField">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -58,7 +58,7 @@
                   <text value="Tipo:"/>
                 </properties>
               </component>
-              <component id="50f5b" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+              <component id="50f5b" class="javax.swing.JTextField" binding="tipoTextField">
                 <constraints>
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -74,7 +74,7 @@
                   <text value="Preço:"/>
                 </properties>
               </component>
-              <component id="c994a" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+              <component id="c994a" class="javax.swing.JTextField" binding="precoTextField">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -90,7 +90,7 @@
                   <text value="Quantidade:"/>
                 </properties>
               </component>
-              <component id="cf9d2" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+              <component id="cf9d2" class="javax.swing.JTextField" binding="quantidadeTextField">
                 <constraints>
                   <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -106,7 +106,7 @@
                   <text value="Quantidade Mínima:"/>
                 </properties>
               </component>
-              <component id="f1971" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+              <component id="f1971" class="javax.swing.JTextField" binding="quantidadeMinimaTextField">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>

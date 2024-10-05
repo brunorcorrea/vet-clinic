@@ -86,7 +86,9 @@ public abstract class DAO {
                             raca VARCHAR,
                             coloracao VARCHAR,
                             especie VARCHAR,
-                            foto BLOB
+                            foto BLOB,
+                            idProprietario INTEGER,
+                            FOREIGN KEY (idProprietario) REFERENCES proprietario(id)
                         );
                     """);
             executeUpdate(stmt);

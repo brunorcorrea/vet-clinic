@@ -10,12 +10,12 @@ public class Paciente {
     private String coloracao;
     private String especie;
     private byte[] foto;
-    //TODO adicionar proprietario
+    private Proprietario proprietario;
 
     public Paciente() {
     }
 
-    public Paciente(int id, String nome, EstadoCastracao estadoCastracao, int idade, String raca, String coloracao, String especie, byte[] foto) {
+    public Paciente(int id, String nome, EstadoCastracao estadoCastracao, int idade, String raca, String coloracao, String especie, byte[] foto, Proprietario proprietario) {
         this.id = id;
         this.nome = nome;
         this.estadoCastracao = estadoCastracao;
@@ -24,6 +24,7 @@ public class Paciente {
         this.coloracao = coloracao;
         this.especie = especie;
         this.foto = foto;
+        this.proprietario = proprietario;
     }
 
     public void cadastrar() {
@@ -100,5 +101,13 @@ public class Paciente {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
     }
 }

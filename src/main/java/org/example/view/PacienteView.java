@@ -1,8 +1,10 @@
 package org.example.view;
 
 import org.example.controller.PacienteController;
+import org.example.controller.ProprietarioController;
 import org.example.model.EstadoCastracao;
 import org.example.model.Paciente;
+import org.example.model.Proprietario;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class PacienteView {
     private final PacienteController pacienteController = PacienteController.getInstance();
+    private final ProprietarioController proprietarioController = ProprietarioController.getInstance();
     private JPanel mainPanel;
     private JTable pacienteTable;
     private JLabel nomeLabel;
@@ -38,8 +41,10 @@ public class PacienteView {
     private JButton adicionarFotoButton;
     private JLabel imagemLabel;
     private JLabel coloracaoLabel;
+    private JComboBox proprietarioComboBox;
 
     private byte[] uploadedImageBytes;
+    private List<Proprietario> proprietarios = new ArrayList<>();
 
     private byte[] imageToByteArray(Image image) {
         try {
@@ -63,6 +68,15 @@ public class PacienteView {
         estadoCastracaoComboBox.addItem(EstadoCastracao.FERTIL.getDescricao());
         estadoCastracaoComboBox.addItem(EstadoCastracao.CASTRADO.getDescricao());
 
+        try {
+            proprietarios = proprietarioController.listarProprietarios();
+        } catch (Exception e) {
+            proprietarios = new ArrayList<>();
+            JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + e.getMessage());
+        }
+
+        proprietarios.forEach(proprietario -> proprietarioComboBox.addItem(proprietario.getNomeCompleto()));
+
         adicionarPacienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,6 +87,14 @@ public class PacienteView {
                 String coloracao = coloracaoTextField.getText().trim();
                 String especie = especieTextField.getText().trim();
                 byte[] foto = (uploadedImageBytes != null) ? uploadedImageBytes : null;
+                String nomeProprietario = (String) proprietarioComboBox.getSelectedItem();
+                Proprietario proprietario = proprietarios.stream().filter(p -> p.getNomeCompleto().equals(nomeProprietario)).findFirst()
+                        .orElse(null);
+
+                if (proprietario == null) {
+                    JOptionPane.showMessageDialog(null, "Proprietário inválido!");
+                    return;
+                }
 
                 if (idade < 0) {
                     JOptionPane.showMessageDialog(null, "Idade inválida!");
@@ -92,6 +114,7 @@ public class PacienteView {
                 paciente.setColoracao(coloracao);
                 paciente.setEspecie(especie);
                 paciente.setFoto(foto);
+                paciente.setProprietario(proprietario);
 
                 try {
                     pacienteController.adicionarPaciente(paciente);

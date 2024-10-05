@@ -13,15 +13,15 @@ public class PacienteTableModel extends GenericTableModel {
     PacienteController pacienteController = PacienteController.getInstance();
 
     public PacienteTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Nome", "Estado Castração", "Idade", "Raça", "Coloração", "Espécie", "Foto"});
+        super(vDados, new String[]{"Id", "Nome", "Estado Castração", "Idade", "Raça", "Coloração", "Espécie", "Proprietário", "Foto"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0, 3 -> Integer.class;
-            case 1, 2, 4, 5, 6 -> String.class;
-            case 7 -> ImageIcon.class;
+            case 1, 2, 4, 5, 6, 7 -> String.class;
+            case 8 -> ImageIcon.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -38,7 +38,8 @@ public class PacienteTableModel extends GenericTableModel {
             case 4 -> paciente.getRaca();
             case 5 -> paciente.getColoracao();
             case 6 -> paciente.getEspecie();
-            case 7 -> paciente.getFoto() != null ? new ImageIcon(paciente.getFoto()) : null;
+            case 7 -> paciente.getProprietario().getNomeCompleto();
+            case 8 -> paciente.getFoto() != null ? new ImageIcon(paciente.getFoto()) : null;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -66,6 +67,7 @@ public class PacienteTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex != 0 && columnIndex != 7;
+        List<Integer> columnsNotEditable = List.of(0, 7, 8);
+        return !columnsNotEditable.contains(columnIndex);
     }
 }
