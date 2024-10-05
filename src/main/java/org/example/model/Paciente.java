@@ -10,6 +10,7 @@ public class Paciente {
     private String coloracao;
     private String especie;
     private byte[] foto;
+    //TODO adicionar proprietario
 
     public Paciente() {
     }

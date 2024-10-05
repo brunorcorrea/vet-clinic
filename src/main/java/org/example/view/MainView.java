@@ -65,6 +65,17 @@ public class MainView {
                 pacienteFrame.setVisible(true);
             }
         });
+        agendamentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame agendamentoFrame = new JFrame("Vet Clinic - Agendamentos");
+                agendamentoFrame.setContentPane(new AgendamentoView().getMainPanel());
+                agendamentoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                agendamentoFrame.pack();
+                agendamentoFrame.setLocationRelativeTo(null);
+                agendamentoFrame.setVisible(true);
+            }
+        });
     }
 
     public JPanel getMainPanel() {
