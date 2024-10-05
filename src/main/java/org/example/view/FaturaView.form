@@ -20,7 +20,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="661d3" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <component id="661d3" class="javax.swing.JTable" binding="faturaTable">
                 <constraints/>
                 <properties/>
               </component>
@@ -42,7 +42,7 @@
                   <text value="Proprietário:"/>
                 </properties>
               </component>
-              <component id="173ab" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="173ab" class="javax.swing.JComboBox" binding="proprietarioComboBox">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -72,12 +72,6 @@
                   <text value="Status:"/>
                 </properties>
               </component>
-              <component id="909bd" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-              </component>
               <component id="d58f9" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -100,11 +94,17 @@
                   <text value="Valor Total:"/>
                 </properties>
               </component>
-              <component id="a5001" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="a5001" class="javax.swing.JTextField" binding="valorTotalTextField">
                 <constraints>
                   <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="909bd" class="javax.swing.JComboBox" binding="statusComboBox">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>

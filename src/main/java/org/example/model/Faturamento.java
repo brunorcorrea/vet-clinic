@@ -10,10 +10,6 @@ public class Faturamento {
     private StatusPagamento status;
     private LocalDateTime dataVencimento;
 
-    public void gerarFatura() {}
-    public void atualizar() {}
-    public void gerarRelatorio() {}
-
     public int getId() {
         return id;
     }

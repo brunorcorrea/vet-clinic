@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import org.example.dao.VeterinarioDAO;
-import org.example.model.Veterinario;
+import org.example.dao.FaturamentoDAO;
+import org.example.model.Faturamento;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,19 +20,19 @@ public class FaturamentoController {
         return instance;
     }
 
-    public List<Veterinario> listarVeterinarios() throws SQLException {
-        return VeterinarioDAO.getInstance().listar();
+    public List<Faturamento> listarFaturamentos() throws SQLException {
+        return FaturamentoDAO.getInstance().listar();
     }
 
-    public void adicionarVeterinario(Veterinario veterinario) throws SQLException {
-        VeterinarioDAO.getInstance().cadastrar(veterinario);
+    public void adicionarFaturamento(Faturamento faturamento) throws SQLException {
+        FaturamentoDAO.getInstance().cadastrar(faturamento);
     }
 
-    public void editarVeterinario(Veterinario veterinario) throws SQLException {
-        VeterinarioDAO.getInstance().editar(veterinario);
+    public void editarFaturamento(Faturamento faturamento) throws SQLException {
+        FaturamentoDAO.getInstance().editar(faturamento);
     }
 
-    public void removerVeterinario(Veterinario veterinario) throws SQLException {
-        VeterinarioDAO.getInstance().excluir(veterinario.getId());
+    public void removerFaturamento(Faturamento faturamento) throws SQLException {
+        FaturamentoDAO.getInstance().excluir(faturamento.getId());
     }
 }
