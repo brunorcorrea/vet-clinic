@@ -14,6 +14,7 @@ public class MainView {
     private JButton proprietariosButton;
     private JButton faturasButton;
     private JButton sairButton;
+    private JButton historicoButton;
 
     public MainView() {
         veterinariosButton.addActionListener(new ActionListener() {
@@ -101,6 +102,17 @@ public class MainView {
                 estoqueFrame.pack();
                 estoqueFrame.setLocationRelativeTo(null);
                 estoqueFrame.setVisible(true);
+            }
+        });
+        historicoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame historicoFrame = new JFrame("Vet Clinic - Histórico");
+                historicoFrame.setContentPane(new HistoricoView().getMainPanel());
+                historicoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                historicoFrame.pack();
+                historicoFrame.setLocationRelativeTo(null);
+                historicoFrame.setVisible(true);
             }
         });
     }
