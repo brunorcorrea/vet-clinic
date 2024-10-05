@@ -20,7 +20,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2ed19" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <component id="2ed19" class="javax.swing.JTable" binding="estoqueTable">
                 <constraints/>
                 <properties/>
               </component>
