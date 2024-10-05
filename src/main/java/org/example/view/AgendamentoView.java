@@ -1,5 +1,6 @@
 package org.example.view;
 
+import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.AgendamentoController;
 import org.example.controller.PacienteController;
 import org.example.controller.VeterinarioController;
@@ -11,6 +12,7 @@ import org.example.model.Veterinario;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +28,14 @@ public class AgendamentoView {
     private JComboBox statusComboBox;
     private JButton adicionarAgendamentoButton;
     private JButton removerAgendamentoButton;
+    private DateTimePicker dataHoraDateTimePicker;
 
     private List<Paciente> pacientes = new ArrayList<>();
     private List<Veterinario> veterinarios = new ArrayList<>();
 
     public AgendamentoView() {
+        dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+
         statusComboBox.addItem(StatusAgendamento.AGENDADO.getDescricao());
         statusComboBox.addItem(StatusAgendamento.CONCLUIDO.getDescricao());
         statusComboBox.addItem(StatusAgendamento.CANCELADO.getDescricao());

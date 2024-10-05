@@ -1,5 +1,6 @@
 package org.example.view;
 
+import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.FaturamentoController;
 import org.example.controller.ProprietarioController;
 import org.example.model.Faturamento;
@@ -9,6 +10,7 @@ import org.example.model.StatusPagamento;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,13 @@ public class FaturaView {
     private JComboBox statusComboBox;
     private JButton adicionarFaturaButton;
     private JButton removerFaturaButton;
+    private DateTimePicker dataVencimentoDateTimePicker;
 
     private List<Proprietario> proprietarios = new ArrayList<>();
 
     public FaturaView() {
+        dataVencimentoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+
         statusComboBox.addItem(StatusPagamento.EM_ATRASO.getDescricao());
         statusComboBox.addItem(StatusPagamento.PENDENTE.getDescricao());
         statusComboBox.addItem(StatusPagamento.PAGO.getDescricao());

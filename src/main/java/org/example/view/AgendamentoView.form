@@ -70,7 +70,7 @@
                   <text value="Data e Hora:"/>
                 </properties>
               </component>
-              <component id="6df9d" class="com.github.lgooddatepicker.components.DateTimePicker">
+              <component id="6df9d" class="com.github.lgooddatepicker.components.DateTimePicker" binding="dataHoraDateTimePicker">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
