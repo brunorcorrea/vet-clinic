@@ -4,12 +4,16 @@ import org.example.controller.PacienteController;
 import org.example.model.EstadoCastracao;
 import org.example.model.Paciente;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +39,27 @@ public class PacienteView {
     private JLabel imagemLabel;
     private JLabel coloracaoLabel;
 
+    private byte[] uploadedImageBytes;
+
+    private byte[] imageToByteArray(Image image) {
+        try {
+            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = bufferedImage.createGraphics();
+            g2d.drawImage(image, 0, 0, null);
+            g2d.dispose();
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public PacienteView() {
         imagemLabel.setPreferredSize(new Dimension(100, 100));
+        pacienteTable.setRowHeight(100);
         estadoCastracaoComboBox.addItem(EstadoCastracao.FERTIL.getDescricao());
         estadoCastracaoComboBox.addItem(EstadoCastracao.CASTRADO.getDescricao());
 
@@ -49,7 +72,7 @@ public class PacienteView {
                 int idade = idadeTextField.getText().trim().isEmpty() ? -1 : Integer.parseInt(idadeTextField.getText().trim());
                 String coloracao = coloracaoTextField.getText().trim();
                 String especie = especieTextField.getText().trim();
-                byte[] foto = (fotoLabel.getIcon() != null) ? fotoLabel.getIcon().toString().getBytes() : null;
+                byte[] foto = (uploadedImageBytes != null) ? uploadedImageBytes : null;
 
                 if (idade < 0) {
                     JOptionPane.showMessageDialog(null, "Idade inválida!");
@@ -78,6 +101,7 @@ public class PacienteView {
                     racaTextField.setText("");
                     coloracaoTextField.setText("");
                     especieTextField.setText("");
+                    uploadedImageBytes = null;
                     fotoLabel.setIcon(null);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente: " + ex.getMessage());
@@ -97,7 +121,37 @@ public class PacienteView {
         removerPacienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = pacienteTable.getSelectedRows();
 
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione ao menos um paciente!");
+                    return;
+                }
+
+                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) paciente(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    for (int i : selectedRows) {
+                        Paciente paciente = new Paciente();
+                        paciente.setId((Integer) pacienteTable.getValueAt(i, 0));
+
+                        try {
+                            PacienteController.getInstance().removerPaciente(paciente);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao remover paciente: " + ex.getMessage());
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "Paciente(s) removidos(s) com sucesso!");
+                }
+
+                List<Paciente> pacientes;
+                try {
+                    pacientes = pacienteController.listarPacientes();
+                } catch (Exception ex) {
+                    pacientes = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null, "Erro ao listar pacientes: " + ex.getMessage());
+                }
+
+                pacienteTable.setModel(new PacienteTableModel(pacientes));
             }
         });
         adicionarFotoButton.addActionListener(new ActionListener() {
@@ -115,6 +169,7 @@ public class PacienteView {
                     Image image = imageIcon.getImage();
                     Image resizedImage = image.getScaledInstance(imagemLabel.getWidth(), imagemLabel.getHeight(), Image.SCALE_SMOOTH);
                     imagemLabel.setIcon(new ImageIcon(resizedImage));
+                    uploadedImageBytes = imageToByteArray(resizedImage);
                 }
             }
         });
@@ -127,7 +182,7 @@ public class PacienteView {
             JOptionPane.showMessageDialog(null, "Erro ao listar pacientes: " + e.getMessage());
         }
 
-        pacienteTable.setModel(new ProprietarioTableModel(pacientes));
+        pacienteTable.setModel(new PacienteTableModel(pacientes));
     }
 
     public JPanel getMainPanel() {

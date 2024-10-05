@@ -38,7 +38,7 @@ public class PacienteTableModel extends GenericTableModel {
             case 4 -> paciente.getRaca();
             case 5 -> paciente.getColoracao();
             case 6 -> paciente.getEspecie();
-            case 7 -> new ImageIcon(paciente.getFoto());
+            case 7 -> paciente.getFoto() != null ? new ImageIcon(paciente.getFoto()) : null;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
