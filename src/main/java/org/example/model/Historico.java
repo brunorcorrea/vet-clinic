@@ -13,12 +13,6 @@ public class Historico {
     private List<String> observacoes;
     private LocalDateTime dataHora;
 
-    public void registrar() {
-    }
-
-    public void visualizar() {
-    }
-
     public int getId() {
         return id;
     }

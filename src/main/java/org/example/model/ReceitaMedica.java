@@ -11,18 +11,6 @@ public class ReceitaMedica {
     private LocalDateTime dataEmissao;
     private List<String> observacoes;
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void visualizar() {
-    }
-
-    public void imprimir() {
-    }
-
     public int getId() {
         return id;
     }

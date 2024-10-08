@@ -7,9 +7,6 @@ import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @author Prof. Dr. Plinio Vilela - prvilela@unicamp.br
- */
 public class VeterinarioTableModel extends GenericTableModel {
 
     VeterinarioController veterinarioController = VeterinarioController.getInstance();

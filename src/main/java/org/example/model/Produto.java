@@ -7,18 +7,6 @@ public class Produto {
     private String tipo;
     private double preco;
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void editar() {
-    }
-
-    public void listar() {
-    }
-
     public int getId() {
         return id;
     }

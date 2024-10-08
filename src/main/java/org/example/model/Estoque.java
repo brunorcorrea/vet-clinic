@@ -8,12 +8,6 @@ public class Estoque {
     private int quantidadeMinima;
     private boolean necessitaReposicao;
 
-    public void atualizar() {
-    }
-
-    public void verificar() {
-    }
-
     public int getId() {
         return id;
     }

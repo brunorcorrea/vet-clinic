@@ -11,18 +11,6 @@ public class Agendamento {
     private String servico;
     private StatusAgendamento status;
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void editar() {
-    }
-
-    public void listar() {
-    }
-
     public int getId() {
         return id;
     }

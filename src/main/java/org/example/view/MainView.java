@@ -12,8 +12,9 @@ public class MainView {
     private JButton estoqueButton;
     private JButton receitasMedicasButton;
     private JButton proprietariosButton;
-    private JButton faturamentosButton;
+    private JButton faturasButton;
     private JButton sairButton;
+    private JButton historicoButton;
 
     public MainView() {
         veterinariosButton.addActionListener(new ActionListener() {
@@ -46,6 +47,72 @@ public class MainView {
                 proprietarioFrame.pack();
                 proprietarioFrame.setLocationRelativeTo(null);
                 proprietarioFrame.setVisible(true);
+            }
+        });
+        faturasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame faturaFrame = new JFrame("Vet Clinic - Faturas");
+                faturaFrame.setContentPane(new FaturaView().getMainPanel());
+                faturaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                faturaFrame.pack();
+                faturaFrame.setLocationRelativeTo(null);
+                faturaFrame.setVisible(true);
+            }
+        });
+        pacientesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame pacienteFrame = new JFrame("Vet Clinic - Pacientes");
+                pacienteFrame.setContentPane(new PacienteView().getMainPanel());
+                pacienteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                pacienteFrame.pack();
+                pacienteFrame.setLocationRelativeTo(null);
+                pacienteFrame.setVisible(true);
+            }
+        });
+        agendamentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame agendamentoFrame = new JFrame("Vet Clinic - Agendamentos");
+                agendamentoFrame.setContentPane(new AgendamentoView().getMainPanel());
+                agendamentoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                agendamentoFrame.pack();
+                agendamentoFrame.setLocationRelativeTo(null);
+                agendamentoFrame.setVisible(true);
+            }
+        });
+        receitasMedicasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame receitaMedicaFrame = new JFrame("Vet Clinic - Receitas Médicas");
+                receitaMedicaFrame.setContentPane(new ReceitaMedicaView().getMainPanel());
+                receitaMedicaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                receitaMedicaFrame.pack();
+                receitaMedicaFrame.setLocationRelativeTo(null);
+                receitaMedicaFrame.setVisible(true);
+            }
+        });
+        estoqueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame estoqueFrame = new JFrame("Vet Clinic - Estoque");
+                estoqueFrame.setContentPane(new EstoqueView().getMainPanel());
+                estoqueFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                estoqueFrame.pack();
+                estoqueFrame.setLocationRelativeTo(null);
+                estoqueFrame.setVisible(true);
+            }
+        });
+        historicoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame historicoFrame = new JFrame("Vet Clinic - Histórico");
+                historicoFrame.setContentPane(new HistoricoView().getMainPanel());
+                historicoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                historicoFrame.pack();
+                historicoFrame.setLocationRelativeTo(null);
+                historicoFrame.setVisible(true);
             }
         });
     }

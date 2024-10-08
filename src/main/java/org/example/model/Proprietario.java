@@ -8,18 +8,6 @@ public class Proprietario {
     private String telefone;
     private String endereco;
 
-    public void cadastrar() {
-    }
-
-    public void excluir() {
-    }
-
-    public void editar() {
-    }
-
-    public void listar() {
-    }
-
     public int getId() {
         return id;
     }
