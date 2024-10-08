@@ -30,16 +30,97 @@ public class EstoqueView {
         adicionarProdutoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String nome = nomeTextField.getText().trim();
+                String tipo = tipoTextField.getText().trim();
+                double preco = Double.parseDouble(precoTextField.getText().trim());
+                int quantidade = Integer.parseInt(quantidadeTextField.getText().trim());
+                int quantidadeMinima = Integer.parseInt(quantidadeMinimaTextField.getText().trim());
 
+                if (nome.isEmpty() || tipo.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Nome e tipo são obrigatórios");
+                    return;
+                }
+
+                if (preco <= 0) {
+                    JOptionPane.showMessageDialog(null, "Preço deve ser maior que zero");
+                    return;
+                }
+
+                if (quantidade < 0) {
+                    JOptionPane.showMessageDialog(null, "Quantidade deve ser maior ou igual zero");
+                    return;
+                }
+
+                if (quantidadeMinima < 0) {
+                    JOptionPane.showMessageDialog(null, "Quantidade mínima deve ser maior ou igual zero");
+                    return;
+                }
+
+                Produto produto = new Produto();
+                produto.setNome(nome);
+                produto.setTipo(tipo);
+                produto.setPreco(preco);
+
+                Estoque estoque = new Estoque();
+                estoque.setQuantidade(quantidade);
+                estoque.setQuantidadeMinima(quantidadeMinima);
+                estoque.setNecessitaReposicao(quantidade < quantidadeMinima);
+                estoque.setProduto(produto);
+
+                try {
+                    produtoController.adicionarProduto(produto);
+                    estoqueController.adicionarEstoque(estoque);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar produto: " + exception.getMessage());
+                }
+
+                buscarEstoqueEProduto();
             }
         });
         removerProdutoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = estoqueTable.getSelectedRows();
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione pelo menos um produto para remover");
+                    return;
+                }
+                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) produto(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    for (int i : selectedRows) {
+                        EstoqueProduto estoqueProduto = new EstoqueProduto();
+                        estoqueProduto.setIdEstoque((Integer) estoqueTable.getValueAt(i, 0));
 
+                        try {
+                            estoqueController.listarEstoque().forEach(estoque -> {
+                                if (estoque.getId() == estoqueProduto.getIdEstoque()) {
+                                    try {
+                                        produtoController.removerProduto(estoque.getProduto());
+                                    } catch (Exception exception) {
+                                        JOptionPane.showMessageDialog(null, "Erro ao remover produto: " + exception.getMessage());
+                                    }
+
+                                    try {
+                                        estoqueController.removerEstoque(estoque);
+                                    } catch (Exception exception) {
+                                        JOptionPane.showMessageDialog(null, "Erro ao remover estoque: " + exception.getMessage());
+                                    }
+                                }
+                            });
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao remover veterinário: " + ex.getMessage());
+                        }
+                    }
+
+                    buscarEstoqueEProduto();
+                }
             }
         });
 
+        buscarEstoqueEProduto();
+    }
+
+    private void buscarEstoqueEProduto() {
         List<Estoque> estoque;
         try {
             estoque = estoqueController.listarEstoque();

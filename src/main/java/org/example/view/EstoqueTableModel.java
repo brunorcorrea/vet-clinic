@@ -53,6 +53,7 @@ public class EstoqueTableModel extends GenericTableModel {
 
         Estoque estoque = new Estoque();
         estoque.setId(estoqueProduto.getIdEstoque());
+        estoque.setProduto(produto);
 
         switch (columnIndex) {
             case 1 -> produto.setNome((String) aValue);
@@ -75,6 +76,8 @@ public class EstoqueTableModel extends GenericTableModel {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao editar estoque: " + e.getMessage());
         }
+
+        fireTableCellUpdated(rowIndex, columnIndex);
     }
 
     @Override
