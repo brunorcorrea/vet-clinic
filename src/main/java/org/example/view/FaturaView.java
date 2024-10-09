@@ -48,7 +48,27 @@ public class FaturaView {
         adicionarFaturaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Proprietario proprietario = proprietarios.get(proprietarioComboBox.getSelectedIndex());
+                double valorTotal = Double.parseDouble(valorTotalTextField.getText());
+                StatusPagamento status = StatusPagamento.fromDescricao((String) statusComboBox.getSelectedItem());
+                LocalDateTime dataVencimento = dataVencimentoDateTimePicker.getDateTimePermissive();
 
+                Faturamento faturamento = new Faturamento();
+                faturamento.setProprietario(proprietario);
+                faturamento.setValorTotal(valorTotal);
+                faturamento.setStatus(status);
+                faturamento.setDataVencimento(dataVencimento);
+
+                try {
+                    faturamentoController.adicionarFaturamento(faturamento);
+                    valorTotalTextField.setText("");
+                    statusComboBox.setSelectedIndex(0);
+                    dataVencimentoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar faturamento: " + ex.getMessage());
+                }
+
+                buscarFaturamentos();
             }
         });
         removerFaturaButton.addActionListener(new ActionListener() {
@@ -58,6 +78,10 @@ public class FaturaView {
             }
         });
 
+        buscarFaturamentos();
+    }
+
+    private void buscarFaturamentos() {
         List<Faturamento> faturamentos;
         try {
             faturamentos = faturamentoController.listarFaturamentos();
