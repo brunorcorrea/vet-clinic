@@ -50,20 +50,44 @@ public class EstoqueTableModel extends GenericTableModel {
         EstoqueProduto estoqueProduto = (EstoqueProduto) vDados.get(rowIndex);
         Produto produto = new Produto();
         produto.setId(estoqueProduto.getIdProduto());
+        produto.setNome(estoqueProduto.getNomeProduto());
+        produto.setTipo(estoqueProduto.getTipoProduto());
+        produto.setPreco(estoqueProduto.getPrecoProduto());
 
         Estoque estoque = new Estoque();
         estoque.setId(estoqueProduto.getIdEstoque());
         estoque.setProduto(produto);
+        estoque.setQuantidade(estoqueProduto.getQuantidade());
+        estoque.setQuantidadeMinima(estoqueProduto.getQuantidadeMinima());
 
         switch (columnIndex) {
-            case 1 -> produto.setNome((String) aValue);
-            case 2 -> produto.setTipo((String) aValue);
-            case 3 -> produto.setPreco((Double) aValue);
-            case 4 -> estoque.setQuantidade((Integer) aValue);
-            case 5 -> estoque.setQuantidadeMinima((Integer) aValue);
-            case 6 -> estoque.setNecessitaReposicao(estoque.getQuantidade() < estoque.getQuantidadeMinima());
+            case 1 -> {
+                produto.setNome((String) aValue);
+                estoqueProduto.setNomeProduto((String) aValue);
+            }
+            case 2 -> {
+                produto.setTipo((String) aValue);
+                estoqueProduto.setTipoProduto((String) aValue);
+            }
+            case 3 -> {
+                produto.setPreco((Double) aValue);
+                estoqueProduto.setPrecoProduto((Double) aValue);
+            }
+            case 4 -> {
+                estoque.setQuantidade((Integer) aValue);
+                estoqueProduto.setQuantidade((Integer) aValue);
+            }
+            case 5 -> {
+                estoque.setQuantidadeMinima((Integer) aValue);
+                estoqueProduto.setQuantidadeMinima((Integer) aValue);
+            }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
+
+        boolean necessitaReposicao = estoque.getQuantidade() < estoque.getQuantidadeMinima();
+        estoque.setNecessitaReposicao(necessitaReposicao);
+        estoqueProduto.setNecessitaReposicao(necessitaReposicao ? "Sim" : "Não");
+        fireTableCellUpdated(rowIndex, 6);
 
         try {
             produtoController.editarProduto(produto);
@@ -76,8 +100,6 @@ public class EstoqueTableModel extends GenericTableModel {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao editar estoque: " + e.getMessage());
         }
-
-        fireTableCellUpdated(rowIndex, columnIndex);
     }
 
     @Override
