@@ -19,7 +19,7 @@ public class AgendamentoDAO extends DAO {
     }
 
     public void cadastrar(Agendamento agendamento) throws SQLException {
-        String sql = "INSERT INTO agendamento (idPaciente, dataHora, servico, status, idVeterinario) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO agendamento (idPaciente, dataHora, servico, status, idVeterinario) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, agendamento.getPaciente().getId());
             stmt.setTimestamp(2, Timestamp.valueOf(agendamento.getDataHora()));

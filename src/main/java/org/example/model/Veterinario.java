@@ -1,5 +1,6 @@
 package org.example.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Veterinario {
@@ -26,7 +27,7 @@ public class Veterinario {
     }
 
     public List<Agendamento> getAgendamentos() {
-        return agendamentos != null ? agendamentos : (agendamentos = List.of());
+        return agendamentos != null ? agendamentos : (agendamentos = new ArrayList<>());
     }
 
     public void setAgendamentos(List<Agendamento> agendamentos) {

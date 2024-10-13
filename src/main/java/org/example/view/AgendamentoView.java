@@ -4,10 +4,7 @@ import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.AgendamentoController;
 import org.example.controller.PacienteController;
 import org.example.controller.VeterinarioController;
-import org.example.model.Agendamento;
-import org.example.model.Paciente;
-import org.example.model.StatusAgendamento;
-import org.example.model.Veterinario;
+import org.example.model.*;
 import org.example.view.tablemodels.AgendamentoTableModel;
 
 import javax.swing.*;
@@ -62,16 +59,95 @@ public class AgendamentoView {
         adicionarAgendamentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
+                Veterinario veterinario = veterinarios.get(veterinarioComboBox.getSelectedIndex());
+                String servico = servicoTextField.getText() != null ? servicoTextField.getText().trim() : "";
+                StatusAgendamento status = StatusAgendamento.fromDescricao((String) statusComboBox.getSelectedItem());
+                LocalDateTime dataHora = dataHoraDateTimePicker.getDateTimePermissive();
 
+                if (paciente == null) {
+                    JOptionPane.showMessageDialog(null, "Paciente inválido!");
+                    return;
+                }
+
+                if (veterinario == null) {
+                    JOptionPane.showMessageDialog(null, "Veterinário inválido!");
+                    return;
+                }
+
+                if (servico.isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Serviço inválido!");
+                    return;
+                }
+
+                if (status == null) {
+                    JOptionPane.showMessageDialog(null, "Status inválido!");
+                    return;
+                }
+
+                if (dataHora == null) {
+                    JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
+                    return;
+                }
+
+                if (dataHora.isBefore(LocalDateTime.now())) {
+                    int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                    if (response == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+                }
+
+                Agendamento agendamento = new Agendamento();
+                agendamento.setPaciente(paciente);
+                agendamento.setVeterinario(veterinario);
+                agendamento.setServico(servico);
+                agendamento.setStatus(status);
+                agendamento.setDataHora(dataHora);
+
+                try {
+                    agendamentoController.adicionarAgendamento(agendamento);
+                    JOptionPane.showMessageDialog(null, "Agendamento adicionado com sucesso!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar agendamento: " + ex.getMessage());
+                }
+
+                buscarAgendamentos();
             }
         });
         removerAgendamentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = agendamentoTable.getSelectedRows();
 
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione ao menos um agendamento!");
+                    return;
+                }
+
+                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) agendamento(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    for (int i : selectedRows) {
+                        Agendamento agendamento = new Agendamento();
+                        agendamento.setId((Integer) agendamentoTable.getValueAt(i, 0));
+
+                        try {
+                            agendamentoController.removerAgendamento(agendamento);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao remover agendamento: " + ex.getMessage());
+                        }
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Agendamento(s) removidos(s) com sucesso!");
+                }
+
+                buscarAgendamentos();
             }
         });
 
+        buscarAgendamentos();
+    }
+
+    private void buscarAgendamentos() {
         List<Agendamento> agendamentos;
         try {
             agendamentos = agendamentoController.listarAgendamentos();
