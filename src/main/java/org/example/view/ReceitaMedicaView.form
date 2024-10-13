@@ -64,14 +64,6 @@
                   <text value="Remover Receita Médica"/>
                 </properties>
               </component>
-              <component id="308b5" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
-                <constraints>
-                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="7c6ed" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -94,7 +86,7 @@
                   <text value="Observações:"/>
                 </properties>
               </component>
-              <component id="2a3a5" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+              <component id="2a3a5" class="javax.swing.JTextArea" binding="medicamentosTextArea">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -108,6 +100,16 @@
                 </constraints>
                 <properties>
                   <text value="Medicamentos:"/>
+                </properties>
+              </component>
+              <component id="308b5" class="javax.swing.JTextArea" binding="observacoesTextArea">
+                <constraints>
+                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value=""/>
                 </properties>
               </component>
             </children>

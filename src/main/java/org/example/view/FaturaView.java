@@ -113,7 +113,7 @@ public class FaturaView {
                         }
                     }
 
-                    JOptionPane.showMessageDialog(null, "Fatura(s) removidos(s) com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Fatura(s) removidas(s) com sucesso!");
                 }
 
                 buscarFaturamentos();

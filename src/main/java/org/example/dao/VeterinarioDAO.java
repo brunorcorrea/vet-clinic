@@ -69,6 +69,7 @@ public class VeterinarioDAO extends DAO {
                 Veterinario veterinario = new Veterinario();
                 veterinario.setId(rs.getInt("id"));
                 veterinario.setNome(rs.getString("nome"));
+                veterinario.setAgendamentos(buscarAgendamentosPorVeterinarioId(veterinario.getId()));
                 veterinarios.add(veterinario);
             }
         }

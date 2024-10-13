@@ -3,9 +3,8 @@ package org.example.view;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.PacienteController;
 import org.example.controller.ReceitaMedicaController;
-import org.example.model.Paciente;
-import org.example.model.ReceitaMedica;
-import org.example.view.tablemodels.AgendamentoTableModel;
+import org.example.model.*;
+import org.example.view.tablemodels.ReceitaMedicaTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,8 +22,8 @@ public class ReceitaMedicaView {
     private JComboBox pacienteComboBox;
     private JButton adicionarReceitaMedicaButton;
     private JButton removerReceitaMedicaButton;
-    private JTextArea textArea1;
-    private JTextArea textArea2;
+    private JTextArea medicamentosTextArea;
+    private JTextArea observacoesTextArea;
     private DateTimePicker dataEmissaoDateTimePicker;
 
     private List<Paciente> pacientes = new ArrayList<>();
@@ -44,25 +43,100 @@ public class ReceitaMedicaView {
         adicionarReceitaMedicaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
+                List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
+                List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
+                LocalDateTime dataEmissao = dataEmissaoDateTimePicker.getDateTimePermissive();
 
+                if (paciente == null) {
+                    JOptionPane.showMessageDialog(null, "Paciente inválido!");
+                    return;
+                }
+
+                if (medicamentos.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Medicamentos inválidos!");
+                    return;
+                }
+
+                if (observacoes.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Observações inválidas!");
+                    return;
+                }
+
+                if (dataEmissao == null) {
+                    JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
+                    return;
+                }
+
+                if (dataEmissao.isBefore(LocalDateTime.now())) {
+                    int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                    if (response == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+                }
+
+                ReceitaMedica receitaMedica = new ReceitaMedica();
+                receitaMedica.setPaciente(paciente);
+                receitaMedica.setMedicamentos(medicamentos);
+                receitaMedica.setObservacoes(observacoes);
+                receitaMedica.setDataEmissao(dataEmissao);
+
+                try {
+                    receitaMedicaController.adicionarReceitaMedica(receitaMedica);
+                    medicamentosTextArea.setText("");
+                    observacoesTextArea.setText("");
+                    dataEmissaoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+                    JOptionPane.showMessageDialog(null, "Receita médica adicionado com sucesso!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar receita médica: " + ex.getMessage());
+                }
+
+                buscarReceitasMedicas();
             }
         });
         removerReceitaMedicaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = receitaMedicaTable.getSelectedRows();
 
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione ao menos um agendamento!");
+                    return;
+                }
+
+                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a(s) receita(s) médica(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    for (int i : selectedRows) {
+                        ReceitaMedica receitaMedica = new ReceitaMedica();
+                        receitaMedica.setId((Integer) receitaMedicaTable.getValueAt(i, 0));
+
+                        try {
+                            receitaMedicaController.removerReceitaMedica(receitaMedica);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao remover receita médica: " + ex.getMessage());
+                        }
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Receita(s) médica(s) removidas(s) com sucesso!");
+                }
+
+                buscarReceitasMedicas();
             }
         });
 
-        List<ReceitaMedica> receitaMedicas;
+        buscarReceitasMedicas();
+    }
+
+    private void buscarReceitasMedicas() {
+        List<ReceitaMedica> receitasMedicas;
         try {
-            receitaMedicas = receitaMedicaController.listarReceitasMedica();
+            receitasMedicas = receitaMedicaController.listarReceitasMedica();
         } catch (Exception e) {
-            receitaMedicas = new ArrayList<>();
+            receitasMedicas = new ArrayList<>();
             JOptionPane.showMessageDialog(null, "Erro ao listar receitas médicas: " + e.getMessage());
         }
 
-        receitaMedicaTable.setModel(new AgendamentoTableModel(receitaMedicas));
+        receitaMedicaTable.setModel(new ReceitaMedicaTableModel(receitasMedicas));
     }
 
     public JPanel getMainPanel() {

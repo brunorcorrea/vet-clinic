@@ -106,6 +106,8 @@ public class AgendamentoView {
 
                 try {
                     agendamentoController.adicionarAgendamento(agendamento);
+                    servicoTextField.setText("");
+                    dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
                     JOptionPane.showMessageDialog(null, "Agendamento adicionado com sucesso!");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao adicionar agendamento: " + ex.getMessage());
