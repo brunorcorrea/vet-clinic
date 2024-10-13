@@ -48,16 +48,81 @@ public class FaturaView {
         adicionarFaturaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Proprietario proprietario = proprietarios.get(proprietarioComboBox.getSelectedIndex());
+                double valorTotal = Double.parseDouble(valorTotalTextField.getText());
+                StatusPagamento status = StatusPagamento.fromDescricao((String) statusComboBox.getSelectedItem());
+                LocalDateTime dataVencimento = dataVencimentoDateTimePicker.getDateTimePermissive();
 
+                if(proprietario == null) {
+                    JOptionPane.showMessageDialog(null, "Proprietário inválido!");
+                    return;
+                }
+
+                if(valorTotal <= 0) {
+                    JOptionPane.showMessageDialog(null, "Valor total inválido!");
+                    return;
+                }
+
+                if(status == null) {
+                    JOptionPane.showMessageDialog(null, "Status inválido!");
+                    return;
+                }
+
+                if(dataVencimento == null) {
+                    JOptionPane.showMessageDialog(null, "Data de vencimento inválida!");
+                    return;
+                }
+
+                Faturamento faturamento = new Faturamento();
+                faturamento.setProprietario(proprietario);
+                faturamento.setValorTotal(valorTotal);
+                faturamento.setStatus(status);
+                faturamento.setDataVencimento(dataVencimento);
+
+                try {
+                    faturamentoController.adicionarFaturamento(faturamento);
+                    JOptionPane.showMessageDialog(null, "Fatura adicionado com sucesso!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao adicionar fatura: " + ex.getMessage());
+                }
+
+                buscarFaturamentos();
             }
         });
         removerFaturaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = faturaTable.getSelectedRows();
 
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione ao menos uma fatura!");
+                    return;
+                }
+
+                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a(s) fatura(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    for (int i : selectedRows) {
+                        Faturamento faturamento = new Faturamento();
+                        faturamento.setId((Integer) faturaTable.getValueAt(i, 0));
+
+                        try {
+                            faturamentoController.removerFaturamento(faturamento);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao remover fatura: " + ex.getMessage());
+                        }
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Fatura(s) removidos(s) com sucesso!");
+                }
+
+                buscarFaturamentos();
             }
         });
 
+        buscarFaturamentos();
+    }
+
+    private void buscarFaturamentos() {
         List<Faturamento> faturamentos;
         try {
             faturamentos = faturamentoController.listarFaturamentos();
