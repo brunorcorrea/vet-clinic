@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.VeterinarioController;
 import org.example.model.Veterinario;
+import org.example.view.tablemodels.VeterinarioTableModel;
 
 import javax.swing.*;
 import java.util.ArrayList;

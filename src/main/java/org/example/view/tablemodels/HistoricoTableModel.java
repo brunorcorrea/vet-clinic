@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.tablemodels;
 
 import org.example.controller.HistoricoController;
 import org.example.model.Historico;

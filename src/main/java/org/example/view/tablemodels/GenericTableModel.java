@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.tablemodels;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;

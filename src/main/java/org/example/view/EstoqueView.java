@@ -5,6 +5,7 @@ import org.example.controller.ProdutoController;
 import org.example.model.Estoque;
 import org.example.model.EstoqueProduto;
 import org.example.model.Produto;
+import org.example.view.tablemodels.EstoqueTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

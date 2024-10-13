@@ -5,6 +5,7 @@ import org.example.controller.HistoricoController;
 import org.example.controller.PacienteController;
 import org.example.model.Historico;
 import org.example.model.Paciente;
+import org.example.view.tablemodels.HistoricoTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

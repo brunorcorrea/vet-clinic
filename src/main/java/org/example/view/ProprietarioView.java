@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.ProprietarioController;
 import org.example.model.Proprietario;
+import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

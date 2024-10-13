@@ -5,6 +5,7 @@ import org.example.controller.PacienteController;
 import org.example.controller.ReceitaMedicaController;
 import org.example.model.Paciente;
 import org.example.model.ReceitaMedica;
+import org.example.view.tablemodels.AgendamentoTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

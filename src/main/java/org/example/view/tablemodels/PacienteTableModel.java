@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.tablemodels;
 
 import org.example.controller.PacienteController;
 import org.example.model.EstadoCastracao;

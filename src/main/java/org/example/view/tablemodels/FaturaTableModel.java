@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.tablemodels;
 
 import org.example.controller.FaturamentoController;
 import org.example.model.Faturamento;

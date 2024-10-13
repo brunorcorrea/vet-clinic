@@ -6,6 +6,7 @@ import org.example.controller.ProprietarioController;
 import org.example.model.Faturamento;
 import org.example.model.Proprietario;
 import org.example.model.StatusPagamento;
+import org.example.view.tablemodels.FaturaTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

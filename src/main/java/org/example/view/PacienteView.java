@@ -5,6 +5,7 @@ import org.example.controller.ProprietarioController;
 import org.example.model.EstadoCastracao;
 import org.example.model.Paciente;
 import org.example.model.Proprietario;
+import org.example.view.tablemodels.PacienteTableModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
