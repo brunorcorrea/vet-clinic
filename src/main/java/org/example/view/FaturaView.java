@@ -50,9 +50,9 @@ public class FaturaView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Proprietario proprietario = proprietarios.get(proprietarioComboBox.getSelectedIndex());
-                double valorTotal = Double.parseDouble(valorTotalTextField.getText());
                 StatusPagamento status = StatusPagamento.fromDescricao((String) statusComboBox.getSelectedItem());
                 LocalDateTime dataVencimento = dataVencimentoDateTimePicker.getDateTimePermissive();
+                double valorTotal = valorTotalTextField.getText() != null ? Double.parseDouble(valorTotalTextField.getText()) : 0;
 
                 if(proprietario == null) {
                     JOptionPane.showMessageDialog(null, "Proprietário inválido!");
