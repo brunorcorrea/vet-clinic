@@ -6,8 +6,6 @@ import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProprietarioView {
@@ -20,98 +18,85 @@ public class ProprietarioView {
     private JTextField nomeCompletoTextField;
     private JTextField telefoneTextField;
     private JTextField enderecoTextField;
-    private JLabel cpfLabel;
-    private JLabel telefoneLabel;
-    private JLabel nomeCompletoLabel;
-    private JLabel enderecoLabel;
 
     public ProprietarioView() {
-        adicionarProprietarioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cpf = cpfTextField.getText().trim();
-                String nomeCompleto = nomeCompletoTextField.getText().trim();
-                String telefone = telefoneTextField.getText().trim();
-                String endereco = enderecoTextField.getText().trim();
+        configureListeners();
+        loadProprietarios();
+    }
 
-                if (cpf.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty() || endereco.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-                    return;
-                }
+    private void configureListeners() {
+        adicionarProprietarioButton.addActionListener(this::adicionarProprietario);
+        removerProprietarioButton.addActionListener(this::removerProprietario);
+    }
 
-                Proprietario proprietario = new Proprietario();
-                proprietario.setCpf(cpf);
-                proprietario.setNomeCompleto(nomeCompleto);
-                proprietario.setTelefone(telefone);
-                proprietario.setEndereco(endereco);
+    private void adicionarProprietario(ActionEvent e) {
+        String cpf = cpfTextField.getText().trim();
+        String nomeCompleto = nomeCompletoTextField.getText().trim();
+        String telefone = telefoneTextField.getText().trim();
+        String endereco = enderecoTextField.getText().trim();
 
-                try {
-                    ProprietarioController.getInstance().adicionarProprietario(proprietario);
-                    cpfTextField.setText("");
-                    nomeCompletoTextField.setText("");
-                    telefoneTextField.setText("");
-                    enderecoTextField.setText("");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar proprietário: " + ex.getMessage());
-                }
-
-                List<Proprietario> proprietarios;
-                try {
-                    proprietarios = proprietarioController.listarProprietarios();
-                } catch (Exception ex) {
-                    proprietarios = new ArrayList<>();
-                    JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + ex.getMessage());
-                }
-
-                proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
-            }
-        });
-        removerProprietarioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[] selectedRows = proprietarioTable.getSelectedRows();
-
-                if (selectedRows.length == 0) {
-                    JOptionPane.showMessageDialog(null, "Selecione ao menos um proprietário!");
-                    return;
-                }
-
-                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
-                if (response == JOptionPane.YES_OPTION) {
-                    for (int i : selectedRows) {
-                        Proprietario proprietario = new Proprietario();
-                        proprietario.setId((Integer) proprietarioTable.getValueAt(i, 0));
-
-                        try {
-                            ProprietarioController.getInstance().removerProprietario(proprietario);
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Erro ao remover proprietário: " + ex.getMessage());
-                        }
-                    }
-                    JOptionPane.showMessageDialog(null, "Proprietário(s) removidos(s) com sucesso!");
-                }
-
-                List<Proprietario> proprietarios;
-                try {
-                    proprietarios = proprietarioController.listarProprietarios();
-                } catch (Exception ex) {
-                    proprietarios = new ArrayList<>();
-                    JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + ex.getMessage());
-                }
-
-                proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
-            }
-        });
-
-        List<Proprietario> proprietarios;
-        try {
-            proprietarios = proprietarioController.listarProprietarios();
-        } catch (Exception e) {
-            proprietarios = new ArrayList<>();
-            JOptionPane.showMessageDialog(null, "Erro ao listar proprietários: " + e.getMessage());
+        if (cpf.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty() || endereco.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            return;
         }
 
-        proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
+        Proprietario proprietario = new Proprietario();
+        proprietario.setCpf(cpf);
+        proprietario.setNomeCompleto(nomeCompleto);
+        proprietario.setTelefone(telefone);
+        proprietario.setEndereco(endereco);
+
+        try {
+            proprietarioController.adicionarProprietario(proprietario);
+            clearInputs();
+            loadProprietarios();
+        } catch (Exception ex) {
+            handleException("Erro ao cadastrar proprietário", ex);
+        }
+    }
+
+    private void removerProprietario(ActionEvent e) {
+        int[] selectedRows = proprietarioTable.getSelectedRows();
+
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um proprietário!");
+            return;
+        }
+
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            for (int i : selectedRows) {
+                try {
+                    Proprietario proprietario = new Proprietario();
+                    proprietario.setId((Integer) proprietarioTable.getValueAt(i, 0));
+                    proprietarioController.removerProprietario(proprietario);
+                } catch (Exception ex) {
+                    handleException("Erro ao remover proprietário", ex);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Proprietário(s) removidos(s) com sucesso!");
+            loadProprietarios();
+        }
+    }
+
+    private void loadProprietarios() {
+        try {
+            List<Proprietario> proprietarios = proprietarioController.listarProprietarios();
+            proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
+        } catch (Exception e) {
+            handleException("Erro ao listar proprietários", e);
+        }
+    }
+
+    private void clearInputs() {
+        cpfTextField.setText("");
+        nomeCompletoTextField.setText("");
+        telefoneTextField.setText("");
+        enderecoTextField.setText("");
+    }
+
+    private void handleException(String message, Exception e) {
+        JOptionPane.showMessageDialog(null, message + ": " + e.getMessage());
     }
 
     public JPanel getMainPanel() {

@@ -3,12 +3,12 @@ package org.example.view;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.PacienteController;
 import org.example.controller.ReceitaMedicaController;
-import org.example.model.*;
+import org.example.model.Paciente;
+import org.example.model.ReceitaMedica;
 import org.example.view.tablemodels.ReceitaMedicaTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ReceitaMedicaView {
 
     private JPanel mainPanel;
     private JTable receitaMedicaTable;
-    private JComboBox pacienteComboBox;
+    private JComboBox<String> pacienteComboBox;
     private JButton adicionarReceitaMedicaButton;
     private JButton removerReceitaMedicaButton;
     private JTextArea medicamentosTextArea;
@@ -29,114 +29,126 @@ public class ReceitaMedicaView {
     private List<Paciente> pacientes = new ArrayList<>();
 
     public ReceitaMedicaView() {
-        dataEmissaoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+        initializeComponents();
+        configureListeners();
+        loadPacientes();
+        buscarReceitasMedicas();
+    }
 
+    private void initializeComponents() {
+        dataEmissaoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+    }
+
+    private void configureListeners() {
+        adicionarReceitaMedicaButton.addActionListener(this::adicionarReceitaMedica);
+        removerReceitaMedicaButton.addActionListener(this::removerReceitaMedica);
+    }
+
+    private void loadPacientes() {
         try {
             pacientes = pacienteController.listarPacientes();
+            pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
         } catch (Exception e) {
             pacientes = new ArrayList<>();
-            JOptionPane.showMessageDialog(null, "Erro ao listar pacientes: " + e.getMessage());
+            handleException("Erro ao listar pacientes", e);
         }
+    }
 
-        pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
+    private void adicionarReceitaMedica(ActionEvent e) {
+        Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
+        List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
+        List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
+        LocalDateTime dataEmissao = dataEmissaoDateTimePicker.getDateTimePermissive();
 
-        adicionarReceitaMedicaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
-                List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
-                List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
-                LocalDateTime dataEmissao = dataEmissaoDateTimePicker.getDateTimePermissive();
+        if (!validateInputs(paciente, medicamentos, observacoes, dataEmissao)) return;
 
-                if (paciente == null) {
-                    JOptionPane.showMessageDialog(null, "Paciente inválido!");
-                    return;
-                }
+        ReceitaMedica receitaMedica = new ReceitaMedica();
+        receitaMedica.setPaciente(paciente);
+        receitaMedica.setMedicamentos(medicamentos);
+        receitaMedica.setObservacoes(observacoes);
+        receitaMedica.setDataEmissao(dataEmissao);
 
-                if (medicamentos.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Medicamentos inválidos!");
-                    return;
-                }
-
-                if (observacoes.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Observações inválidas!");
-                    return;
-                }
-
-                if (dataEmissao == null) {
-                    JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
-                    return;
-                }
-
-                if (dataEmissao.isBefore(LocalDateTime.now())) {
-                    int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-                    if (response == JOptionPane.NO_OPTION) {
-                        return;
-                    }
-                }
-
-                ReceitaMedica receitaMedica = new ReceitaMedica();
-                receitaMedica.setPaciente(paciente);
-                receitaMedica.setMedicamentos(medicamentos);
-                receitaMedica.setObservacoes(observacoes);
-                receitaMedica.setDataEmissao(dataEmissao);
-
-                try {
-                    receitaMedicaController.adicionarReceitaMedica(receitaMedica);
-                    medicamentosTextArea.setText("");
-                    observacoesTextArea.setText("");
-                    dataEmissaoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
-                    JOptionPane.showMessageDialog(null, "Receita médica adicionado com sucesso!");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao adicionar receita médica: " + ex.getMessage());
-                }
-
-                buscarReceitasMedicas();
-            }
-        });
-        removerReceitaMedicaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[] selectedRows = receitaMedicaTable.getSelectedRows();
-
-                if (selectedRows.length == 0) {
-                    JOptionPane.showMessageDialog(null, "Selecione ao menos um agendamento!");
-                    return;
-                }
-
-                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a(s) receita(s) médica(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
-                if (response == JOptionPane.YES_OPTION) {
-                    for (int i : selectedRows) {
-                        ReceitaMedica receitaMedica = new ReceitaMedica();
-                        receitaMedica.setId((Integer) receitaMedicaTable.getValueAt(i, 0));
-
-                        try {
-                            receitaMedicaController.removerReceitaMedica(receitaMedica);
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Erro ao remover receita médica: " + ex.getMessage());
-                        }
-                    }
-
-                    JOptionPane.showMessageDialog(null, "Receita(s) médica(s) removidas(s) com sucesso!");
-                }
-
-                buscarReceitasMedicas();
-            }
-        });
+        try {
+            receitaMedicaController.adicionarReceitaMedica(receitaMedica);
+            clearInputs();
+            JOptionPane.showMessageDialog(null, "Receita médica adicionada com sucesso!");
+        } catch (Exception ex) {
+            handleException("Erro ao adicionar receita médica", ex);
+        }
 
         buscarReceitasMedicas();
     }
 
-    private void buscarReceitasMedicas() {
-        List<ReceitaMedica> receitasMedicas;
-        try {
-            receitasMedicas = receitaMedicaController.listarReceitasMedica();
-        } catch (Exception e) {
-            receitasMedicas = new ArrayList<>();
-            JOptionPane.showMessageDialog(null, "Erro ao listar receitas médicas: " + e.getMessage());
+    private void removerReceitaMedica(ActionEvent e) {
+        int[] selectedRows = receitaMedicaTable.getSelectedRows();
+
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione ao menos uma receita médica!");
+            return;
         }
 
-        receitaMedicaTable.setModel(new ReceitaMedicaTableModel(receitasMedicas));
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a(s) receita(s) médica(s) selecionada(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            for (int i : selectedRows) {
+                try {
+                    ReceitaMedica receitaMedica = new ReceitaMedica();
+                    receitaMedica.setId((Integer) receitaMedicaTable.getValueAt(i, 0));
+                    receitaMedicaController.removerReceitaMedica(receitaMedica);
+                } catch (Exception ex) {
+                    handleException("Erro ao remover receita médica", ex);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Receita(s) médica(s) removida(s) com sucesso!");
+            buscarReceitasMedicas();
+        }
+    }
+
+    private void buscarReceitasMedicas() {
+        try {
+            List<ReceitaMedica> receitasMedicas = receitaMedicaController.listarReceitasMedica();
+            receitaMedicaTable.setModel(new ReceitaMedicaTableModel(receitasMedicas));
+        } catch (Exception e) {
+            handleException("Erro ao listar receitas médicas", e);
+        }
+    }
+
+    private boolean validateInputs(Paciente paciente, List<String> medicamentos, List<String> observacoes, LocalDateTime dataEmissao) {
+        if (paciente == null) {
+            JOptionPane.showMessageDialog(null, "Paciente inválido!");
+            return false;
+        }
+
+        if (medicamentos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Medicamentos inválidos!");
+            return false;
+        }
+
+        if (observacoes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Observações inválidas!");
+            return false;
+        }
+
+        if (dataEmissao == null) {
+            JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
+            return false;
+        }
+
+        if (dataEmissao.isBefore(LocalDateTime.now())) {
+            int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            return response != JOptionPane.NO_OPTION;
+        }
+
+        return true;
+    }
+
+    private void clearInputs() {
+        medicamentosTextArea.setText("");
+        observacoesTextArea.setText("");
+        dataEmissaoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+    }
+
+    private void handleException(String message, Exception e) {
+        JOptionPane.showMessageDialog(null, message + ": " + e.getMessage());
     }
 
     public JPanel getMainPanel() {
