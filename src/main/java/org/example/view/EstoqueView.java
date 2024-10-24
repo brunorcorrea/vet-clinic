@@ -1,20 +1,14 @@
 package org.example.view;
 
-import org.example.controller.EstoqueController;
-import org.example.controller.ProdutoController;
-import org.example.model.Estoque;
+import org.example.controller.EstoqueViewController;
 import org.example.model.EstoqueProduto;
-import org.example.model.Produto;
 import org.example.view.tablemodels.EstoqueTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EstoqueView {
-    private final EstoqueController estoqueController = EstoqueController.getInstance();
-    private final ProdutoController produtoController = ProdutoController.getInstance();
+    private final EstoqueViewController viewController = new EstoqueViewController();
 
     private JPanel mainPanel;
     private JTable estoqueTable;
@@ -46,20 +40,7 @@ public class EstoqueView {
 
             validateInputs(nome, tipo, preco, quantidade, quantidadeMinima);
 
-            Produto produto = new Produto();
-            produto.setNome(nome);
-            produto.setTipo(tipo);
-            produto.setPreco(preco);
-
-            Estoque estoque = new Estoque();
-            estoque.setQuantidade(quantidade);
-            estoque.setQuantidadeMinima(quantidadeMinima);
-            estoque.setNecessitaReposicao(quantidade < quantidadeMinima);
-            estoque.setProduto(produto);
-
-            produtoController.adicionarProduto(produto);
-            estoqueController.adicionarEstoque(estoque);
-
+            viewController.adicionarProduto(nome, tipo, preco, quantidade, quantidadeMinima);
             buscarEstoqueEProduto();
         } catch (Exception ex) {
             handleException("Erro ao adicionar produto", ex);
@@ -76,19 +57,8 @@ public class EstoqueView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    EstoqueProduto estoqueProduto = new EstoqueProduto();
-                    estoqueProduto.setIdEstoque((Integer) estoqueTable.getValueAt(i, 0));
-
-                    estoqueController.listarEstoque().forEach(estoque -> {
-                        if (estoque.getId() == estoqueProduto.getIdEstoque()) {
-                            try {
-                                produtoController.removerProduto(estoque.getProduto());
-                                estoqueController.removerEstoque(estoque);
-                            } catch (Exception exception) {
-                                handleException("Erro ao remover produto ou estoque", exception);
-                            }
-                        }
-                    });
+                    int estoqueId = (Integer) estoqueTable.getValueAt(i, 0);
+                    viewController.removerProduto(estoqueId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover produto", ex);
                 }
@@ -99,18 +69,8 @@ public class EstoqueView {
 
     private void buscarEstoqueEProduto() {
         try {
-            List<Estoque> estoque = estoqueController.listarEstoque();
-            List<Produto> produtos = produtoController.listarProdutos();
-
-            List<EstoqueProduto> estoqueProdutos = new ArrayList<>();
-            for (int indice = 0; indice < estoque.size(); indice++) {
-                Estoque estoqueAtual = estoque.get(indice);
-                Produto produto = produtos.get(indice);
-                String necessitaReposicao = estoqueAtual.isNecessitaReposicao() ? "Sim" : "Não";
-                estoqueProdutos.add(new EstoqueProduto(estoqueAtual.getId(), produto.getId(), produto.getNome(), produto.getTipo(), produto.getPreco(), estoqueAtual.getQuantidade(), estoqueAtual.getQuantidadeMinima(), necessitaReposicao));
-            }
-
-            estoqueTable.setModel(new EstoqueTableModel(estoqueProdutos));
+            EstoqueTableModel model = viewController.criarEstoqueTableModel();
+            estoqueTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar estoque ou produtos", e);
         }

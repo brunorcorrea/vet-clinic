@@ -1,9 +1,7 @@
 package org.example.view;
 
-import org.example.controller.PacienteController;
-import org.example.controller.ProprietarioController;
+import org.example.controller.PacienteViewController;
 import org.example.model.EstadoCastracao;
-import org.example.model.Paciente;
 import org.example.model.Proprietario;
 import org.example.view.tablemodels.PacienteTableModel;
 
@@ -20,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteView {
-    private final PacienteController pacienteController = PacienteController.getInstance();
-    private final ProprietarioController proprietarioController = ProprietarioController.getInstance();
+    private final PacienteViewController viewController = new PacienteViewController();
     private JPanel mainPanel;
     private JTable pacienteTable;
     private JTextField nomeTextField;
@@ -52,7 +49,7 @@ public class PacienteView {
         estadoCastracaoComboBox.addItem(EstadoCastracao.CASTRADO.getDescricao());
 
         try {
-            proprietarios = proprietarioController.listarProprietarios();
+            proprietarios = viewController.listarProprietarios();
             proprietarios.forEach(proprietario -> proprietarioComboBox.addItem(proprietario.getNomeCompleto()));
         } catch (Exception e) {
             handleException("Erro ao listar proprietários", e);
@@ -79,17 +76,7 @@ public class PacienteView {
 
             validateInputs(nome, estadoCastracao, raca, idade, coloracao, especie, proprietario);
 
-            Paciente paciente = new Paciente();
-            paciente.setNome(nome);
-            paciente.setEstadoCastracao(EstadoCastracao.fromDescricao(estadoCastracao));
-            paciente.setIdade(idade);
-            paciente.setRaca(raca);
-            paciente.setColoracao(coloracao);
-            paciente.setEspecie(especie);
-            paciente.setFoto(foto);
-            paciente.setProprietario(proprietario);
-
-            pacienteController.adicionarPaciente(paciente);
+            viewController.adicionarPaciente(nome, estadoCastracao, raca, idade, coloracao, especie, foto, proprietario);
             clearInputs();
             loadPacientes();
         } catch (Exception ex) {
@@ -108,9 +95,8 @@ public class PacienteView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Paciente paciente = new Paciente();
-                    paciente.setId((Integer) pacienteTable.getValueAt(i, 0));
-                    pacienteController.removerPaciente(paciente);
+                    int pacienteId = (Integer) pacienteTable.getValueAt(i, 0);
+                    viewController.removerPaciente(pacienteId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover paciente", ex);
                 }
@@ -138,8 +124,8 @@ public class PacienteView {
 
     private void loadPacientes() {
         try {
-            List<Paciente> pacientes = pacienteController.listarPacientes();
-            pacienteTable.setModel(new PacienteTableModel(pacientes));
+            PacienteTableModel model = viewController.criarPacienteTableModel();
+            pacienteTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar pacientes", e);
         }

@@ -1,10 +1,8 @@
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
-import org.example.controller.PacienteController;
-import org.example.controller.ReceitaMedicaController;
+import org.example.controller.ReceitaMedicaViewController;
 import org.example.model.Paciente;
-import org.example.model.ReceitaMedica;
 import org.example.view.tablemodels.ReceitaMedicaTableModel;
 
 import javax.swing.*;
@@ -14,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReceitaMedicaView {
-    private final ReceitaMedicaController receitaMedicaController = ReceitaMedicaController.getInstance();
-    private final PacienteController pacienteController = PacienteController.getInstance();
+    private final ReceitaMedicaViewController viewController = new ReceitaMedicaViewController();
 
     private JPanel mainPanel;
     private JTable receitaMedicaTable;
@@ -46,7 +43,7 @@ public class ReceitaMedicaView {
 
     private void loadPacientes() {
         try {
-            pacientes = pacienteController.listarPacientes();
+            pacientes = viewController.listarPacientes();
             pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
         } catch (Exception e) {
             pacientes = new ArrayList<>();
@@ -62,14 +59,8 @@ public class ReceitaMedicaView {
 
         if (!validateInputs(paciente, medicamentos, observacoes, dataEmissao)) return;
 
-        ReceitaMedica receitaMedica = new ReceitaMedica();
-        receitaMedica.setPaciente(paciente);
-        receitaMedica.setMedicamentos(medicamentos);
-        receitaMedica.setObservacoes(observacoes);
-        receitaMedica.setDataEmissao(dataEmissao);
-
         try {
-            receitaMedicaController.adicionarReceitaMedica(receitaMedica);
+            viewController.adicionarReceitaMedica(paciente, medicamentos, observacoes, dataEmissao);
             clearInputs();
             JOptionPane.showMessageDialog(null, "Receita médica adicionada com sucesso!");
         } catch (Exception ex) {
@@ -91,9 +82,8 @@ public class ReceitaMedicaView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    ReceitaMedica receitaMedica = new ReceitaMedica();
-                    receitaMedica.setId((Integer) receitaMedicaTable.getValueAt(i, 0));
-                    receitaMedicaController.removerReceitaMedica(receitaMedica);
+                    int receitaMedicaId = (Integer) receitaMedicaTable.getValueAt(i, 0);
+                    viewController.removerReceitaMedica(receitaMedicaId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover receita médica", ex);
                 }
@@ -105,8 +95,8 @@ public class ReceitaMedicaView {
 
     private void buscarReceitasMedicas() {
         try {
-            List<ReceitaMedica> receitasMedicas = receitaMedicaController.listarReceitasMedica();
-            receitaMedicaTable.setModel(new ReceitaMedicaTableModel(receitasMedicas));
+            ReceitaMedicaTableModel model = viewController.criarReceitaMedicaTableModel();
+            receitaMedicaTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar receitas médicas", e);
         }

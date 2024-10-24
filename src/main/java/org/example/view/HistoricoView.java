@@ -1,10 +1,9 @@
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
-import org.example.controller.HistoricoController;
-import org.example.controller.PacienteController;
-import org.example.model.Historico;
+import org.example.controller.HistoricoViewController;
 import org.example.model.Paciente;
+import org.example.model.StatusPagamento;
 import org.example.view.tablemodels.HistoricoTableModel;
 
 import javax.swing.*;
@@ -14,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricoView {
-    private final HistoricoController historicoController = HistoricoController.getInstance();
-    private final PacienteController pacienteController = PacienteController.getInstance();
+    private final HistoricoViewController viewController = new HistoricoViewController();
 
     private JPanel mainPanel;
     private JTable historicoTable;
@@ -40,7 +38,7 @@ public class HistoricoView {
         dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
 
         try {
-            pacientes = pacienteController.listarPacientes();
+            pacientes = viewController.listarPacientes();
             pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
         } catch (Exception e) {
             handleException("Erro ao listar pacientes", e);
@@ -63,15 +61,7 @@ public class HistoricoView {
 
             validateInputs(paciente, vacinas, doencas, peso, observacoes, dataHora);
 
-            Historico historico = new Historico();
-            historico.setPaciente(paciente);
-            historico.setVacinas(vacinas);
-            historico.setDoencas(doencas);
-            historico.setPeso(peso);
-            historico.setDataHora(dataHora);
-            historico.setObservacoes(observacoes);
-
-            historicoController.adicionarHistorico(historico);
+            viewController.adicionarHistorico(paciente, vacinas, doencas, peso, observacoes, dataHora);
             clearInputs();
             JOptionPane.showMessageDialog(null, "Histórico adicionado com sucesso!");
             buscarHistoricos();
@@ -90,9 +80,8 @@ public class HistoricoView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Historico historico = new Historico();
-                    historico.setId((Integer) historicoTable.getValueAt(i, 0));
-                    historicoController.removerHistorico(historico);
+                    int historicoId = (Integer) historicoTable.getValueAt(i, 0);
+                    viewController.removerHistorico(historicoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover histórico", ex);
                 }
@@ -104,8 +93,8 @@ public class HistoricoView {
 
     private void buscarHistoricos() {
         try {
-            List<Historico> historicos = historicoController.listarHistoricos();
-            historicoTable.setModel(new HistoricoTableModel(historicos));
+            HistoricoTableModel model = viewController.criarHistoricoTableModel();
+            historicoTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar históricos", e);
         }

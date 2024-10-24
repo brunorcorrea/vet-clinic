@@ -1,9 +1,7 @@
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
-import org.example.controller.AgendamentoController;
-import org.example.controller.PacienteController;
-import org.example.controller.VeterinarioController;
+import org.example.controller.AgendamentoViewController;
 import org.example.model.Agendamento;
 import org.example.model.Paciente;
 import org.example.model.StatusAgendamento;
@@ -17,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgendamentoView {
-    private final AgendamentoController agendamentoController = AgendamentoController.getInstance();
-    private final PacienteController pacienteController = PacienteController.getInstance();
-    private final VeterinarioController veterinarioController = VeterinarioController.getInstance();
+    private final AgendamentoViewController viewController = new AgendamentoViewController();
     private JPanel mainPanel;
     private JTable agendamentoTable;
     private JComboBox<String> pacienteComboBox;
@@ -47,14 +43,14 @@ public class AgendamentoView {
         }
 
         try {
-            pacientes = pacienteController.listarPacientes();
+            pacientes = viewController.listarPacientes();
             pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
         } catch (Exception e) {
             handleException("Erro ao listar pacientes", e);
         }
 
         try {
-            veterinarios = veterinarioController.listarVeterinarios();
+            veterinarios = viewController.listarVeterinarios();
             veterinarios.forEach(veterinario -> veterinarioComboBox.addItem(veterinario.getNome()));
         } catch (Exception e) {
             handleException("Erro ao listar veterinários", e);
@@ -76,14 +72,7 @@ public class AgendamentoView {
 
             validateInputs(paciente, veterinario, servico, status, dataHora);
 
-            Agendamento agendamento = new Agendamento();
-            agendamento.setPaciente(paciente);
-            agendamento.setVeterinario(veterinario);
-            agendamento.setServico(servico);
-            agendamento.setStatus(status);
-            agendamento.setDataHora(dataHora);
-
-            agendamentoController.adicionarAgendamento(agendamento);
+            viewController.adicionarAgendamento(paciente, veterinario, servico, status, dataHora);
             servicoTextField.setText("");
             dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
             JOptionPane.showMessageDialog(null, "Agendamento adicionado com sucesso!");
@@ -105,9 +94,8 @@ public class AgendamentoView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Agendamento agendamento = new Agendamento();
-                    agendamento.setId((Integer) agendamentoTable.getValueAt(i, 0));
-                    agendamentoController.removerAgendamento(agendamento);
+                    int agendamentoId = (Integer) agendamentoTable.getValueAt(i, 0);
+                    viewController.removerAgendamento(agendamentoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover agendamento", ex);
                 }
@@ -119,7 +107,7 @@ public class AgendamentoView {
 
     private void buscarAgendamentos() {
         try {
-            List<Agendamento> agendamentos = agendamentoController.listarAgendamentos();
+            List<Agendamento> agendamentos = viewController.listarAgendamentos();
             agendamentoTable.setModel(new AgendamentoTableModel(agendamentos));
         } catch (Exception e) {
             handleException("Erro ao listar agendamentos", e);

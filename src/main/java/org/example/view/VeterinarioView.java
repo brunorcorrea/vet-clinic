@@ -1,7 +1,6 @@
 package org.example.view;
 
-import org.example.controller.VeterinarioController;
-import org.example.model.Veterinario;
+import org.example.controller.VeterinarioViewController;
 import org.example.view.tablemodels.VeterinarioTableModel;
 
 import javax.swing.*;
@@ -9,13 +8,12 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class VeterinarioView {
-    private final VeterinarioController veterinarioController = VeterinarioController.getInstance();
+    private final VeterinarioViewController viewController = new VeterinarioViewController();
     private JPanel mainPanel;
     private JTable veterinarioTable;
     private JButton adicionarVeterinarioButton;
     private JTextField nomeVeterinarioTextField;
     private JButton removerVeterinarioButton;
-    private JLabel nomeLabel;
 
     public VeterinarioView() {
         configureListeners();
@@ -34,11 +32,8 @@ public class VeterinarioView {
             return;
         }
 
-        Veterinario veterinario = new Veterinario();
-        veterinario.setNome(nomeVeterinario);
-
         try {
-            veterinarioController.adicionarVeterinario(veterinario);
+            viewController.adicionarVeterinario(nomeVeterinario);
             nomeVeterinarioTextField.setText("");
             JOptionPane.showMessageDialog(null, "Veterinário adicionado com sucesso!");
         } catch (Exception ex) {
@@ -59,9 +54,8 @@ public class VeterinarioView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Veterinario veterinario = new Veterinario();
-                    veterinario.setId((Integer) veterinarioTable.getValueAt(i, 0));
-                    veterinarioController.removerVeterinario(veterinario);
+                    int veterinarioId = (Integer) veterinarioTable.getValueAt(i, 0);
+                    viewController.removerVeterinario(veterinarioId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover veterinário", ex);
                 }
@@ -73,8 +67,8 @@ public class VeterinarioView {
 
     private void loadVeterinarios() {
         try {
-            List<Veterinario> veterinarios = veterinarioController.listarVeterinarios();
-            veterinarioTable.setModel(new VeterinarioTableModel(veterinarios));
+            VeterinarioTableModel model = viewController.criarVeterinarioTableModel();
+            veterinarioTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar veterinários", e);
         }

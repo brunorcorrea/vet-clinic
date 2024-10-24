@@ -1,8 +1,7 @@
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
-import org.example.controller.FaturamentoController;
-import org.example.controller.ProprietarioController;
+import org.example.controller.FaturaViewController;
 import org.example.model.Faturamento;
 import org.example.model.Proprietario;
 import org.example.model.StatusPagamento;
@@ -15,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FaturaView {
-    private final FaturamentoController faturamentoController = FaturamentoController.getInstance();
-    private final ProprietarioController proprietarioController = ProprietarioController.getInstance();
+    private final FaturaViewController viewController = new FaturaViewController();
 
     private JPanel mainPanel;
     private JTable faturaTable;
@@ -43,7 +41,7 @@ public class FaturaView {
         }
 
         try {
-            proprietarios = proprietarioController.listarProprietarios();
+            proprietarios = viewController.listarProprietarios();
             proprietarios.forEach(proprietario -> proprietarioComboBox.addItem(proprietario.getNomeCompleto()));
         } catch (Exception e) {
             handleException("Erro ao listar proprietários", e);
@@ -64,13 +62,7 @@ public class FaturaView {
 
             validateInputs(proprietario, valorTotal, status, dataVencimento);
 
-            Faturamento faturamento = new Faturamento();
-            faturamento.setProprietario(proprietario);
-            faturamento.setValorTotal(valorTotal);
-            faturamento.setStatus(status);
-            faturamento.setDataVencimento(dataVencimento);
-
-            faturamentoController.adicionarFaturamento(faturamento);
+            viewController.adicionarFatura(proprietario, valorTotal, status, dataVencimento);
             JOptionPane.showMessageDialog(null, "Fatura adicionada com sucesso!");
             buscarFaturamentos();
         } catch (Exception ex) {
@@ -88,9 +80,8 @@ public class FaturaView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Faturamento faturamento = new Faturamento();
-                    faturamento.setId((Integer) faturaTable.getValueAt(i, 0));
-                    faturamentoController.removerFaturamento(faturamento);
+                    int faturamentoId = (Integer) faturaTable.getValueAt(i, 0);
+                    viewController.removerFatura(faturamentoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover fatura", ex);
                 }
@@ -102,8 +93,8 @@ public class FaturaView {
 
     private void buscarFaturamentos() {
         try {
-            List<Faturamento> faturamentos = faturamentoController.listarFaturamentos();
-            faturaTable.setModel(new FaturaTableModel(faturamentos));
+            FaturaTableModel model = viewController.criarFaturaTableModel();
+            faturaTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar faturamentos", e);
         }

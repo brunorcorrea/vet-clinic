@@ -1,7 +1,6 @@
 package org.example.view;
 
-import org.example.controller.ProprietarioController;
-import org.example.model.Proprietario;
+import org.example.controller.ProprietarioViewController;
 import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
@@ -9,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class ProprietarioView {
-    private final ProprietarioController proprietarioController = ProprietarioController.getInstance();
+    private final ProprietarioViewController viewController = new ProprietarioViewController();
     private JPanel mainPanel;
     private JTable proprietarioTable;
     private JButton adicionarProprietarioButton;
@@ -40,14 +39,8 @@ public class ProprietarioView {
             return;
         }
 
-        Proprietario proprietario = new Proprietario();
-        proprietario.setCpf(cpf);
-        proprietario.setNomeCompleto(nomeCompleto);
-        proprietario.setTelefone(telefone);
-        proprietario.setEndereco(endereco);
-
         try {
-            proprietarioController.adicionarProprietario(proprietario);
+            viewController.adicionarProprietario(cpf, nomeCompleto, telefone, endereco);
             clearInputs();
             loadProprietarios();
         } catch (Exception ex) {
@@ -67,9 +60,8 @@ public class ProprietarioView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    Proprietario proprietario = new Proprietario();
-                    proprietario.setId((Integer) proprietarioTable.getValueAt(i, 0));
-                    proprietarioController.removerProprietario(proprietario);
+                    int proprietarioId = (Integer) proprietarioTable.getValueAt(i, 0);
+                    viewController.removerProprietario(proprietarioId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover proprietário", ex);
                 }
@@ -81,8 +73,8 @@ public class ProprietarioView {
 
     private void loadProprietarios() {
         try {
-            List<Proprietario> proprietarios = proprietarioController.listarProprietarios();
-            proprietarioTable.setModel(new ProprietarioTableModel(proprietarios));
+            ProprietarioTableModel model = viewController.criarProprietarioTableModel();
+            proprietarioTable.setModel(model);
         } catch (Exception e) {
             handleException("Erro ao listar proprietários", e);
         }
