@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class DAO {
-    public static final String DBURL = "jdbc:sqlite:./vet2024.db";
+    public static final String DBURL = "jdbc:sqlite:vet2024.db";
     private static Connection con;
 
     public static Connection getConnection() {

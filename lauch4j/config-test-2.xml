@@ -18,6 +18,7 @@
         <mainClass>org.example.Main</mainClass>
         <cp>./external-libs/LGoodDatePicker-11.2.1.jar</cp>
         <cp>./external-libs/sqlite-jdbc-3.46.1.0.jar</cp>
+        <cp>./external-libs/forms_rt-7.0.3.jar</cp>
     </classPath>
     <jre>
         <path>%JAVA_HOME%;%PATH%</path>
