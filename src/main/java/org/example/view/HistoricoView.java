@@ -1,26 +1,22 @@
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
-import org.example.controller.HistoricoController;
-import org.example.controller.PacienteController;
-import org.example.model.Historico;
+import org.example.controller.HistoricoViewController;
 import org.example.model.Paciente;
 import org.example.view.tablemodels.HistoricoTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricoView {
-    private final HistoricoController historicoController = HistoricoController.getInstance();
-    private final PacienteController pacienteController = PacienteController.getInstance();
+    private final HistoricoViewController viewController = new HistoricoViewController();
 
     private JPanel mainPanel;
     private JTable historicoTable;
-    private JComboBox pacienteComboBox;
+    private JComboBox<String> pacienteComboBox;
     private JTextArea vacinasTextArea;
     private JTextArea doencasTextArea;
     private JTextField pesoTextField;
@@ -32,123 +28,108 @@ public class HistoricoView {
     private List<Paciente> pacientes = new ArrayList<>();
 
     public HistoricoView() {
-        dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
-
-        try {
-            pacientes = pacienteController.listarPacientes();
-        } catch (Exception e) {
-            pacientes = new ArrayList<>();
-            JOptionPane.showMessageDialog(null, "Erro ao listar históricos: " + e.getMessage());
-        }
-
-        pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
-
-        adicionarAoHistoricoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
-                List<String> vacinas = List.of(vacinasTextArea.getText().split("\n"));
-                List<String> doencas = List.of(doencasTextArea.getText().split("\n"));
-                String peso = pesoTextField.getText() != null ? pesoTextField.getText().trim() : "";
-                List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
-                LocalDateTime dataHora = dataHoraDateTimePicker.getDateTimePermissive();
-
-                if (paciente == null) {
-                    JOptionPane.showMessageDialog(null, "Paciente inválido!");
-                    return;
-                }
-
-                if (vacinas.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vacinas inválidos!");
-                    return;
-                }
-
-                if (doencas.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Doenças inválidas!");
-                    return;
-                }
-
-                if (peso.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Peso inválido!");
-                    return;
-                }
-
-                if  (observacoes.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Observações inválidas!");
-                    return;
-                }
-
-                if (dataHora == null) {
-                    JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
-                    return;
-                }
-
-                Historico historico = new Historico();
-                historico.setPaciente(paciente);
-                historico.setVacinas(vacinas);
-                historico.setDoencas(doencas);
-                historico.setPeso(peso);
-                historico.setDataHora(dataHora);
-                historico.setObservacoes(observacoes);
-
-                try {
-                    historicoController.adicionarHistorico(historico);
-                    vacinasTextArea.setText("");
-                    doencasTextArea.setText("");
-                    pesoTextField.setText("");
-                    observacoesTextArea.setText("");
-                    dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
-                    JOptionPane.showMessageDialog(null, "Histórico adicionado com sucesso!");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao adicionar histórico: " + ex.getMessage());
-                }
-
-                buscarHistoricos();
-            }
-        });
-        removerDoHistoricoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[] selectedRows = historicoTable.getSelectedRows();
-
-                if (selectedRows.length == 0) {
-                    JOptionPane.showMessageDialog(null, "Selecione ao menos um histórico!");
-                    return;
-                }
-
-                int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) histórico(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
-                if (response == JOptionPane.YES_OPTION) {
-                    for (int i : selectedRows) {
-                        Historico historico = new Historico();
-                        historico.setId((Integer) historicoTable.getValueAt(i, 0));
-
-                        try {
-                            historicoController.removerHistorico(historico);
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Erro ao remover histórico: " + ex.getMessage());
-                        }
-                    }
-
-                    JOptionPane.showMessageDialog(null, "Histórico(s) removidos(s) com sucesso!");
-                }
-
-                buscarHistoricos();
-            }
-        });
-
+        initializeComponents();
+        configureListeners();
         buscarHistoricos();
     }
 
-    private void buscarHistoricos() {
-        List<Historico> historicos;
-        try {
-            historicos = historicoController.listarHistoricos();
-        } catch (Exception e) {
-            historicos = new ArrayList<>();
-            JOptionPane.showMessageDialog(null, "Erro ao listar históricos: " + e.getMessage());
-        }
+    private void initializeComponents() {
+        dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
 
-        historicoTable.setModel(new HistoricoTableModel(historicos));
+        try {
+            pacientes = viewController.listarPacientes();
+            pacientes.forEach(paciente -> pacienteComboBox.addItem(paciente.getNome()));
+        } catch (Exception e) {
+            handleException("Erro ao listar pacientes", e);
+        }
+    }
+
+    private void configureListeners() {
+        adicionarAoHistoricoButton.addActionListener(this::adicionarAoHistorico);
+        removerDoHistoricoButton.addActionListener(this::removerDoHistorico);
+    }
+
+    private void adicionarAoHistorico(ActionEvent e) {
+        try {
+            Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
+            List<String> vacinas = List.of(vacinasTextArea.getText().split("\n"));
+            List<String> doencas = List.of(doencasTextArea.getText().split("\n"));
+            String peso = pesoTextField.getText().trim();
+            List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
+            LocalDateTime dataHora = dataHoraDateTimePicker.getDateTimePermissive();
+
+            validateInputs(paciente, vacinas, doencas, peso, observacoes, dataHora);
+
+            viewController.adicionarHistorico(paciente, vacinas, doencas, peso, observacoes, dataHora);
+            clearInputs();
+            JOptionPane.showMessageDialog(null, "Histórico adicionado com sucesso!");
+            buscarHistoricos();
+        } catch (Exception ex) {
+            handleException("Erro ao adicionar histórico", ex);
+        }
+    }
+
+    private void removerDoHistorico(ActionEvent e) {
+        int[] selectedRows = historicoTable.getSelectedRows();
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um histórico!");
+            return;
+        }
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) histórico(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            for (int i : selectedRows) {
+                try {
+                    int historicoId = (Integer) historicoTable.getValueAt(i, 0);
+                    viewController.removerHistorico(historicoId);
+                } catch (Exception ex) {
+                    handleException("Erro ao remover histórico", ex);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Histórico(s) removido(s) com sucesso!");
+            buscarHistoricos();
+        }
+    }
+
+    private void buscarHistoricos() {
+        try {
+            HistoricoTableModel model = viewController.criarHistoricoTableModel();
+            historicoTable.setModel(model);
+        } catch (Exception e) {
+            handleException("Erro ao listar históricos", e);
+        }
+    }
+
+    private void validateInputs(Paciente paciente, List<String> vacinas, List<String> doencas, String peso, List<String> observacoes, LocalDateTime dataHora) {
+        if (paciente == null) {
+            throw new IllegalArgumentException("Paciente inválido!");
+        }
+        if (vacinas.isEmpty()) {
+            throw new IllegalArgumentException("Vacinas inválidas!");
+        }
+        if (doencas.isEmpty()) {
+            throw new IllegalArgumentException("Doenças inválidas!");
+        }
+        if (peso.isEmpty()) {
+            throw new IllegalArgumentException("Peso inválido!");
+        }
+        if (observacoes.isEmpty()) {
+            throw new IllegalArgumentException("Observações inválidas!");
+        }
+        if (dataHora == null) {
+            throw new IllegalArgumentException("Data e hora inválidas!");
+        }
+    }
+
+    private void clearInputs() {
+        vacinasTextArea.setText("");
+        doencasTextArea.setText("");
+        pesoTextField.setText("");
+        observacoesTextArea.setText("");
+        dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
+    }
+
+    private void handleException(String message, Exception e) {
+        JOptionPane.showMessageDialog(null, message + ": " + e.getMessage());
     }
 
     public JPanel getMainPanel() {

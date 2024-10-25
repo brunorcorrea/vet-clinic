@@ -60,45 +60,51 @@ public class EstoqueTableModel extends GenericTableModel {
         estoque.setQuantidade(estoqueProduto.getQuantidade());
         estoque.setQuantidadeMinima(estoqueProduto.getQuantidadeMinima());
 
-        switch (columnIndex) {
-            case 1 -> {
-                produto.setNome((String) aValue);
-                estoqueProduto.setNomeProduto((String) aValue);
-            }
-            case 2 -> {
-                produto.setTipo((String) aValue);
-                estoqueProduto.setTipoProduto((String) aValue);
-            }
-            case 3 -> {
-                produto.setPreco((Double) aValue);
-                estoqueProduto.setPrecoProduto((Double) aValue);
-            }
-            case 4 -> {
-                estoque.setQuantidade((Integer) aValue);
-                estoqueProduto.setQuantidade((Integer) aValue);
-            }
-            case 5 -> {
-                estoque.setQuantidadeMinima((Integer) aValue);
-                estoqueProduto.setQuantidadeMinima((Integer) aValue);
-            }
-            default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
-        }
-
-        boolean necessitaReposicao = estoque.getQuantidade() < estoque.getQuantidadeMinima();
-        estoque.setNecessitaReposicao(necessitaReposicao);
-        estoqueProduto.setNecessitaReposicao(necessitaReposicao ? "Sim" : "Não");
-        fireTableCellUpdated(rowIndex, 6);
-
         try {
+            switch (columnIndex) {
+                case 1 -> {
+                    produto.setNome((String) aValue);
+                    estoqueProduto.setNomeProduto((String) aValue);
+                }
+                case 2 -> {
+                    produto.setTipo((String) aValue);
+                    estoqueProduto.setTipoProduto((String) aValue);
+                }
+                case 3 -> {
+                    double preco = Double.parseDouble(aValue.toString());
+                    if (preco <= 0) throw new IllegalArgumentException("Preço deve ser maior que zero");
+                    produto.setPreco(preco);
+                    estoqueProduto.setPrecoProduto(preco);
+                }
+                case 4 -> {
+                    int quantidade = Integer.parseInt(aValue.toString());
+                    if (quantidade <= 0) throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
+                    estoque.setQuantidade(quantidade);
+                    estoqueProduto.setQuantidade(quantidade);
+                }
+                case 5 -> {
+                    int quantidadeMinima = Integer.parseInt(aValue.toString());
+                    if (quantidadeMinima < 0)
+                        throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
+                    estoque.setQuantidadeMinima(quantidadeMinima);
+                    estoqueProduto.setQuantidadeMinima(quantidadeMinima);
+                }
+                default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+
+            boolean necessitaReposicao = estoque.getQuantidade() < estoque.getQuantidadeMinima();
+            estoque.setNecessitaReposicao(necessitaReposicao);
+            estoqueProduto.setNecessitaReposicao(necessitaReposicao ? "Sim" : "Não");
+            fireTableCellUpdated(rowIndex, 6);
+
             produtoController.editarProduto(produto);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar produto: " + e.getMessage());
-        }
-
-        try {
             estoqueController.editarEstoque(estoque);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar estoque: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar produto/estoque: " + e.getMessage());
         }
     }
 

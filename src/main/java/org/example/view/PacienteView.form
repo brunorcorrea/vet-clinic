@@ -34,7 +34,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="86075" class="javax.swing.JLabel" binding="nomeLabel">
+              <component id="86075" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -50,7 +50,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="f9553" class="javax.swing.JLabel" binding="estadoDeCastracaoLabel">
+              <component id="f9553" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -64,12 +64,12 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="86ce3" class="javax.swing.JLabel" binding="idadeLabel">
+              <component id="86ce3" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Idade:"/>
+                  <text value="Idade (anos):"/>
                 </properties>
               </component>
               <component id="e9c47" class="javax.swing.JTextField" binding="idadeTextField">
@@ -80,7 +80,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="b8e81" class="javax.swing.JLabel" binding="racaLabel">
+              <component id="b8e81" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -96,7 +96,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="a4002" class="javax.swing.JLabel" binding="coloracaoLabel">
+              <component id="a4002" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -112,7 +112,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="83787" class="javax.swing.JLabel" binding="fotoLabel">
+              <component id="83787" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -128,7 +128,7 @@
                   <text value="Adicionar Foto"/>
                 </properties>
               </component>
-              <component id="5e864" class="javax.swing.JLabel" binding="especieLabel">
+              <component id="5e864" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

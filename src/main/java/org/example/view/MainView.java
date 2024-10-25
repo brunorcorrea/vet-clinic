@@ -17,13 +17,6 @@ public class MainView {
     public MainView() {
         veterinariosButton.addActionListener(e -> openFrame("Vet Clinic - Veterinários", new VeterinarioView().getMainPanel()));
 
-        sairButton.addActionListener(e -> {
-            int response = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (response == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
-        });
-
         proprietariosButton.addActionListener(e -> openFrame("Vet Clinic - Proprietários", new ProprietarioView().getMainPanel()));
 
         faturasButton.addActionListener(e -> openFrame("Vet Clinic - Faturas", new FaturaView().getMainPanel()));
@@ -37,6 +30,13 @@ public class MainView {
         estoqueButton.addActionListener(e -> openFrame("Vet Clinic - Estoque", new EstoqueView().getMainPanel()));
 
         historicoButton.addActionListener(e -> openFrame("Vet Clinic - Histórico", new HistoricoView().getMainPanel()));
+
+        sairButton.addActionListener(e -> {
+            int response = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
     }
 
     public JPanel getMainPanel() {
@@ -50,7 +50,6 @@ public class MainView {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setAlwaysOnTop(true);
         frame.setSize(800, 600);
     }
 }

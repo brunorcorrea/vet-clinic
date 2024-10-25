@@ -74,7 +74,7 @@
                   <text value="Preço:"/>
                 </properties>
               </component>
-              <component id="c994a" class="javax.swing.JTextField" binding="precoTextField">
+              <component id="c994a" class="javax.swing.JTextField" binding="precoTextField" custom-create="true">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -90,7 +90,7 @@
                   <text value="Quantidade:"/>
                 </properties>
               </component>
-              <component id="cf9d2" class="javax.swing.JTextField" binding="quantidadeTextField">
+              <component id="cf9d2" class="javax.swing.JTextField" binding="quantidadeTextField" custom-create="true">
                 <constraints>
                   <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -106,7 +106,7 @@
                   <text value="Quantidade Mínima:"/>
                 </properties>
               </component>
-              <component id="f1971" class="javax.swing.JTextField" binding="quantidadeMinimaTextField">
+              <component id="f1971" class="javax.swing.JTextField" binding="quantidadeMinimaTextField" custom-create="true">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>

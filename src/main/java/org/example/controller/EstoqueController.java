@@ -35,4 +35,12 @@ public class EstoqueController {
     public void removerEstoque(Estoque estoque) throws SQLException {
         EstoqueDAO.getInstance().excluir(estoque.getId());
     }
+
+    public Estoque obterEstoquePorId(int estoqueId) throws SQLException {
+        return listarEstoque()
+                .stream()
+                .filter(estoque -> estoque.getId() == estoqueId)
+                .findFirst()
+                .orElse(null);
+    }
 }
