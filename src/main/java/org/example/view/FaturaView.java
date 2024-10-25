@@ -2,7 +2,6 @@ package org.example.view;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.FaturaViewController;
-import org.example.model.Faturamento;
 import org.example.model.Proprietario;
 import org.example.model.StatusPagamento;
 import org.example.view.tablemodels.FaturaTableModel;

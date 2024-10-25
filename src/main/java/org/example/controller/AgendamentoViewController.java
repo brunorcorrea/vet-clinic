@@ -4,9 +4,7 @@ import org.example.model.Agendamento;
 import org.example.model.Paciente;
 import org.example.model.StatusAgendamento;
 import org.example.model.Veterinario;
-import org.example.view.tablemodels.AgendamentoTableModel;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.List;
 

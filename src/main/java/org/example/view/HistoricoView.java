@@ -3,7 +3,6 @@ package org.example.view;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import org.example.controller.HistoricoViewController;
 import org.example.model.Paciente;
-import org.example.model.StatusPagamento;
 import org.example.view.tablemodels.HistoricoTableModel;
 
 import javax.swing.*;

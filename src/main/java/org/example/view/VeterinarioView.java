@@ -5,7 +5,6 @@ import org.example.view.tablemodels.VeterinarioTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 public class VeterinarioView {
     private final VeterinarioViewController viewController = new VeterinarioViewController();

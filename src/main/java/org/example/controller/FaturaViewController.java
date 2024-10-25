@@ -6,7 +6,6 @@ import org.example.model.StatusPagamento;
 import org.example.view.tablemodels.FaturaTableModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FaturaViewController {

@@ -5,7 +5,6 @@ import org.example.model.Paciente;
 import org.example.view.tablemodels.HistoricoTableModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricoViewController {
