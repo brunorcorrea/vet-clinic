@@ -3,7 +3,7 @@
     <dontWrapJar>false</dontWrapJar>
     <headerType>gui</headerType>
     <jar>C:\Users\corre\Documents\GitHub\vet-clinic\target\vet-clinic-1.0-SNAPSHOT.jar</jar>
-    <outfile>C:\Users\corre\Documents\GitHub\vet-clinic\target\vet-clinic.exe</outfile>
+    <outfile>C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe</outfile>
     <errTitle></errTitle>
     <cmdLine></cmdLine>
     <chdir>.</chdir>
@@ -14,6 +14,11 @@
     <restartOnCrash>false</restartOnCrash>
     <manifest></manifest>
     <icon></icon>
+    <classPath>
+        <mainClass>org.example.Main</mainClass>
+        <cp>./external-libs/LGoodDatePicker-11.2.1.jar</cp>
+        <cp>./external-libs/sqlite-jdbc-3.46.1.0.jar</cp>
+    </classPath>
     <jre>
         <path>%JAVA_HOME%;%PATH%</path>
         <requiresJdk>false</requiresJdk>
