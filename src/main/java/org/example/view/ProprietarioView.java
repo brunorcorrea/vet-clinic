@@ -4,8 +4,12 @@ import org.example.controller.ProprietarioViewController;
 import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.text.ParseException;
+
+import static org.example.utils.Validator.isCPFValid;
+import static org.example.utils.Validator.isTelefoneValid;
 
 public class ProprietarioView {
     private final ProprietarioViewController viewController = new ProprietarioViewController();
@@ -34,12 +38,10 @@ public class ProprietarioView {
         String telefone = telefoneTextField.getText().trim();
         String endereco = enderecoTextField.getText().trim();
 
-        if (cpf.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty() || endereco.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-            return;
-        }
 
         try {
+            validateInputs(cpf, nomeCompleto, telefone, endereco);
+
             viewController.adicionarProprietario(cpf, nomeCompleto, telefone, endereco);
             clearInputs();
             loadProprietarios();
@@ -80,6 +82,20 @@ public class ProprietarioView {
         }
     }
 
+    private void validateInputs(String cpf, String nomeCompleto, String telefone, String endereco) {
+        if (cpf.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty() || endereco.isEmpty()) {
+            throw new IllegalArgumentException("Preencha todos os campos!");
+        }
+
+        if (!isCPFValid(cpf)) {
+            throw new IllegalArgumentException("CPF inválido!");
+        }
+
+        if (!isTelefoneValid(telefone)) {
+            throw new IllegalArgumentException("Telefone inválido!");
+        }
+    }
+
     private void clearInputs() {
         cpfTextField.setText("");
         nomeCompletoTextField.setText("");
@@ -93,5 +109,23 @@ public class ProprietarioView {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    private void createUIComponents() {
+        try {
+            MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
+            cpfMask.setPlaceholderCharacter('_');
+            cpfTextField = new JFormattedTextField(cpfMask);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            MaskFormatter telefoneMask = new MaskFormatter("(##) #####-####");
+            telefoneMask.setPlaceholderCharacter('_');
+            telefoneTextField = new JFormattedTextField(telefoneMask);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

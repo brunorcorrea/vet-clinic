@@ -1,11 +1,15 @@
 package org.example.view;
 
 import org.example.controller.EstoqueViewController;
-import org.example.model.EstoqueProduto;
 import org.example.view.tablemodels.EstoqueTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
+import static org.example.utils.Formatter.createDecimalNumberFormatter;
+import static org.example.utils.Formatter.createIntegerNumberFormatter;
 
 public class EstoqueView {
     private final EstoqueViewController viewController = new EstoqueViewController();
@@ -83,11 +87,11 @@ public class EstoqueView {
         if (preco <= 0) {
             throw new IllegalArgumentException("Preço deve ser maior que zero");
         }
-        if (quantidade < 0) {
+        if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
         }
         if (quantidadeMinima < 0) {
-            throw new IllegalArgumentException("Quantidade mínima deve ser maior ou igual zero");
+            throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
         }
     }
 
@@ -97,5 +101,55 @@ public class EstoqueView {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    private void createUIComponents() {
+        var decimalNumberFormatter = createDecimalNumberFormatter();
+        var integerNumberFormatter = createIntegerNumberFormatter();
+
+        precoTextField = new JFormattedTextField(decimalNumberFormatter);
+        setDefaultPrecoTextFieldValue();
+        precoTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (precoTextField.getText().isEmpty()) {
+                    setDefaultPrecoTextFieldValue();
+                }
+            }
+        });
+
+        quantidadeTextField = new JFormattedTextField(integerNumberFormatter);
+        setQuantidadeTextFieldDefaultValue();
+        quantidadeTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (quantidadeTextField.getText().isEmpty()) {
+                    setQuantidadeTextFieldDefaultValue();
+                }
+            }
+        });
+
+        quantidadeMinimaTextField = new JFormattedTextField(integerNumberFormatter);
+        setQuantidadeMinimaTextFieldDefaultValue();
+        quantidadeMinimaTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (quantidadeMinimaTextField.getText().isEmpty()) {
+                    setQuantidadeMinimaTextFieldDefaultValue();
+                }
+            }
+        });
+    }
+
+    private void setQuantidadeMinimaTextFieldDefaultValue() {
+        quantidadeMinimaTextField.setText("0");
+    }
+
+    private void setQuantidadeTextFieldDefaultValue() {
+        quantidadeTextField.setText("0");
+    }
+
+    private void setDefaultPrecoTextFieldValue() {
+        precoTextField.setText("0.0");
     }
 }
