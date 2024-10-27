@@ -246,3 +246,219 @@ Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
 Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
 Args length:	206/32768 chars
 Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\corre\Documents\GitHub\vet-clinic\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21\bin
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.11.9-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\PROGRA~1\Red Gate\Flyway Desktop\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Users\corre\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\corre\AppData\Local\Programs\Python\Python312\;C:\Users\corre\AppData\Local\Microsoft\WindowsApps;C:\Users\corre\AppData\Local\JetBrains\Toolbox\scripts;C:\Users\corre\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\corre\go\bin;C:\Users\corre\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\flutter-sdk\flutter\bin;C:\Users\corre\.dotnet\tools;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_005 / 64-Bit (OK)
+Main class:	org.example.Main
+Add classpath:	.\external-libs\LGoodDatePicker-11.2.1.jar
+Add classpath:	.\external-libs\sqlite-jdbc-3.46.1.0.jar
+Add classpath:	.\external-libs\forms_rt-7.0.3.jar
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-classpath "C:\Users\corre\Documents\GitHub\vet-clinic\vet-clinic.exe;.\external-libs\LGoodDatePicker-11.2.1.jar;.\external-libs\sqlite-jdbc-3.46.1.0.jar;.\external-libs\forms_rt-7.0.3.jar" org.example.Main
+Args length:	206/32768 chars
+Exit code:	0

@@ -104,7 +104,7 @@ public class EstoqueTableModel extends GenericTableModel {
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar produto/estoque: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar produto/estoque: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

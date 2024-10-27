@@ -1,5 +1,7 @@
 package org.example.view;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.example.controller.VeterinarioViewController;
 import org.example.view.tablemodels.VeterinarioTableModel;
 
@@ -35,7 +37,6 @@ public class VeterinarioView {
         try {
             viewController.adicionarVeterinario(nomeVeterinario);
             nomeVeterinarioTextField.setText("");
-            JOptionPane.showMessageDialog(null, "Veterinário adicionado com sucesso!");
         } catch (Exception ex) {
             handleException("Erro ao adicionar veterinário", ex);
         }
@@ -60,7 +61,6 @@ public class VeterinarioView {
                     handleException("Erro ao remover veterinário", ex);
                 }
             }
-            JOptionPane.showMessageDialog(null, "Veterinário(s) removido(s) com sucesso!");
             loadVeterinarios();
         }
     }
@@ -75,7 +75,7 @@ public class VeterinarioView {
     }
 
     private void handleException(String message, Exception e) {
-        JOptionPane.showMessageDialog(null, message + ": " + e.getMessage());
+        JOptionPane.showMessageDialog(null, message + ": " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
     public JPanel getMainPanel() {
@@ -107,21 +107,21 @@ public class VeterinarioView {
         veterinarioTable = new JTable();
         scrollPane1.setViewportView(veterinarioTable);
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel2, BorderLayout.NORTH);
         nomeVeterinarioTextField = new JTextField();
         nomeVeterinarioTextField.setText("");
         nomeVeterinarioTextField.setToolTipText("Nome do Veterinário");
-        panel2.add(nomeVeterinarioTextField, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panel2.add(nomeVeterinarioTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         adicionarVeterinarioButton = new JButton();
         adicionarVeterinarioButton.setText("Adicionar Veterinário");
-        panel2.add(adicionarVeterinarioButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.add(adicionarVeterinarioButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         removerVeterinarioButton = new JButton();
         removerVeterinarioButton.setText("Remover Veterinário");
-        panel2.add(removerVeterinarioButton, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(removerVeterinarioButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Nome:");
-        panel2.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -130,4 +130,5 @@ public class VeterinarioView {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

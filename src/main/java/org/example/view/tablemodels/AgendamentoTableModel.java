@@ -56,7 +56,7 @@ public class AgendamentoTableModel extends GenericTableModel {
         try {
             agendamentoController.editarAgendamento(agendamento);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar agendamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar agendamento: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

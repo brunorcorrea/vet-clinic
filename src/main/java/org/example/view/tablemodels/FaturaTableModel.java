@@ -54,7 +54,7 @@ public class FaturaTableModel extends GenericTableModel {
         try {
             faturamentoController.editarFaturamento(faturamento);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar faturamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar faturamento: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

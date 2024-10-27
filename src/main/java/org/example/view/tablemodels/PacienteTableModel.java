@@ -61,7 +61,7 @@ public class PacienteTableModel extends GenericTableModel {
         try {
             pacienteController.editarPaciente(paciente);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar paciente: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar paciente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

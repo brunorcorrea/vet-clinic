@@ -59,7 +59,7 @@ public class HistoricoTableModel extends GenericTableModel {
         try {
             historicoController.editarHistorico(historico);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar histórico: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar histórico: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

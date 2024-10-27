@@ -54,7 +54,7 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
         try {
             receitaMedicaController.editarReceitaMedica(receitaMedica);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar Receita Médica: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar Receita Médica: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

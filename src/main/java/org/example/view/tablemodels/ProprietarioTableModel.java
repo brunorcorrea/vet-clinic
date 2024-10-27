@@ -52,7 +52,7 @@ public class ProprietarioTableModel extends GenericTableModel {
         try {
             proprietarioController.editarProprietario(proprietario);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar veterinário: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar veterinário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
