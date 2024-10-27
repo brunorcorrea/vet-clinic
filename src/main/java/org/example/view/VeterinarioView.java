@@ -47,7 +47,7 @@ public class VeterinarioView {
     private void removerVeterinario(ActionEvent e) {
         int[] selectedRows = veterinarioTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione pelo menos um veterinário para remover");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um veterinário!");
             return;
         }
 
