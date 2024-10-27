@@ -26,20 +26,24 @@ public class EstoqueViewController {
         produto.setTipo(tipo);
         produto.setPreco(preco);
 
+        produtoController.adicionarProduto(produto);
+
+        int id = produtoController.listarProdutos().getLast().getId();
+        produto.setId(id);
+
         Estoque estoque = new Estoque();
         estoque.setQuantidade(quantidade);
         estoque.setQuantidadeMinima(quantidadeMinima);
         estoque.setNecessitaReposicao(quantidade < quantidadeMinima);
         estoque.setProduto(produto);
 
-        produtoController.adicionarProduto(produto);
         estoqueController.adicionarEstoque(estoque);
     }
 
     public void removerProduto(int estoqueId) throws Exception {
         Estoque estoque = estoqueController.obterEstoquePorId(estoqueId);
-        produtoController.removerProduto(estoque.getProduto());
         estoqueController.removerEstoque(estoque);
+        produtoController.removerProduto(estoque.getProduto());
     }
 
     public EstoqueTableModel criarEstoqueTableModel() throws Exception {

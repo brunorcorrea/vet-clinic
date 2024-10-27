@@ -131,12 +131,6 @@ public class AgendamentoView {
         if (dataHora == null) {
             throw new IllegalArgumentException("Data e hora inválidas!");
         }
-        if (dataHora.isBefore(LocalDateTime.now())) {
-            int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (response == JOptionPane.NO_OPTION) {
-                throw new IllegalArgumentException("Data e hora no passado não permitida!");
-            }
-        }
     }
 
     private void handleException(String message, Exception e) {

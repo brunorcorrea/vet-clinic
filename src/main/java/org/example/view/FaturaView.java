@@ -65,6 +65,7 @@ public class FaturaView {
             validateInputs(proprietario, valorTotal, status, dataVencimento);
 
             viewController.adicionarFatura(proprietario, valorTotal, status, dataVencimento);
+            clearInputs();
             buscarFaturamentos();
         } catch (Exception ex) {
             handleException("Erro ao adicionar fatura", ex);
@@ -89,6 +90,13 @@ public class FaturaView {
             }
             buscarFaturamentos();
         }
+    }
+
+    private void clearInputs() {
+        valorTotalTextField.setText("");
+        proprietarioComboBox.setSelectedIndex(0);
+        statusComboBox.setSelectedIndex(0);
+        dataVencimentoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
     }
 
     private void buscarFaturamentos() {

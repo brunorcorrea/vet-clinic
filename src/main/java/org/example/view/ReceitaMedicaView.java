@@ -124,11 +124,6 @@ public class ReceitaMedicaView {
             return false;
         }
 
-        if (dataEmissao.isBefore(LocalDateTime.now())) {
-            int response = JOptionPane.showConfirmDialog(null, "Data e hora estão no passado. Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            return response != JOptionPane.NO_OPTION;
-        }
-
         return true;
     }
 

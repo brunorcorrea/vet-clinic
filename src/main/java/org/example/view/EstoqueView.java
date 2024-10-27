@@ -49,6 +49,7 @@ public class EstoqueView {
             validateInputs(nome, tipo, preco, quantidade, quantidadeMinima);
 
             viewController.adicionarProduto(nome, tipo, preco, quantidade, quantidadeMinima);
+            clearInputs();
             buscarEstoqueEProduto();
         } catch (Exception ex) {
             handleException("Erro ao adicionar produto", ex);
@@ -97,6 +98,14 @@ public class EstoqueView {
         if (quantidadeMinima < 0) {
             throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
         }
+    }
+
+    private void clearInputs() {
+        nomeTextField.setText("");
+        tipoTextField.setText("");
+        setDefaultPrecoTextFieldValue();
+        setQuantidadeTextFieldDefaultValue();
+        setQuantidadeMinimaTextFieldDefaultValue();
     }
 
     private void handleException(String message, Exception e) {
