@@ -16,15 +16,15 @@ public class EstoqueTableModel extends GenericTableModel {
     ProdutoController produtoController = ProdutoController.getInstance();
 
     public EstoqueTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Nome", "Tipo", "Preço", "Quantidade", "Quantidade Mínima", "Necessita Reposição"});
+        super(vDados, new String[]{"Nome", "Tipo", "Preço", "Quantidade", "Quantidade Mínima", "Necessita Reposição"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 4, 5 -> Integer.class;
-            case 1, 2, 6 -> String.class;
-            case 3 -> Double.class;
+            case 0, 1, 5 -> String.class;
+            case 2 -> Double.class;
+            case 3, 4 -> Integer.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -34,13 +34,12 @@ public class EstoqueTableModel extends GenericTableModel {
         EstoqueProduto estoqueProduto = (EstoqueProduto) vDados.get(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> estoqueProduto.getIdEstoque();
-            case 1 -> estoqueProduto.getNomeProduto();
-            case 2 -> estoqueProduto.getTipoProduto();
-            case 3 -> estoqueProduto.getPrecoProduto();
-            case 4 -> estoqueProduto.getQuantidade();
-            case 5 -> estoqueProduto.getQuantidadeMinima();
-            case 6 -> estoqueProduto.getNecessitaReposicao();
+            case 0 -> estoqueProduto.getNomeProduto();
+            case 1 -> estoqueProduto.getTipoProduto();
+            case 2 -> estoqueProduto.getPrecoProduto();
+            case 3 -> estoqueProduto.getQuantidade();
+            case 4 -> estoqueProduto.getQuantidadeMinima();
+            case 5 -> estoqueProduto.getNecessitaReposicao();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -62,27 +61,27 @@ public class EstoqueTableModel extends GenericTableModel {
 
         try {
             switch (columnIndex) {
-                case 1 -> {
+                case 0 -> {
                     produto.setNome((String) aValue);
                     estoqueProduto.setNomeProduto((String) aValue);
                 }
-                case 2 -> {
+                case 1 -> {
                     produto.setTipo((String) aValue);
                     estoqueProduto.setTipoProduto((String) aValue);
                 }
-                case 3 -> {
+                case 2 -> {
                     double preco = Double.parseDouble(aValue.toString());
                     if (preco <= 0) throw new IllegalArgumentException("Preço deve ser maior que zero");
                     produto.setPreco(preco);
                     estoqueProduto.setPrecoProduto(preco);
                 }
-                case 4 -> {
+                case 3 -> {
                     int quantidade = Integer.parseInt(aValue.toString());
                     if (quantidade <= 0) throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
                     estoque.setQuantidade(quantidade);
                     estoqueProduto.setQuantidade(quantidade);
                 }
-                case 5 -> {
+                case 4 -> {
                     int quantidadeMinima = Integer.parseInt(aValue.toString());
                     if (quantidadeMinima < 0)
                         throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
@@ -95,7 +94,7 @@ public class EstoqueTableModel extends GenericTableModel {
             boolean necessitaReposicao = estoque.getQuantidade() < estoque.getQuantidadeMinima();
             estoque.setNecessitaReposicao(necessitaReposicao);
             estoqueProduto.setNecessitaReposicao(necessitaReposicao ? "Sim" : "Não");
-            fireTableCellUpdated(rowIndex, 6);
+            fireTableCellUpdated(rowIndex, 5);
 
             produtoController.editarProduto(produto);
             estoqueController.editarEstoque(estoque);
@@ -110,7 +109,7 @@ public class EstoqueTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 6);
+        List<Integer> columnsNotEditable = List.of(5);
         return !columnsNotEditable.contains(columnIndex);
     }
 }

@@ -13,16 +13,15 @@ public class HistoricoTableModel extends GenericTableModel {
     HistoricoController historicoController = HistoricoController.getInstance();
 
     public HistoricoTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Paciente", "Peso", "Vacinas", "Doenças", "Observações", "Data e Hora"});
+        super(vDados, new String[]{"Paciente", "Peso", "Vacinas", "Doenças", "Observações", "Data e Hora"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> Integer.class;
-            case 1, 3, 4, 5 -> String.class;
-            case 2 -> double.class;
-            case 6 -> LocalDateTime.class;
+            case 0, 2, 3, 4 -> String.class;
+            case 1 -> double.class;
+            case 5 -> LocalDateTime.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -32,13 +31,12 @@ public class HistoricoTableModel extends GenericTableModel {
         Historico historico = (Historico) vDados.get(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> historico.getId();
-            case 1 -> historico.getPaciente().getNome();
-            case 2 -> historico.getPeso();
-            case 3 -> String.join(", ", historico.getVacinas());
-            case 4 -> String.join(", ", historico.getDoencas());
-            case 5 -> String.join(", ", historico.getObservacoes());
-            case 6 -> historico.getDataHora();
+            case 0 -> historico.getPaciente().getNome();
+            case 1 -> historico.getPeso();
+            case 2 -> String.join(", ", historico.getVacinas());
+            case 3 -> String.join(", ", historico.getDoencas());
+            case 4 -> String.join(", ", historico.getObservacoes());
+            case 5 -> historico.getDataHora();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -48,11 +46,11 @@ public class HistoricoTableModel extends GenericTableModel {
         Historico historico = (Historico) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 2 -> historico.setPeso((String) aValue);
-            case 3 -> historico.setVacinas(List.of(((String) aValue).split(", ")));
-            case 4 -> historico.setDoencas(List.of(((String) aValue).split(", ")));
-            case 5 -> historico.setObservacoes(List.of(((String) aValue).split(", ")));
-            case 6 -> historico.setDataHora((LocalDateTime) aValue);
+            case 1 -> historico.setPeso((String) aValue);
+            case 2 -> historico.setVacinas(List.of(((String) aValue).split(", ")));
+            case 3 -> historico.setDoencas(List.of(((String) aValue).split(", ")));
+            case 4 -> historico.setObservacoes(List.of(((String) aValue).split(", ")));
+            case 5 -> historico.setDataHora((LocalDateTime) aValue);
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
@@ -65,7 +63,7 @@ public class HistoricoTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 7, 8);
+        List<Integer> columnsNotEditable = List.of(5);
         return !columnsNotEditable.contains(columnIndex);
     }
 }
