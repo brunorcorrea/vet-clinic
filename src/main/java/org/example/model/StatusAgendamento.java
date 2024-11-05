@@ -16,7 +16,8 @@ public enum StatusAgendamento {
                 return statusAgendamento;
             }
         }
-        return null;
+
+        throw new IllegalArgumentException("Descrição inválida: " + descricao);
     }
 
     public String getDescricao() {

@@ -49,7 +49,16 @@ public class AgendamentoTableModel extends GenericTableModel {
         switch (columnIndex) {
             case 3 -> agendamento.setDataHora((LocalDateTime) aValue);
             case 4 -> agendamento.setServico((String) aValue);
-            case 5 -> agendamento.setStatus(StatusAgendamento.fromDescricao((String) aValue));
+            case 5 -> {
+                String status = ((String) aValue).trim();
+                status = status.substring(0, 1).toUpperCase() + status.substring(1).toLowerCase();
+                try {
+                    agendamento.setStatus(StatusAgendamento.fromDescricao(status));
+                } catch (IllegalArgumentException e) {
+                    String message = "Status inválido: " + status + ". Os status válidos são: " + StatusAgendamento.AGENDADO.getDescricao() + ", " + StatusAgendamento.CONCLUIDO.getDescricao() + " ou " + StatusAgendamento.CANCELADO.getDescricao() + ".";
+                    JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
@@ -62,7 +71,7 @@ public class AgendamentoTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 7, 8);
+        List<Integer> columnsNotEditable = List.of(0, 1, 7, 8);
         return !columnsNotEditable.contains(columnIndex);
     }
 }
