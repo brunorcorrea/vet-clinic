@@ -24,6 +24,10 @@ public class VeterinarioTableModel extends GenericTableModel {
         };
     }
 
+    public Veterinario getVeterinario(int rowIndex) {
+        return (Veterinario) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Veterinario veterinario = (Veterinario) vDados.get(rowIndex);
