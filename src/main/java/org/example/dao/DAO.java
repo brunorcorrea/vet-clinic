@@ -72,7 +72,7 @@ public abstract class DAO {
                             valorTotal REAL,
                             status VARCHAR,
                             dataVencimento INTEGER,
-                            FOREIGN KEY (idProprietario) REFERENCES proprietario(id)
+                            FOREIGN KEY (idProprietario) REFERENCES proprietario(id) ON DELETE CASCADE
                         );
                     """);
             executeUpdate(stmt);
@@ -88,7 +88,7 @@ public abstract class DAO {
                             especie VARCHAR,
                             foto BLOB,
                             idProprietario INTEGER,
-                            FOREIGN KEY (idProprietario) REFERENCES proprietario(id)
+                            FOREIGN KEY (idProprietario) REFERENCES proprietario(id) ON DELETE CASCADE
                         );
                     """);
             executeUpdate(stmt);
@@ -131,8 +131,8 @@ public abstract class DAO {
                             status VARCHAR,
                             idVeterinario INTEGER,
                             idPaciente INTEGER,
-                            FOREIGN KEY (idVeterinario) REFERENCES veterinario(id),
-                            FOREIGN KEY (idPaciente) REFERENCES paciente(id)
+                            FOREIGN KEY (idVeterinario) REFERENCES veterinario(id) ON DELETE CASCADE,
+                            FOREIGN KEY (idPaciente) REFERENCES paciente(id) ON DELETE CASCADE
                         );
                     """);
             executeUpdate(stmt);
@@ -146,7 +146,7 @@ public abstract class DAO {
                             peso REAL,
                             observacoes VARCHAR,
                             dataHora INTEGER,
-                            FOREIGN KEY (idPaciente) REFERENCES paciente(id)
+                            FOREIGN KEY (idPaciente) REFERENCES paciente(id) ON DELETE CASCADE
                         );
                     """);
             executeUpdate(stmt);
@@ -158,7 +158,7 @@ public abstract class DAO {
                             medicamentos VARCHAR,
                             dataEmissao INTEGER,
                             observacoes VARCHAR,
-                            FOREIGN KEY (idPaciente) REFERENCES paciente(id)
+                            FOREIGN KEY (idPaciente) REFERENCES paciente(id) ON DELETE CASCADE
                         );
                     """);
             executeUpdate(stmt);

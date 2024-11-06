@@ -23,6 +23,11 @@ public class ProprietarioTableModel extends GenericTableModel {
         };
     }
 
+
+    public Proprietario getProprietario(int rowIndex) {
+        return (Proprietario) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Proprietario proprietario = (Proprietario) vDados.get(rowIndex);

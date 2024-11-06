@@ -38,8 +38,21 @@ public class PacienteViewController {
         return pacienteController.listarPacientes();
     }
 
-    public PacienteTableModel criarPacienteTableModel() throws Exception {
+    public PacienteTableModel criarPacienteTableModel(String nomeProprietario) throws Exception {
         List<Paciente> pacientes = listarPacientes();
+        if (nomeProprietario != null && !nomeProprietario.isEmpty()) {
+            filtrarPacientes(pacientes, nomeProprietario);
+        }
+
         return new PacienteTableModel(pacientes);
+    }
+
+    private void filtrarPacientes(List<Paciente> pacientes, String nomeProprietario) throws Exception {
+        pacientes.removeIf(paciente -> shouldRemovePaciente(nomeProprietario, paciente));
+    }
+
+    private boolean shouldRemovePaciente(String nomeProprietario, Paciente paciente) {
+        return paciente != null && paciente.getProprietario() != null &&
+                !paciente.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase());
     }
 }
