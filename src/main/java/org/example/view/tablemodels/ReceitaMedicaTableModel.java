@@ -25,6 +25,10 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
         };
     }
 
+    public ReceitaMedica getReceitaMedica(int rowIndex) {
+        return (ReceitaMedica) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ReceitaMedica receitaMedica = (ReceitaMedica) vDados.get(rowIndex);
