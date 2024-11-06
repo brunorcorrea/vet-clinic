@@ -26,6 +26,10 @@ public class HistoricoTableModel extends GenericTableModel {
         };
     }
 
+    public Historico getHistorico(int rowIndex) {
+        return (Historico) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Historico historico = (Historico) vDados.get(rowIndex);

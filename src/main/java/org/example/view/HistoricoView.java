@@ -27,13 +27,14 @@ public class HistoricoView {
     private JButton removerDoHistoricoButton;
     private DateTimePicker dataHoraDateTimePicker;
     private JTextArea observacoesTextArea;
+    private HistoricoTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
 
     public HistoricoView() {
         initializeComponents();
         configureListeners();
-        buscarHistoricos();
+        loadHistoricos();
     }
 
     private void initializeComponents() {
@@ -48,11 +49,11 @@ public class HistoricoView {
     }
 
     private void configureListeners() {
-        adicionarAoHistoricoButton.addActionListener(this::adicionarAoHistorico);
-        removerDoHistoricoButton.addActionListener(this::removerDoHistorico);
+        adicionarAoHistoricoButton.addActionListener(this::adicionarHistorico);
+        removerDoHistoricoButton.addActionListener(this::removerHistorico);
     }
 
-    private void adicionarAoHistorico(ActionEvent e) {
+    private void adicionarHistorico(ActionEvent e) {
         try {
             Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
             List<String> vacinas = List.of(vacinasTextArea.getText().split("\n"));
@@ -65,13 +66,13 @@ public class HistoricoView {
 
             viewController.adicionarHistorico(paciente, vacinas, doencas, peso, observacoes, dataHora);
             clearInputs();
-            buscarHistoricos();
+            loadHistoricos();
         } catch (Exception ex) {
             handleException("Erro ao adicionar histórico", ex);
         }
     }
 
-    private void removerDoHistorico(ActionEvent e) {
+    private void removerHistorico(ActionEvent e) {
         int[] selectedRows = historicoTable.getSelectedRows();
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(null, "Selecione ao menos um histórico!");
@@ -81,20 +82,20 @@ public class HistoricoView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int historicoId = (Integer) historicoTable.getValueAt(i, 0);
+                    int historicoId = tableModel.getHistorico(i).getId();
                     viewController.removerHistorico(historicoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover histórico", ex);
                 }
             }
-            buscarHistoricos();
+            loadHistoricos();
         }
     }
 
-    private void buscarHistoricos() {
+    private void loadHistoricos() {
         try {
-            HistoricoTableModel model = viewController.criarHistoricoTableModel();
-            historicoTable.setModel(model);
+            tableModel = viewController.criarHistoricoTableModel();
+            historicoTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar históricos", e);
         }
