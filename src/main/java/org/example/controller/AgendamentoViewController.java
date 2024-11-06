@@ -4,6 +4,7 @@ import org.example.model.Agendamento;
 import org.example.model.Paciente;
 import org.example.model.StatusAgendamento;
 import org.example.model.Veterinario;
+import org.example.view.tablemodels.AgendamentoTableModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,5 +40,10 @@ public class AgendamentoViewController {
 
     public List<Agendamento> listarAgendamentos() throws Exception {
         return agendamentoController.listarAgendamentos();
+    }
+
+    public AgendamentoTableModel criarAgendamentoTableModel() throws Exception {
+        List<Agendamento> agendamentos = listarAgendamentos();
+        return new AgendamentoTableModel(agendamentos);
     }
 }

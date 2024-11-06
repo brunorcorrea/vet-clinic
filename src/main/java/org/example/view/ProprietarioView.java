@@ -25,6 +25,7 @@ public class ProprietarioView {
     private JTextField telefoneTextField;
     private JTextField enderecoTextField;
     private JTextField textField1;
+    private ProprietarioTableModel tableModel;
 
     public ProprietarioView() {
         $$$setupUI$$$();
@@ -42,7 +43,6 @@ public class ProprietarioView {
         String nomeCompleto = nomeCompletoTextField.getText().trim();
         String telefone = telefoneTextField.getText().trim();
         String endereco = enderecoTextField.getText().trim();
-
 
         try {
             validateInputs(cpf, nomeCompleto, telefone, endereco);
@@ -63,12 +63,17 @@ public class ProprietarioView {
             return;
         }
 
-        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) proprietário(s) selecionado(s) e todos os seus dados relacionados?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int proprietarioId = (Integer) proprietarioTable.getValueAt(i, 0);
+                    int proprietarioId = tableModel.getProprietario(i).getId();
                     viewController.removerProprietario(proprietarioId);
+                    //TODO remover agendamentos
+                    //TODO remover faturamento
+                    //TODO remover histórico
+                    //TODO remover receita médica
+                    //TODO remover pacientes
                 } catch (Exception ex) {
                     handleException("Erro ao remover proprietário", ex);
                 }
@@ -79,8 +84,8 @@ public class ProprietarioView {
 
     private void loadProprietarios() {
         try {
-            ProprietarioTableModel model = viewController.criarProprietarioTableModel();
-            proprietarioTable.setModel(model);
+            tableModel = viewController.criarProprietarioTableModel();
+            proprietarioTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar proprietários", e);
         }
@@ -182,7 +187,7 @@ public class ProprietarioView {
         panel3.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
-        label5.setText("Buscar:");
+        label5.setText("Buscar por nome:");
         panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textField1 = new JTextField();
         panel3.add(textField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));

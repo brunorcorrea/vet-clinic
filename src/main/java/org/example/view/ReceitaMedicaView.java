@@ -25,6 +25,7 @@ public class ReceitaMedicaView {
     private JTextArea medicamentosTextArea;
     private JTextArea observacoesTextArea;
     private DateTimePicker dataEmissaoDateTimePicker;
+    private ReceitaMedicaTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
 
@@ -32,7 +33,7 @@ public class ReceitaMedicaView {
         initializeComponents();
         configureListeners();
         loadPacientes();
-        buscarReceitasMedicas();
+        loadReceitasMedicas();
     }
 
     private void initializeComponents() {
@@ -69,7 +70,7 @@ public class ReceitaMedicaView {
             handleException("Erro ao adicionar receita médica", ex);
         }
 
-        buscarReceitasMedicas();
+        loadReceitasMedicas();
     }
 
     private void removerReceitaMedica(ActionEvent e) {
@@ -84,20 +85,20 @@ public class ReceitaMedicaView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int receitaMedicaId = (Integer) receitaMedicaTable.getValueAt(i, 0);
+                    int receitaMedicaId = tableModel.getReceitaMedica(i).getId();
                     viewController.removerReceitaMedica(receitaMedicaId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover receita médica", ex);
                 }
             }
-            buscarReceitasMedicas();
+            loadReceitasMedicas();
         }
     }
 
-    private void buscarReceitasMedicas() {
+    private void loadReceitasMedicas() {
         try {
-            ReceitaMedicaTableModel model = viewController.criarReceitaMedicaTableModel();
-            receitaMedicaTable.setModel(model);
+            tableModel = viewController.criarReceitaMedicaTableModel();
+            receitaMedicaTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar receitas médicas", e);
         }

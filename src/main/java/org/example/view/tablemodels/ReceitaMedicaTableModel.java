@@ -13,17 +13,20 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
     ReceitaMedicaController receitaMedicaController = ReceitaMedicaController.getInstance();
 
     public ReceitaMedicaTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Paciente", "Medicamentos", "Observações", "Data de Emissão"});
+        super(vDados, new String[]{"Paciente", "Medicamentos", "Observações", "Data de Emissão"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> Integer.class;
-            case 1, 2, 3 -> String.class;
-            case 4 -> LocalDateTime.class;
+            case 0, 1, 2 -> String.class;
+            case 3 -> LocalDateTime.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
+    }
+
+    public ReceitaMedica getReceitaMedica(int rowIndex) {
+        return (ReceitaMedica) vDados.get(rowIndex);
     }
 
     @Override
@@ -31,11 +34,10 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
         ReceitaMedica receitaMedica = (ReceitaMedica) vDados.get(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> receitaMedica.getId();
-            case 1 -> receitaMedica.getPaciente().getNome();
-            case 2 -> String.join(", ", receitaMedica.getMedicamentos());
-            case 3 -> String.join(", ", receitaMedica.getObservacoes());
-            case 4 -> receitaMedica.getDataEmissao();
+            case 0 -> receitaMedica.getPaciente().getNome();
+            case 1 -> String.join(", ", receitaMedica.getMedicamentos());
+            case 2 -> String.join(", ", receitaMedica.getObservacoes());
+            case 3 -> receitaMedica.getDataEmissao();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -45,9 +47,9 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
         ReceitaMedica receitaMedica = (ReceitaMedica) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 2 -> receitaMedica.setMedicamentos(List.of(((String) aValue).split(", ")));
-            case 3 -> receitaMedica.setObservacoes(List.of(((String) aValue).split(", ")));
-            case 4 -> receitaMedica.setDataEmissao((LocalDateTime) aValue);
+            case 1 -> receitaMedica.setMedicamentos(List.of(((String) aValue).split(", ")));
+            case 2 -> receitaMedica.setObservacoes(List.of(((String) aValue).split(", ")));
+            case 3 -> receitaMedica.setDataEmissao((LocalDateTime) aValue);
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
@@ -60,7 +62,6 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 1);
-        return !columnsNotEditable.contains(columnIndex);
+        return columnIndex != 0;
     }
 }

@@ -14,17 +14,20 @@ public class AgendamentoTableModel extends GenericTableModel {
     AgendamentoController agendamentoController = AgendamentoController.getInstance();
 
     public AgendamentoTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Paciente", "Veterinário", "Data e Hora", "Serviço", "Status"});
+        super(vDados, new String[]{"Paciente", "Veterinário", "Data e Hora", "Serviço", "Status"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0 -> Integer.class;
-            case 1, 2, 4, 5 -> String.class;
-            case 3 -> LocalDateTime.class;
+            case 0, 1, 3, 4 -> String.class;
+            case 2 -> LocalDateTime.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
+    }
+
+    public Agendamento getAgendamento(int rowIndex) {
+        return (Agendamento) vDados.get(rowIndex);
     }
 
     @Override
@@ -32,12 +35,11 @@ public class AgendamentoTableModel extends GenericTableModel {
         Agendamento agendamento = (Agendamento) vDados.get(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> agendamento.getId();
-            case 1 -> agendamento.getPaciente().getNome();
-            case 2 -> agendamento.getVeterinario().getNome();
-            case 3 -> agendamento.getDataHora();
-            case 4 -> agendamento.getServico();
-            case 5 -> agendamento.getStatus().getDescricao();
+            case 0 -> agendamento.getPaciente().getNome();
+            case 1 -> agendamento.getVeterinario().getNome();
+            case 2 -> agendamento.getDataHora();
+            case 3 -> agendamento.getServico();
+            case 4 -> agendamento.getStatus().getDescricao();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -47,9 +49,9 @@ public class AgendamentoTableModel extends GenericTableModel {
         Agendamento agendamento = (Agendamento) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 3 -> agendamento.setDataHora((LocalDateTime) aValue);
-            case 4 -> agendamento.setServico((String) aValue);
-            case 5 -> {
+            case 2 -> agendamento.setDataHora((LocalDateTime) aValue);
+            case 3 -> agendamento.setServico((String) aValue);
+            case 4 -> {
                 String status = ((String) aValue).trim();
                 status = status.substring(0, 1).toUpperCase() + status.substring(1).toLowerCase();
                 try {
@@ -57,6 +59,7 @@ public class AgendamentoTableModel extends GenericTableModel {
                 } catch (IllegalArgumentException e) {
                     String message = "Status inválido: " + status + ". Os status válidos são: " + StatusAgendamento.AGENDADO.getDescricao() + ", " + StatusAgendamento.CONCLUIDO.getDescricao() + " ou " + StatusAgendamento.CANCELADO.getDescricao() + ".";
                     JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -71,7 +74,7 @@ public class AgendamentoTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 1, 7, 8);
+        List<Integer> columnsNotEditable = List.of(0, 1);
         return !columnsNotEditable.contains(columnIndex);
     }
 }

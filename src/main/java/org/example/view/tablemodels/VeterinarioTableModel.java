@@ -12,16 +12,20 @@ public class VeterinarioTableModel extends GenericTableModel {
     VeterinarioController veterinarioController = VeterinarioController.getInstance();
 
     public VeterinarioTableModel(List vDados) {
-        super(vDados, new String[]{"Id", "Nome", "Quantidade de Agendamentos"});
+        super(vDados, new String[]{"Nome", "Quantidade de Agendamentos"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 2 -> Integer.class;
-            case 1 -> String.class;
+            case 0 -> String.class;
+            case 1 -> Integer.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
+    }
+
+    public Veterinario getVeterinario(int rowIndex) {
+        return (Veterinario) vDados.get(rowIndex);
     }
 
     @Override
@@ -29,9 +33,8 @@ public class VeterinarioTableModel extends GenericTableModel {
         Veterinario veterinario = (Veterinario) vDados.get(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> veterinario.getId();
-            case 1 -> veterinario.getNome();
-            case 2 -> veterinario.getAgendamentos().size();
+            case 0 -> veterinario.getNome();
+            case 1 -> veterinario.getAgendamentos().size();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -40,7 +43,7 @@ public class VeterinarioTableModel extends GenericTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Veterinario veterinario = (Veterinario) vDados.get(rowIndex);
 
-        if (columnIndex == 1) {
+        if (columnIndex == 0) {
             veterinario.setNome((String) aValue);
         } else {
             throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -55,7 +58,6 @@ public class VeterinarioTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex != 0 && columnIndex != 2;
+        return columnIndex != 1;
     }
-
 }

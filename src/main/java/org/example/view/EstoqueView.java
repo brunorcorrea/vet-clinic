@@ -26,11 +26,12 @@ public class EstoqueView {
     private JTextField quantidadeMinimaTextField;
     private JButton adicionarProdutoButton;
     private JButton removerProdutoButton;
+    private EstoqueTableModel tableModel;
 
     public EstoqueView() {
         $$$setupUI$$$();
         configureListeners();
-        buscarEstoqueEProduto();
+        loadEstoqueEProduto();
     }
 
     private void configureListeners() {
@@ -50,7 +51,7 @@ public class EstoqueView {
 
             viewController.adicionarProduto(nome, tipo, preco, quantidade, quantidadeMinima);
             clearInputs();
-            buscarEstoqueEProduto();
+            loadEstoqueEProduto();
         } catch (Exception ex) {
             handleException("Erro ao adicionar produto", ex);
         }
@@ -66,22 +67,23 @@ public class EstoqueView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int estoqueId = (Integer) estoqueTable.getValueAt(i, 0);
-                    viewController.removerProduto(estoqueId);
+                    int estoqueId = tableModel.getEstoqueProduto(i).getIdEstoque();
+                    int produtoId = tableModel.getEstoqueProduto(i).getIdProduto();
+                    viewController.removerProduto(estoqueId, produtoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover produto", ex);
                 }
             }
-            buscarEstoqueEProduto();
+            loadEstoqueEProduto();
         }
     }
 
-    private void buscarEstoqueEProduto() {
+    private void loadEstoqueEProduto() {
         try {
-            EstoqueTableModel model = viewController.criarEstoqueTableModel();
-            estoqueTable.setModel(model);
+            tableModel = viewController.criarEstoqueTableModel();
+            estoqueTable.setModel(tableModel);
         } catch (Exception e) {
-            handleException("Erro ao listar estoque ou produtos", e);
+            handleException("Erro ao listar produtos.", e);
         }
     }
 

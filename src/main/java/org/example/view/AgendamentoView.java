@@ -4,7 +4,6 @@ import com.github.lgooddatepicker.components.DateTimePicker;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.example.controller.AgendamentoViewController;
-import org.example.model.Agendamento;
 import org.example.model.Paciente;
 import org.example.model.StatusAgendamento;
 import org.example.model.Veterinario;
@@ -28,6 +27,7 @@ public class AgendamentoView {
     private JButton adicionarAgendamentoButton;
     private JButton removerAgendamentoButton;
     private DateTimePicker dataHoraDateTimePicker;
+    private AgendamentoTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
     private List<Veterinario> veterinarios = new ArrayList<>();
@@ -35,7 +35,7 @@ public class AgendamentoView {
     public AgendamentoView() {
         initializeComponents();
         configureListeners();
-        buscarAgendamentos();
+        loadAgendamentos();
     }
 
     private void initializeComponents() {
@@ -78,7 +78,7 @@ public class AgendamentoView {
             viewController.adicionarAgendamento(paciente, veterinario, servico, status, dataHora);
             servicoTextField.setText("");
             dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
-            buscarAgendamentos();
+            loadAgendamentos();
         } catch (Exception ex) {
             handleException("Erro ao adicionar agendamento", ex);
         }
@@ -96,20 +96,20 @@ public class AgendamentoView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int agendamentoId = (Integer) agendamentoTable.getValueAt(i, 0);
+                    int agendamentoId = tableModel.getAgendamento(i).getId();
                     viewController.removerAgendamento(agendamentoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover agendamento", ex);
                 }
             }
-            buscarAgendamentos();
+            loadAgendamentos();
         }
     }
 
-    private void buscarAgendamentos() {
+    private void loadAgendamentos() {
         try {
-            List<Agendamento> agendamentos = viewController.listarAgendamentos();
-            agendamentoTable.setModel(new AgendamentoTableModel(agendamentos));
+            tableModel = viewController.criarAgendamentoTableModel();
+            agendamentoTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar agendamentos", e);
         }

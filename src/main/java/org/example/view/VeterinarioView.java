@@ -16,6 +16,7 @@ public class VeterinarioView {
     private JButton adicionarVeterinarioButton;
     private JTextField nomeVeterinarioTextField;
     private JButton removerVeterinarioButton;
+    private VeterinarioTableModel tableModel;
 
     public VeterinarioView() {
         configureListeners();
@@ -55,7 +56,7 @@ public class VeterinarioView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int veterinarioId = (Integer) veterinarioTable.getValueAt(i, 0);
+                    int veterinarioId = tableModel.getVeterinario(i).getId();
                     viewController.removerVeterinario(veterinarioId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover veterinário", ex);
@@ -67,8 +68,8 @@ public class VeterinarioView {
 
     private void loadVeterinarios() {
         try {
-            VeterinarioTableModel model = viewController.criarVeterinarioTableModel();
-            veterinarioTable.setModel(model);
+            tableModel = viewController.criarVeterinarioTableModel();
+            veterinarioTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar veterinários", e);
         }

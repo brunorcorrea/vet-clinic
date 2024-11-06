@@ -9,6 +9,8 @@ import org.example.view.tablemodels.PacienteTableModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +36,8 @@ public class PacienteView {
     private JButton adicionarFotoButton;
     private JLabel imagemLabel;
     private JComboBox<String> proprietarioComboBox;
+    private JTextField filtroProprietarioNomeTextField;
+    private PacienteTableModel tableModel;
 
     private byte[] uploadedImageBytes;
     private List<Proprietario> proprietarios = new ArrayList<>();
@@ -41,7 +45,7 @@ public class PacienteView {
     public PacienteView() {
         initializeComponents();
         configureListeners();
-        loadPacientes();
+        loadPacientes(filtroProprietarioNomeTextField.getText().trim());
     }
 
     private void initializeComponents() {
@@ -62,6 +66,28 @@ public class PacienteView {
         adicionarPacienteButton.addActionListener(this::adicionarPaciente);
         removerPacienteButton.addActionListener(this::removerPaciente);
         adicionarFotoButton.addActionListener(this::adicionarFoto);
+
+        filtroProprietarioNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            private void filterPacientes() {
+                String text = filtroProprietarioNomeTextField.getText().trim();
+                loadPacientes(text);
+            }
+        });
     }
 
     private void adicionarPaciente(ActionEvent e) {
@@ -80,7 +106,7 @@ public class PacienteView {
 
             viewController.adicionarPaciente(nome, estadoCastracao, raca, idade, coloracao, especie, foto, proprietario);
             clearInputs();
-            loadPacientes();
+            loadPacientes(filtroProprietarioNomeTextField.getText().trim());
         } catch (Exception ex) {
             handleException("Erro ao cadastrar paciente", ex);
         }
@@ -97,13 +123,17 @@ public class PacienteView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int pacienteId = (Integer) pacienteTable.getValueAt(i, 0);
+                    int pacienteId = tableModel.getPaciente(i).getId();
+                    //TODO remover agendamentos
+                    //TODO remover faturamento
+                    //TODO remover histórico
+                    //TODO remover receita médica
                     viewController.removerPaciente(pacienteId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover paciente", ex);
                 }
             }
-            loadPacientes();
+            loadPacientes(filtroProprietarioNomeTextField.getText().trim());
         }
     }
 
@@ -123,10 +153,10 @@ public class PacienteView {
         }
     }
 
-    private void loadPacientes() {
+    private void loadPacientes(String nomeProprietario) {
         try {
-            PacienteTableModel model = viewController.criarPacienteTableModel();
-            pacienteTable.setModel(model);
+            tableModel = viewController.criarPacienteTableModel(nomeProprietario);
+            pacienteTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar pacientes", e);
         }
@@ -197,7 +227,7 @@ public class PacienteView {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, BorderLayout.CENTER);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -256,6 +286,14 @@ public class PacienteView {
         removerPacienteButton = new JButton();
         removerPacienteButton.setText("Remover Paciente");
         panel2.add(removerPacienteButton, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label9 = new JLabel();
+        label9.setText("Buscar por proprietário:");
+        panel3.add(label9, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        filtroProprietarioNomeTextField = new JTextField();
+        panel3.add(filtroProprietarioNomeTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
