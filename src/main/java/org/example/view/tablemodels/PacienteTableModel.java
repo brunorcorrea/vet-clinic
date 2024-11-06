@@ -26,6 +26,10 @@ public class PacienteTableModel extends GenericTableModel {
         };
     }
 
+    public Paciente getPaciente(int rowIndex) {
+        return (Paciente) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Paciente paciente = (Paciente) vDados.get(rowIndex);

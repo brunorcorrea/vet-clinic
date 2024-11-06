@@ -37,6 +37,7 @@ public class PacienteView {
     private JLabel imagemLabel;
     private JComboBox<String> proprietarioComboBox;
     private JTextField filtroProprietarioNomeTextField;
+    private PacienteTableModel tableModel;
 
     private byte[] uploadedImageBytes;
     private List<Proprietario> proprietarios = new ArrayList<>();
@@ -122,7 +123,7 @@ public class PacienteView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int pacienteId = (Integer) pacienteTable.getValueAt(i, 0);
+                    int pacienteId = tableModel.getPaciente(i).getId();
                     //TODO remover agendamentos
                     //TODO remover faturamento
                     //TODO remover histórico
@@ -154,8 +155,8 @@ public class PacienteView {
 
     private void loadPacientes(String nomeProprietario) {
         try {
-            PacienteTableModel model = viewController.criarPacienteTableModel(nomeProprietario);
-            pacienteTable.setModel(model);
+            tableModel = viewController.criarPacienteTableModel(nomeProprietario);
+            pacienteTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar pacientes", e);
         }
