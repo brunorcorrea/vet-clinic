@@ -40,10 +40,14 @@ public class EstoqueViewController {
         estoqueController.adicionarEstoque(estoque);
     }
 
-    public void removerProduto(int estoqueId) throws Exception {
-        Estoque estoque = estoqueController.obterEstoquePorId(estoqueId);
+    public void removerProduto(int estoqueId, int produtoId) throws Exception {
+        Estoque estoque = new Estoque();
+        estoque.setId(estoqueId);
         estoqueController.removerEstoque(estoque);
-        produtoController.removerProduto(estoque.getProduto());
+
+        Produto produto = new Produto();
+        produto.setId(produtoId);
+        produtoController.removerProduto(produto);
     }
 
     public EstoqueTableModel criarEstoqueTableModel() throws Exception {

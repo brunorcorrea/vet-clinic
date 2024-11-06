@@ -29,6 +29,10 @@ public class EstoqueTableModel extends GenericTableModel {
         };
     }
 
+    public EstoqueProduto getEstoqueProduto(int rowIndex) {
+        return (EstoqueProduto) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         EstoqueProduto estoqueProduto = (EstoqueProduto) vDados.get(rowIndex);
