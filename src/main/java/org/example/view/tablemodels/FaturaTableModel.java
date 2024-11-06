@@ -27,6 +27,10 @@ public class FaturaTableModel extends GenericTableModel {
         };
     }
 
+    public Faturamento getFaturamento(int rowIndex) {
+        return (Faturamento) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Faturamento faturamento = (Faturamento) vDados.get(rowIndex);

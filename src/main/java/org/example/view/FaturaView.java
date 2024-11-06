@@ -26,13 +26,14 @@ public class FaturaView {
     private JButton adicionarFaturaButton;
     private JButton removerFaturaButton;
     private DateTimePicker dataVencimentoDateTimePicker;
+    private FaturaTableModel tableModel;
 
     private List<Proprietario> proprietarios = new ArrayList<>();
 
     public FaturaView() {
         initializeComponents();
         configureListeners();
-        buscarFaturamentos();
+        loadFaturamentos();
     }
 
     private void initializeComponents() {
@@ -66,7 +67,7 @@ public class FaturaView {
 
             viewController.adicionarFatura(proprietario, valorTotal, status, dataVencimento);
             clearInputs();
-            buscarFaturamentos();
+            loadFaturamentos();
         } catch (Exception ex) {
             handleException("Erro ao adicionar fatura", ex);
         }
@@ -82,13 +83,13 @@ public class FaturaView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int faturamentoId = (Integer) faturaTable.getValueAt(i, 0);
+                    int faturamentoId = tableModel.getFaturamento(i).getId();
                     viewController.removerFatura(faturamentoId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover fatura", ex);
                 }
             }
-            buscarFaturamentos();
+            loadFaturamentos();
         }
     }
 
@@ -99,10 +100,10 @@ public class FaturaView {
         dataVencimentoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
     }
 
-    private void buscarFaturamentos() {
+    private void loadFaturamentos() {
         try {
-            FaturaTableModel model = viewController.criarFaturaTableModel();
-            faturaTable.setModel(model);
+            tableModel = viewController.criarFaturaTableModel();
+            faturaTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar faturamentos", e);
         }
