@@ -47,12 +47,12 @@ public class PacienteViewController {
         return new PacienteTableModel(pacientes);
     }
 
-    private void filtrarPacientes(List<Paciente> pacientes, String nomeProprietario) throws Exception {
+    private void filtrarPacientes(List<Paciente> pacientes, String nomeProprietario) {
         pacientes.removeIf(paciente -> shouldRemovePaciente(nomeProprietario, paciente));
     }
 
     private boolean shouldRemovePaciente(String nomeProprietario, Paciente paciente) {
         return paciente != null && paciente.getProprietario() != null &&
-                !paciente.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase());
+                !paciente.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase()); //TODO if proprietario is null, should it be removed, yes, it should
     }
 }

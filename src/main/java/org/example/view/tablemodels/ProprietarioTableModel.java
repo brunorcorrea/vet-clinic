@@ -23,7 +23,6 @@ public class ProprietarioTableModel extends GenericTableModel {
         };
     }
 
-
     public Proprietario getProprietario(int rowIndex) {
         return (Proprietario) vDados.get(rowIndex);
     }

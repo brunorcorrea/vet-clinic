@@ -26,6 +26,10 @@ public class AgendamentoTableModel extends GenericTableModel {
         };
     }
 
+    public Agendamento getAgendamento(int rowIndex) {
+        return (Agendamento) vDados.get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Agendamento agendamento = (Agendamento) vDados.get(rowIndex);
