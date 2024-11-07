@@ -85,7 +85,7 @@ public class EstoqueView {
     private void removerProduto(ActionEvent e) {
         int[] selectedRows = estoqueTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um produto!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um produto", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) produto(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);

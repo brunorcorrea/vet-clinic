@@ -115,7 +115,7 @@ public class PacienteView {
     private void removerPaciente(ActionEvent e) {
         int[] selectedRows = pacienteTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um paciente!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um paciente", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

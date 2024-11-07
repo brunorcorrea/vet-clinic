@@ -3,6 +3,7 @@ package org.example.view;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import org.example.dao.DAO;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -48,6 +49,7 @@ public class MainView {
         sairButton.addActionListener(e -> {
             int response = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (response == JOptionPane.YES_OPTION) {
+                DAO.closeConnection();
                 System.exit(0);
             }
         });

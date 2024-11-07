@@ -113,7 +113,7 @@ public class AgendamentoView {
         int[] selectedRows = agendamentoTable.getSelectedRows();
 
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um agendamento!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um agendamento", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

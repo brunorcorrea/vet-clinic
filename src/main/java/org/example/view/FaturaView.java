@@ -101,7 +101,7 @@ public class FaturaView {
     private void removerFatura(ActionEvent e) {
         int[] selectedRows = faturaTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos uma fatura!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos uma fatura", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a(s) fatura(s) selecionada(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);

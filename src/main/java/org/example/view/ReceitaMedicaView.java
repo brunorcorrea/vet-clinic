@@ -77,7 +77,7 @@ public class ReceitaMedicaView {
         int[] selectedRows = receitaMedicaTable.getSelectedRows();
 
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos uma receita médica!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos uma receita médica", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -106,22 +106,22 @@ public class ReceitaMedicaView {
 
     private boolean validateInputs(Paciente paciente, List<String> medicamentos, List<String> observacoes, LocalDateTime dataEmissao) {
         if (paciente == null) {
-            JOptionPane.showMessageDialog(null, "Paciente inválido!");
+            JOptionPane.showMessageDialog(null, "Paciente inválido", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (medicamentos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Medicamentos inválidos!");
+            JOptionPane.showMessageDialog(null, "Medicamentos inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (observacoes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Observações inválidas!");
+            JOptionPane.showMessageDialog(null, "Observações inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (dataEmissao == null) {
-            JOptionPane.showMessageDialog(null, "Data e hora inválidas!");
+            JOptionPane.showMessageDialog(null, "Data e hora inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
