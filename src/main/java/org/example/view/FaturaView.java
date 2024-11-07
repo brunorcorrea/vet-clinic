@@ -61,20 +61,20 @@ public class FaturaView {
         filtroProprietarioNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterFaturas();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterFaturas();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterFaturas();
             }
 
-            private void filterPacientes() {
+            private void filterFaturas() {
                 String text = filtroProprietarioNomeTextField.getText().trim();
                 loadFaturamentos(text);
             }

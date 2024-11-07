@@ -42,20 +42,20 @@ public class ProprietarioView {
         filtroNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterProprietarios();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterProprietarios();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                filterPacientes();
+                filterProprietarios();
             }
 
-            private void filterPacientes() {
+            private void filterProprietarios() {
                 String text = filtroNomeTextField.getText().trim();
                 loadProprietarios(text);
             }
