@@ -27,8 +27,20 @@ public class ProprietarioViewController {
         return proprietarioController.listarProprietarios();
     }
 
-    public ProprietarioTableModel criarProprietarioTableModel() throws Exception {
+    public ProprietarioTableModel criarProprietarioTableModel(String nome) throws Exception {
         List<Proprietario> proprietarios = listarProprietarios();
+        if (nome != null && !nome.isEmpty()) {
+            filtrarProprietarios(proprietarios, nome);
+        }
+
         return new ProprietarioTableModel(proprietarios);
+    }
+
+    private void filtrarProprietarios(List<Proprietario> proprietarios, String nome) {
+        proprietarios.removeIf(proprietario -> shouldRemoveProprietario(nome, proprietario));
+    }
+
+    private boolean shouldRemoveProprietario(String nome, Proprietario proprietario) {
+        return proprietario != null && !proprietario.getNomeCompleto().toLowerCase().contains(nome.toLowerCase());
     }
 }

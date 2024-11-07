@@ -6,6 +6,8 @@ import org.example.controller.ProprietarioViewController;
 import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,18 +26,40 @@ public class ProprietarioView {
     private JTextField nomeCompletoTextField;
     private JTextField telefoneTextField;
     private JTextField enderecoTextField;
-    private JTextField textField1;
+    private JTextField filtroNomeTextField;
     private ProprietarioTableModel tableModel;
 
     public ProprietarioView() {
         $$$setupUI$$$();
         configureListeners();
-        loadProprietarios();
+        loadProprietarios(filtroNomeTextField.getText().trim());
     }
 
     private void configureListeners() {
         adicionarProprietarioButton.addActionListener(this::adicionarProprietario);
         removerProprietarioButton.addActionListener(this::removerProprietario);
+
+        filtroNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterPacientes();
+            }
+
+            private void filterPacientes() {
+                String text = filtroNomeTextField.getText().trim();
+                loadProprietarios(text);
+            }
+        });
     }
 
     private void adicionarProprietario(ActionEvent e) {
@@ -49,7 +73,7 @@ public class ProprietarioView {
 
             viewController.adicionarProprietario(cpf, nomeCompleto, telefone, endereco);
             clearInputs();
-            loadProprietarios();
+            loadProprietarios(filtroNomeTextField.getText().trim());
         } catch (Exception ex) {
             handleException("Erro ao cadastrar proprietário", ex);
         }
@@ -78,13 +102,13 @@ public class ProprietarioView {
                     handleException("Erro ao remover proprietário", ex);
                 }
             }
-            loadProprietarios();
+            loadProprietarios(filtroNomeTextField.getText().trim());
         }
     }
 
-    private void loadProprietarios() {
+    private void loadProprietarios(String nome) {
         try {
-            tableModel = viewController.criarProprietarioTableModel();
+            tableModel = viewController.criarProprietarioTableModel(nome);
             proprietarioTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar proprietários", e);
@@ -184,16 +208,13 @@ public class ProprietarioView {
         proprietarioTable = new JTable();
         scrollPane1.setViewportView(proprietarioTable);
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("Buscar por nome:");
         panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField1 = new JTextField();
-        panel3.add(textField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JButton button1 = new JButton();
-        button1.setText("Buscar Proprietário");
-        panel3.add(button1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        filtroNomeTextField = new JTextField();
+        panel3.add(filtroNomeTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
