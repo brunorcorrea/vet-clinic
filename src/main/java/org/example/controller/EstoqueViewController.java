@@ -50,16 +50,18 @@ public class EstoqueViewController {
         produtoController.removerProduto(produto);
     }
 
-    public EstoqueTableModel criarEstoqueTableModel() throws Exception {
-        List<Estoque> estoque = listarEstoque();
+    public EstoqueTableModel criarEstoqueTableModel(String nomeProdutoFiltro) throws Exception {
+        List<Estoque> estoques = listarEstoque();
         List<Produto> produtos = listarProdutos();
 
         List<EstoqueProduto> estoqueProdutos = new ArrayList<>();
-        for (int indice = 0; indice < estoque.size(); indice++) {
-            Estoque estoqueAtual = estoque.get(indice);
+        for (int indice = 0; indice < estoques.size(); indice++) {
+            Estoque estoqueAtual = estoques.get(indice);
             Produto produto = produtos.get(indice);
-            String necessitaReposicao = estoqueAtual.isNecessitaReposicao() ? "Sim" : "Não";
-            estoqueProdutos.add(new EstoqueProduto(estoqueAtual.getId(), produto.getId(), produto.getNome(), produto.getTipo(), produto.getPreco(), estoqueAtual.getQuantidade(), estoqueAtual.getQuantidadeMinima(), necessitaReposicao));
+            if (nomeProdutoFiltro == null || nomeProdutoFiltro.isEmpty() || produto.getNome().toLowerCase().contains(nomeProdutoFiltro.toLowerCase())) {
+                String necessitaReposicao = estoqueAtual.isNecessitaReposicao() ? "Sim" : "Não";
+                estoqueProdutos.add(new EstoqueProduto(estoqueAtual.getId(), produto.getId(), produto.getNome(), produto.getTipo(), produto.getPreco(), estoqueAtual.getQuantidade(), estoqueAtual.getQuantidadeMinima(), necessitaReposicao));
+            }
         }
 
         return new EstoqueTableModel(estoqueProdutos);

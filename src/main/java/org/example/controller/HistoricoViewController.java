@@ -36,8 +36,22 @@ public class HistoricoViewController {
         return historicoController.listarHistoricos();
     }
 
-    public HistoricoTableModel criarHistoricoTableModel() throws Exception {
+    public HistoricoTableModel criarHistoricoTableModel(String nomePaciente) throws Exception {
         List<Historico> historicos = listarHistoricos();
+
+        if (nomePaciente != null && !nomePaciente.isEmpty()) {
+            filtrarHistoricos(historicos, nomePaciente);
+        }
+
         return new HistoricoTableModel(historicos);
+    }
+
+    private void filtrarHistoricos(List<Historico> historicos, String nomePaciente) {
+        historicos.removeIf(historico -> shouldRemoveHistorico(nomePaciente, historico));
+    }
+
+    private boolean shouldRemoveHistorico(String nomePaciente, Historico historico) {
+        return historico != null && historico.getPaciente() != null &&
+                !historico.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase()); //TODO if paciente is null, should it be removed, yes, it should
     }
 }

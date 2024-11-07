@@ -42,8 +42,21 @@ public class AgendamentoViewController {
         return agendamentoController.listarAgendamentos();
     }
 
-    public AgendamentoTableModel criarAgendamentoTableModel() throws Exception {
+    public AgendamentoTableModel criarAgendamentoTableModel(String nomePaciente) throws Exception {
         List<Agendamento> agendamentos = listarAgendamentos();
+        if (nomePaciente != null && !nomePaciente.isEmpty()) {
+            filtrarAgendamentos(agendamentos, nomePaciente);
+        }
+
         return new AgendamentoTableModel(agendamentos);
+    }
+
+    private void filtrarAgendamentos(List<Agendamento> agendamentos, String nomePaciente) {
+        agendamentos.removeIf(agendamento -> shouldRemoveAgendamento(nomePaciente, agendamento));
+    }
+
+    private boolean shouldRemoveAgendamento(String nomePaciente, Agendamento agendamento) {
+        return agendamento != null && agendamento.getPaciente() != null &&
+                !agendamento.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase()); //TODO if paciente is null, should it be removed, yes, it should
     }
 }

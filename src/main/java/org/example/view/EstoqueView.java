@@ -6,6 +6,8 @@ import org.example.controller.EstoqueViewController;
 import org.example.view.tablemodels.EstoqueTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -26,17 +28,40 @@ public class EstoqueView {
     private JTextField quantidadeMinimaTextField;
     private JButton adicionarProdutoButton;
     private JButton removerProdutoButton;
+    private JTextField filtroProdutoNomeTextField;
     private EstoqueTableModel tableModel;
 
     public EstoqueView() {
         $$$setupUI$$$();
         configureListeners();
-        loadEstoqueEProduto();
+        loadEstoqueEProduto(filtroProdutoNomeTextField.getText().trim());
     }
 
     private void configureListeners() {
         adicionarProdutoButton.addActionListener(this::adicionarProduto);
         removerProdutoButton.addActionListener(this::removerProduto);
+
+        filtroProdutoNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterEstoques();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterEstoques();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterEstoques();
+            }
+
+            private void filterEstoques() {
+                String text = filtroProdutoNomeTextField.getText().trim();
+                loadEstoqueEProduto(text);
+            }
+        });
     }
 
     private void adicionarProduto(ActionEvent e) {
@@ -51,7 +76,7 @@ public class EstoqueView {
 
             viewController.adicionarProduto(nome, tipo, preco, quantidade, quantidadeMinima);
             clearInputs();
-            loadEstoqueEProduto();
+            loadEstoqueEProduto(filtroProdutoNomeTextField.getText().trim());
         } catch (Exception ex) {
             handleException("Erro ao adicionar produto", ex);
         }
@@ -74,13 +99,13 @@ public class EstoqueView {
                     handleException("Erro ao remover produto", ex);
                 }
             }
-            loadEstoqueEProduto();
+            loadEstoqueEProduto(filtroProdutoNomeTextField.getText().trim());
         }
     }
 
-    private void loadEstoqueEProduto() {
+    private void loadEstoqueEProduto(String nomeProduto) {
         try {
-            tableModel = viewController.criarEstoqueTableModel();
+            tableModel = viewController.criarEstoqueTableModel(nomeProduto);
             estoqueTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar produtos.", e);
@@ -180,7 +205,7 @@ public class EstoqueView {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, BorderLayout.CENTER);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -217,6 +242,15 @@ public class EstoqueView {
         removerProdutoButton = new JButton();
         removerProdutoButton.setText("Remover Produto");
         panel2.add(removerProdutoButton, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Buscar por produto:");
+        panel3.add(label6, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        filtroProdutoNomeTextField = new JTextField();
+        filtroProdutoNomeTextField.setText("");
+        panel3.add(filtroProdutoNomeTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
