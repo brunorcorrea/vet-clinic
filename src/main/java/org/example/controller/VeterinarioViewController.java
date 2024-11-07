@@ -24,8 +24,21 @@ public class VeterinarioViewController {
         return veterinarioController.listarVeterinarios();
     }
 
-    public VeterinarioTableModel criarVeterinarioTableModel() throws Exception {
+    public VeterinarioTableModel criarVeterinarioTableModel(String nome) throws Exception {
         List<Veterinario> veterinarios = listarVeterinarios();
+
+        if (nome != null && !nome.isEmpty()) {
+            filtrarVeterinarios(veterinarios, nome);
+        }
+
         return new VeterinarioTableModel(veterinarios);
+    }
+
+    private void filtrarVeterinarios(List<Veterinario> veterinarios, String nome) {
+        veterinarios.removeIf(veterinario -> shouldRemoveVeterinario(nome, veterinario));
+    }
+
+    private boolean shouldRemoveVeterinario(String nome, Veterinario veterinario) {
+        return veterinario != null && !veterinario.getNome().toLowerCase().contains(nome.toLowerCase());
     }
 }
