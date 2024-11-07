@@ -10,6 +10,8 @@ import org.example.model.Veterinario;
 import org.example.view.tablemodels.AgendamentoTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class AgendamentoView {
     private JButton adicionarAgendamentoButton;
     private JButton removerAgendamentoButton;
     private DateTimePicker dataHoraDateTimePicker;
+    private JTextField filtroPacienteNomeTextField;
     private AgendamentoTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
@@ -35,7 +38,7 @@ public class AgendamentoView {
     public AgendamentoView() {
         initializeComponents();
         configureListeners();
-        loadAgendamentos();
+        loadAgendamentos(filtroPacienteNomeTextField.getText().trim());
     }
 
     private void initializeComponents() {
@@ -63,6 +66,28 @@ public class AgendamentoView {
     private void configureListeners() {
         adicionarAgendamentoButton.addActionListener(this::adicionarAgendamento);
         removerAgendamentoButton.addActionListener(this::removerAgendamento);
+
+        filtroPacienteNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterAgendamentos();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterAgendamentos();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterAgendamentos();
+            }
+
+            private void filterAgendamentos() {
+                String text = filtroPacienteNomeTextField.getText().trim();
+                loadAgendamentos(text);
+            }
+        });
     }
 
     private void adicionarAgendamento(ActionEvent e) {
@@ -78,7 +103,7 @@ public class AgendamentoView {
             viewController.adicionarAgendamento(paciente, veterinario, servico, status, dataHora);
             servicoTextField.setText("");
             dataHoraDateTimePicker.setDateTimePermissive(LocalDateTime.now());
-            loadAgendamentos();
+            loadAgendamentos(filtroPacienteNomeTextField.getText().trim());
         } catch (Exception ex) {
             handleException("Erro ao adicionar agendamento", ex);
         }
@@ -102,13 +127,13 @@ public class AgendamentoView {
                     handleException("Erro ao remover agendamento", ex);
                 }
             }
-            loadAgendamentos();
+            loadAgendamentos(filtroPacienteNomeTextField.getText().trim());
         }
     }
 
-    private void loadAgendamentos() {
+    private void loadAgendamentos(String nomePaciente) {
         try {
-            tableModel = viewController.criarAgendamentoTableModel();
+            tableModel = viewController.criarAgendamentoTableModel(nomePaciente);
             agendamentoTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar agendamentos", e);
@@ -159,7 +184,7 @@ public class AgendamentoView {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, BorderLayout.CENTER);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -201,6 +226,14 @@ public class AgendamentoView {
         removerAgendamentoButton = new JButton();
         removerAgendamentoButton.setText("Remover Agendamento");
         panel2.add(removerAgendamentoButton, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Busca por paciente:");
+        panel3.add(label6, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        filtroPacienteNomeTextField = new JTextField();
+        panel3.add(filtroPacienteNomeTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
