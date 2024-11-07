@@ -35,8 +35,22 @@ public class FaturaViewController {
         return faturamentoController.listarFaturamentos();
     }
 
-    public FaturaTableModel criarFaturaTableModel() throws Exception {
+    public FaturaTableModel criarFaturaTableModel(String nomeProprietario) throws Exception {
         List<Faturamento> faturamentos = listarFaturamentos();
+
+        if (nomeProprietario != null && !nomeProprietario.isEmpty()) {
+            filtrarFaturamentos(faturamentos, nomeProprietario);
+        }
+
         return new FaturaTableModel(faturamentos);
+    }
+
+    private void filtrarFaturamentos(List<Faturamento> faturamentos, String nomeProprietario) {
+        faturamentos.removeIf(faturamento -> shouldRemoveFaturamento(nomeProprietario, faturamento));
+    }
+
+    private boolean shouldRemoveFaturamento(String nomeProprietario, Faturamento faturamento) {
+        return faturamento != null && faturamento.getProprietario() != null &&
+                !faturamento.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase()); //TODO if proprietario is null, should it be removed, yes, it should
     }
 }
