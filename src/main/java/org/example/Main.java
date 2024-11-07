@@ -1,8 +1,11 @@
 package org.example;
 
+import org.example.dao.DAO;
 import org.example.view.MainView;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +22,13 @@ public class Main {
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
+
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    DAO.closeConnection();
+                }
+            });
         });
     }
 }
