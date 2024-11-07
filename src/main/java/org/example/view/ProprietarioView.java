@@ -83,7 +83,7 @@ public class ProprietarioView {
         int[] selectedRows = proprietarioTable.getSelectedRows();
 
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um proprietário!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um proprietário", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -117,15 +117,15 @@ public class ProprietarioView {
 
     private void validateInputs(String cpf, String nomeCompleto, String telefone, String endereco) {
         if (cpf.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty() || endereco.isEmpty()) {
-            throw new IllegalArgumentException("Preencha todos os campos!");
+            throw new IllegalArgumentException("Preencha todos os campos");
         }
 
         if (!isCPFValid(cpf)) {
-            throw new IllegalArgumentException("CPF inválido!");
+            throw new IllegalArgumentException("CPF inválido");
         }
 
         if (!isTelefoneValid(telefone)) {
-            throw new IllegalArgumentException("Telefone inválido!");
+            throw new IllegalArgumentException("Telefone inválido");
         }
     }
 

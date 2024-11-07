@@ -103,9 +103,9 @@ public class EstoqueTableModel extends GenericTableModel {
             produtoController.editarProduto(produto);
             estoqueController.editarEstoque(estoque);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao editar produto/estoque: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }

@@ -100,7 +100,7 @@ public class HistoricoView {
     private void removerHistorico(ActionEvent e) {
         int[] selectedRows = historicoTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um histórico!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um histórico", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) histórico(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);

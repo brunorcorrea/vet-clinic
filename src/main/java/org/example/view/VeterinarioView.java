@@ -56,7 +56,7 @@ public class VeterinarioView {
     private void adicionarVeterinario(ActionEvent e) {
         String nomeVeterinario = nomeVeterinarioTextField.getText().trim();
         if (nomeVeterinario.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nome do veterinário não pode ser vazio");
+            JOptionPane.showMessageDialog(null, "Nome do veterinário não pode ser vazio", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -73,7 +73,7 @@ public class VeterinarioView {
     private void removerVeterinario(ActionEvent e) {
         int[] selectedRows = veterinarioTable.getSelectedRows();
         if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(null, "Selecione ao menos um veterinário!");
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um veterinário", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -130,7 +130,7 @@ public class VeterinarioView {
         mainPanel.add(panel1, BorderLayout.CENTER);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         nomeVeterinarioTextField = new JTextField();
         nomeVeterinarioTextField.setText("");
         nomeVeterinarioTextField.setToolTipText("Nome do Veterinário");
