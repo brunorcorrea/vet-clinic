@@ -52,7 +52,8 @@ public class PacienteViewController {
     }
 
     private boolean shouldRemovePaciente(String nomeProprietario, Paciente paciente) {
-        return paciente != null && paciente.getProprietario() != null &&
-                !paciente.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase()); //TODO if proprietario is null, should it be removed, yes, it should
+        return paciente == null || paciente.getProprietario() == null ||
+                paciente.getProprietario().getNomeCompleto() == null ||
+                !paciente.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase());
     }
 }

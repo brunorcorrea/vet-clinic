@@ -50,7 +50,8 @@ public class FaturaViewController {
     }
 
     private boolean shouldRemoveFaturamento(String nomeProprietario, Faturamento faturamento) {
-        return faturamento != null && faturamento.getProprietario() != null &&
-                !faturamento.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase()); //TODO if proprietario is null, should it be removed, yes, it should
+        return faturamento == null || faturamento.getProprietario() == null ||
+                faturamento.getProprietario().getNomeCompleto() == null ||
+                !faturamento.getProprietario().getNomeCompleto().toLowerCase().contains(nomeProprietario.toLowerCase());
     }
 }
