@@ -124,6 +124,10 @@ public class ProprietarioView {
             throw new IllegalArgumentException("CPF inválido");
         }
 
+        if (tableModel.hasProprietarioWithCPF(cpf)) {
+            throw new IllegalArgumentException("Já existe um proprietário com o CPF informado");
+        }
+
         if (!isTelefoneValid(telefone)) {
             throw new IllegalArgumentException("Telefone inválido");
         }

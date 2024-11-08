@@ -41,6 +41,7 @@ public class ProprietarioViewController {
     }
 
     private boolean shouldRemoveProprietario(String nome, Proprietario proprietario) {
-        return proprietario != null && !proprietario.getNomeCompleto().toLowerCase().contains(nome.toLowerCase());
+        return proprietario == null || proprietario.getNomeCompleto() == null ||
+                !proprietario.getNomeCompleto().toLowerCase().contains(nome.toLowerCase());
     }
 }

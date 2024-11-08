@@ -39,6 +39,7 @@ public class VeterinarioViewController {
     }
 
     private boolean shouldRemoveVeterinario(String nome, Veterinario veterinario) {
-        return veterinario != null && !veterinario.getNome().toLowerCase().contains(nome.toLowerCase());
+        return veterinario == null || veterinario.getNome() == null ||
+                !veterinario.getNome().toLowerCase().contains(nome.toLowerCase());
     }
 }

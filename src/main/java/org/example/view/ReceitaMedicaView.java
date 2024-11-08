@@ -56,13 +56,14 @@ public class ReceitaMedicaView {
     }
 
     private void adicionarReceitaMedica(ActionEvent e) {
-        List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
-        List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
+        String medicamentosText = medicamentosTextArea.getText();
         LocalDateTime dataEmissao = dataEmissaoDateTimePicker.getDateTimePermissive();
         int pacienteIndex = pacienteComboBox.getSelectedIndex();
 
-        if (!validateInputs(pacienteIndex, medicamentos, observacoes, dataEmissao)) return;
+        if (!validateInputs(pacienteIndex, medicamentosText, dataEmissao)) return;
 
+        List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
+        List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
         Paciente paciente = pacientes.get(pacienteIndex);
         try {
             viewController.adicionarReceitaMedica(paciente, medicamentos, observacoes, dataEmissao);
@@ -105,19 +106,14 @@ public class ReceitaMedicaView {
         }
     }
 
-    private boolean validateInputs(int pacienteIndex, List<String> medicamentos, List<String> observacoes, LocalDateTime dataEmissao) {
+    private boolean validateInputs(int pacienteIndex, String medicamentos, LocalDateTime dataEmissao) {
         if (pacienteIndex < 0 || pacienteIndex >= pacientes.size()) {
             JOptionPane.showMessageDialog(null, "Paciente inválido", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        if (medicamentos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Medicamentos inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (observacoes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Observações inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (medicamentos == null || medicamentos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Medicamentos não podem ser vazios", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

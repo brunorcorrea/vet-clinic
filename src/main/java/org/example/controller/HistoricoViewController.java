@@ -51,7 +51,8 @@ public class HistoricoViewController {
     }
 
     private boolean shouldRemoveHistorico(String nomePaciente, Historico historico) {
-        return historico != null && historico.getPaciente() != null &&
-                !historico.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase()); //TODO if paciente is null, should it be removed, yes, it should
+        return historico == null || historico.getPaciente() == null ||
+                historico.getPaciente().getNome() == null ||
+                !historico.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase());
     }
 }

@@ -56,7 +56,8 @@ public class AgendamentoViewController {
     }
 
     private boolean shouldRemoveAgendamento(String nomePaciente, Agendamento agendamento) {
-        return agendamento != null && agendamento.getPaciente() != null &&
-                !agendamento.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase()); //TODO if paciente is null, should it be removed, yes, it should
+        return agendamento == null || agendamento.getPaciente() == null ||
+                agendamento.getPaciente().getNome() == null ||
+                !agendamento.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase());
     }
 }
