@@ -79,7 +79,7 @@ public class VeterinarioView {
             return;
         }
 
-        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) veterinário(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) veterinário(s) selecionado(s) e todos os seus dados relacionados?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
@@ -88,7 +88,7 @@ public class VeterinarioView {
 
                     agendamentoViewController.removerAgendamentosPorVeterinario(veterinarioId);
                 } catch (Exception ex) {
-                    handleException("Erro ao remover veterinário", ex);
+                    handleException("Erro ao remover veterinário e seus dados relacionados", ex);
                 }
             }
             loadVeterinarios(filtroNomeTextField.getText().trim());

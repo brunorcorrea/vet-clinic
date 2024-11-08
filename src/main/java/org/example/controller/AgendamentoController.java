@@ -39,4 +39,8 @@ public class AgendamentoController {
     public void removerAgendamentosPorVeterinario(int veterinarioId) throws SQLException {
         AgendamentoDAO.getInstance().excluirPorVeterinario(veterinarioId);
     }
+
+    public void removerAgendamentosPorPaciente(int pacienteId) throws SQLException {
+        AgendamentoDAO.getInstance().excluirPorPaciente(pacienteId);
+    }
 }

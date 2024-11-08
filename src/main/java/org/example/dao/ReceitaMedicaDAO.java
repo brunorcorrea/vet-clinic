@@ -39,6 +39,14 @@ public class ReceitaMedicaDAO extends DAO {
         }
     }
 
+    public void excluirPorPaciente(int pacienteId) throws SQLException {
+        String sql = "DELETE FROM receitaMedica WHERE idPaciente = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, pacienteId);
+            stmt.executeUpdate();
+        }
+    }
+
     public void editar(ReceitaMedica receita) throws SQLException {
         String sql = "UPDATE receitaMedica SET idPaciente = ?, medicamentos = ?, dataEmissao = ?, observacoes = ? WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {

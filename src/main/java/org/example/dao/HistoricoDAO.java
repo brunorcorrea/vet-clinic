@@ -40,6 +40,14 @@ public class HistoricoDAO extends DAO {
         }
     }
 
+    public void excluirPorPaciente(int pacienteId) throws SQLException {
+        String sql = "DELETE FROM historico WHERE idPaciente = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, pacienteId);
+            stmt.executeUpdate();
+        }
+    }
+
     public void editar(Historico historico) throws SQLException {
         String sql = "UPDATE historico SET idPaciente = ?, vacinas = ?, doencas = ?, peso = ?, observacoes = ?, dataHora = ? WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {

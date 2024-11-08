@@ -35,4 +35,8 @@ public class ReceitaMedicaController {
     public void removerReceitaMedica(ReceitaMedica receitaMedica) throws SQLException {
         ReceitaMedicaDAO.getInstance().excluir(receitaMedica.getId());
     }
+
+    public void removerReceitasPorPaciente(int pacienteId) throws SQLException {
+        ReceitaMedicaDAO.getInstance().excluirPorPaciente(pacienteId);
+    }
 }

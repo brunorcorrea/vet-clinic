@@ -2,7 +2,10 @@ package org.example.view;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.example.controller.FaturaViewController;
+import org.example.controller.PacienteViewController;
 import org.example.controller.ProprietarioViewController;
+import org.example.model.Proprietario;
 import org.example.view.tablemodels.ProprietarioTableModel;
 
 import javax.swing.*;
@@ -12,12 +15,17 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Objects;
 
 import static org.example.utils.Validator.isCPFValid;
 import static org.example.utils.Validator.isTelefoneValid;
 
 public class ProprietarioView {
+
+    private final FaturaViewController faturaViewController = new FaturaViewController();
     private final ProprietarioViewController viewController = new ProprietarioViewController();
+    private final PacienteViewController pacienteViewController = new PacienteViewController();
     private JPanel mainPanel;
     private JTable proprietarioTable;
     private JButton adicionarProprietarioButton;
@@ -91,15 +99,26 @@ public class ProprietarioView {
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
-                    int proprietarioId = tableModel.getProprietario(i).getId();
+                    Proprietario proprietario = tableModel.getProprietario(i);
+                    int proprietarioId = proprietario.getId();
+
                     viewController.removerProprietario(proprietarioId);
-                    //TODO remover agendamentos
-                    //TODO remover faturamento
-                    //TODO remover histórico
-                    //TODO remover receita médica
-                    //TODO remover pacientes
+                    faturaViewController.removerFaturasPorProprietario(proprietarioId);
+
+                    List<Integer> pacientesIds = pacienteViewController.listarPacientesIdsPorProprietario(proprietarioId)
+                            .stream().filter(Objects::nonNull).toList();
+
+                    pacientesIds.forEach(
+                            pacienteId -> {
+                                try {
+                                    pacienteViewController.removerPaciente(pacienteId);
+                                } catch (Exception ex) {
+                                    handleException("Erro ao remover paciente", ex);
+                                }
+                            }
+                    );
                 } catch (Exception ex) {
-                    handleException("Erro ao remover proprietário", ex);
+                    handleException("Erro ao remover proprietário e seus dados relacionados", ex);
                 }
             }
             loadProprietarios(filtroNomeTextField.getText().trim());

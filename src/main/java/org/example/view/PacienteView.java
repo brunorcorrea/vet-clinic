@@ -119,18 +119,14 @@ public class PacienteView {
             return;
         }
 
-        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) paciente(s) selecionado(s)?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o(s) paciente(s) selecionado(s) e todos os seus dados relacionados?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
             for (int i : selectedRows) {
                 try {
                     int pacienteId = tableModel.getPaciente(i).getId();
-                    //TODO remover agendamentos
-                    //TODO remover faturamento
-                    //TODO remover histórico
-                    //TODO remover receita médica
                     viewController.removerPaciente(pacienteId);
                 } catch (Exception ex) {
-                    handleException("Erro ao remover paciente", ex);
+                    handleException("Erro ao remover paciente e seus dados relacionados", ex);
                 }
             }
             loadPacientes(filtroProprietarioNomeTextField.getText().trim());

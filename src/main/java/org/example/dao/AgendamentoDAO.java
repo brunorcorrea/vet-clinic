@@ -46,6 +46,14 @@ public class AgendamentoDAO extends DAO {
         }
     }
 
+    public void excluirPorPaciente(int pacienteId) throws SQLException {
+        String sql = "DELETE FROM agendamento WHERE idPaciente = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, pacienteId);
+            stmt.executeUpdate();
+        }
+    }
+
     public void editar(Agendamento agendamento) throws SQLException {
         String sql = "UPDATE agendamento SET idPaciente = ?, dataHora = ?, servico = ?, status = ? WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {

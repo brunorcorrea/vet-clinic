@@ -35,4 +35,8 @@ public class PacienteController {
     public void removerPaciente(Paciente paciente) throws SQLException {
         PacienteDAO.getInstance().excluir(paciente.getId());
     }
+
+    public List<Integer> listarPacientesIdsPorProprietario(int proprietarioId) throws SQLException {
+        return PacienteDAO.getInstance().listarIdsPorProprietario(proprietarioId);
+    }
 }

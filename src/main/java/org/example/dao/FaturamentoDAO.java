@@ -39,6 +39,14 @@ public class FaturamentoDAO extends DAO {
         }
     }
 
+    public void excluirPorProprietario(int proprietarioId) throws SQLException {
+        String sql = "DELETE FROM faturamento WHERE idProprietario = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, proprietarioId);
+            stmt.executeUpdate();
+        }
+    }
+
     public void editar(Faturamento faturamento) throws SQLException {
         String sql = "UPDATE faturamento SET idProprietario = ?, valorTotal = ?, status = ?, dataVencimento = ? WHERE id = ?";
         try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
