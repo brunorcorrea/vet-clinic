@@ -56,13 +56,14 @@ public class ReceitaMedicaView {
     }
 
     private void adicionarReceitaMedica(ActionEvent e) {
-        Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
         List<String> medicamentos = List.of(medicamentosTextArea.getText().split("\n"));
         List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
         LocalDateTime dataEmissao = dataEmissaoDateTimePicker.getDateTimePermissive();
+        int pacienteIndex = pacienteComboBox.getSelectedIndex();
 
-        if (!validateInputs(paciente, medicamentos, observacoes, dataEmissao)) return;
+        if (!validateInputs(pacienteIndex, medicamentos, observacoes, dataEmissao)) return;
 
+        Paciente paciente = pacientes.get(pacienteIndex);
         try {
             viewController.adicionarReceitaMedica(paciente, medicamentos, observacoes, dataEmissao);
             clearInputs();
@@ -104,8 +105,8 @@ public class ReceitaMedicaView {
         }
     }
 
-    private boolean validateInputs(Paciente paciente, List<String> medicamentos, List<String> observacoes, LocalDateTime dataEmissao) {
-        if (paciente == null) {
+    private boolean validateInputs(int pacienteIndex, List<String> medicamentos, List<String> observacoes, LocalDateTime dataEmissao) {
+        if (pacienteIndex < 0 || pacienteIndex >= pacientes.size()) {
             JOptionPane.showMessageDialog(null, "Paciente inválido", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }

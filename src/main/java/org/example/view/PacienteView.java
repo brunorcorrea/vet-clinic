@@ -99,11 +99,11 @@ public class PacienteView {
             String coloracao = coloracaoTextField.getText().trim();
             String especie = especieTextField.getText().trim();
             byte[] foto = (uploadedImageBytes != null) ? uploadedImageBytes : null;
-            String nomeProprietario = (String) proprietarioComboBox.getSelectedItem();
-            Proprietario proprietario = proprietarios.stream().filter(p -> p.getNomeCompleto().equals(nomeProprietario)).findFirst().orElse(null);
+            int proprietarioIndex = proprietarioComboBox.getSelectedIndex();
 
-            validateInputs(nome, estadoCastracao, raca, idade, coloracao, especie, proprietario);
+            validateInputs(nome, estadoCastracao, raca, idade, coloracao, especie, proprietarioIndex);
 
+            Proprietario proprietario = proprietarios.get(proprietarioIndex);
             viewController.adicionarPaciente(nome, estadoCastracao, raca, idade, coloracao, especie, foto, proprietario);
             clearInputs();
             loadPacientes(filtroProprietarioNomeTextField.getText().trim());
@@ -162,8 +162,8 @@ public class PacienteView {
         }
     }
 
-    private void validateInputs(String nome, String estadoCastracao, String raca, int idade, String coloracao, String especie, Proprietario proprietario) {
-        if (proprietario == null) {
+    private void validateInputs(String nome, String estadoCastracao, String raca, int idade, String coloracao, String especie, int proprietarioIndex) {
+        if (proprietarioIndex < 0 || proprietarioIndex >= proprietarios.size()) {
             throw new IllegalArgumentException("Proprietário inválido!");
         }
         if (idade < 0) {

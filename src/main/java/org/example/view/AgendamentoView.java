@@ -92,13 +92,16 @@ public class AgendamentoView {
 
     private void adicionarAgendamento(ActionEvent e) {
         try {
-            Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
-            Veterinario veterinario = veterinarios.get(veterinarioComboBox.getSelectedIndex());
             String servico = servicoTextField.getText().trim();
             StatusAgendamento status = StatusAgendamento.fromDescricao((String) statusComboBox.getSelectedItem());
             LocalDateTime dataHora = dataHoraDateTimePicker.getDateTimePermissive();
+            int pacienteIndex = pacienteComboBox.getSelectedIndex();
+            int veterinarioIndex = veterinarioComboBox.getSelectedIndex();
 
-            validateInputs(paciente, veterinario, servico, status, dataHora);
+            validateInputs(pacienteIndex, veterinarioIndex, servico, status, dataHora);
+
+            Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
+            Veterinario veterinario = veterinarios.get(veterinarioComboBox.getSelectedIndex());
 
             viewController.adicionarAgendamento(paciente, veterinario, servico, status, dataHora);
             servicoTextField.setText("");
@@ -140,11 +143,11 @@ public class AgendamentoView {
         }
     }
 
-    private void validateInputs(Paciente paciente, Veterinario veterinario, String servico, StatusAgendamento status, LocalDateTime dataHora) {
-        if (paciente == null) {
+    private void validateInputs(int pacienteIndex, int veterinarioIndex, String servico, StatusAgendamento status, LocalDateTime dataHora) {
+        if (pacienteIndex < 0 || pacienteIndex >= pacientes.size()) {
             throw new IllegalArgumentException("Paciente inválido!");
         }
-        if (veterinario == null) {
+        if (veterinarioIndex < 0 || veterinarioIndex >= veterinarios.size()) {
             throw new IllegalArgumentException("Veterinário inválido!");
         }
         if (servico.isBlank()) {
