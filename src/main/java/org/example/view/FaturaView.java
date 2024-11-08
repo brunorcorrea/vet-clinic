@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,9 @@ public class FaturaView {
         try {
             StatusPagamento status = StatusPagamento.fromDescricao((String) statusComboBox.getSelectedItem());
             LocalDateTime dataVencimento = dataVencimentoDateTimePicker.getDateTimePermissive();
-            double valorTotal = Double.parseDouble(valorTotalTextField.getText().trim());
+
+            NumberFormat format = NumberFormat.getInstance();
+            double valorTotal = format.parse(valorTotalTextField.getText()).doubleValue();
             int proprietarioIndex = proprietarioComboBox.getSelectedIndex();
 
             validateInputs(proprietarioIndex, valorTotal, status, dataVencimento);
@@ -125,7 +128,7 @@ public class FaturaView {
     }
 
     private void clearInputs() {
-        valorTotalTextField.setText("");
+        setDefaultValorTotalTextFieldValue();
         proprietarioComboBox.setSelectedIndex(0);
         statusComboBox.setSelectedIndex(0);
         dataVencimentoDateTimePicker.setDateTimePermissive(LocalDateTime.now());
