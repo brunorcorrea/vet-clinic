@@ -49,7 +49,16 @@ public class FaturaTableModel extends GenericTableModel {
         Faturamento faturamento = (Faturamento) vDados.get(rowIndex);
 
         if (columnIndex == 2) {
-            faturamento.setStatus(StatusPagamento.fromDescricao((String) aValue));
+
+            String status = ((String) aValue).trim();
+            try {
+                faturamento.setStatus(StatusPagamento.fromDescricao(status));
+            } catch (IllegalArgumentException e) {
+                String message = "Status inválido: " + status + ". Os status válidos são: " + StatusPagamento.EM_ATRASO.getDescricao() + ", " + StatusPagamento.PAGO.getDescricao() + " ou " + StatusPagamento.PENDENTE.getDescricao() + ".";
+                JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
         } else {
             throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }

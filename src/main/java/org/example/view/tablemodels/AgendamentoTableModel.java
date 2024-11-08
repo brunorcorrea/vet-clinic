@@ -53,7 +53,6 @@ public class AgendamentoTableModel extends GenericTableModel {
             case 3 -> agendamento.setServico((String) aValue);
             case 4 -> {
                 String status = ((String) aValue).trim();
-                status = status.substring(0, 1).toUpperCase() + status.substring(1).toLowerCase();
                 try {
                     agendamento.setStatus(StatusAgendamento.fromDescricao(status));
                 } catch (IllegalArgumentException e) {
