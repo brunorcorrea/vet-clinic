@@ -3,14 +3,29 @@ package org.example.view;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.ListItem;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
 import org.example.controller.ReceitaMedicaViewController;
 import org.example.model.Paciente;
+import org.example.model.ReceitaMedica;
 import org.example.view.tablemodels.ReceitaMedicaTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +40,7 @@ public class ReceitaMedicaView {
     private JTextArea medicamentosTextArea;
     private JTextArea observacoesTextArea;
     private DateTimePicker dataEmissaoDateTimePicker;
+    private JButton gerarPdfButton;
     private ReceitaMedicaTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
@@ -43,6 +59,69 @@ public class ReceitaMedicaView {
     private void configureListeners() {
         adicionarReceitaMedicaButton.addActionListener(this::adicionarReceitaMedica);
         removerReceitaMedicaButton.addActionListener(this::removerReceitaMedica);
+        gerarPdfButton.addActionListener(this::gerarPdf);
+    }
+
+    private void gerarPdf(ActionEvent e) {
+        int selectedRow = receitaMedicaTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione uma receita médica para gerar o PDF", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ReceitaMedica receitaMedica = tableModel.getReceitaMedica(selectedRow);
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Salvar PDF");
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                gerarPdfReceitaMedica(receitaMedica, fileToSave.getAbsolutePath() + ".pdf");
+                JOptionPane.showMessageDialog(null, "PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                handleException("Erro ao gerar PDF", ex);
+            }
+        }
+    }
+
+    public void gerarPdfReceitaMedica(ReceitaMedica receitaMedica, String filePath) throws Exception {
+        PdfWriter writer = new PdfWriter(filePath);
+
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        String logoPath = "src/main/resources/vet-clinic-logo-200px.png";
+        ImageData imageData = ImageDataFactory.create(logoPath);
+        Image logo = new Image(imageData);
+        logo.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        document.add(logo);
+
+        document.add(new Paragraph("Receita Médica").setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
+
+        document.add(new Paragraph().add(new Text("Paciente: ").setBold()).add(new Text(receitaMedica.getPaciente().getNome())));
+        document.add(new Paragraph().add(new Text("Data de Emissão: ").setBold()).add(new Text(receitaMedica.getDataEmissao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))));
+
+        document.add(new Paragraph("Medicamentos:").setBold());
+        com.itextpdf.layout.element.List medicamentosList = new com.itextpdf.layout.element.List();
+        for (String medicamento : receitaMedica.getMedicamentos()) {
+            medicamentosList.add(new ListItem(medicamento));
+        }
+        document.add(medicamentosList);
+
+        document.add(new Paragraph("Observações:").setBold());
+        com.itextpdf.layout.element.List observacoesList = new com.itextpdf.layout.element.List();
+        for (String observacao : receitaMedica.getObservacoes()) {
+            observacoesList.add(new ListItem(observacao));
+        }
+        document.add(observacoesList);
+
+        document.showTextAligned(new Paragraph("________________________________").setFontSize(12), 297.5f, 70, pdfDoc.getNumberOfPages(), TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+        document.showTextAligned(new Paragraph("Assinatura").setFontSize(12), 297.5f, 55, pdfDoc.getNumberOfPages(), TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+
+        document.showTextAligned(new Paragraph("Gerado por VetClinic 2024 - desenvolvido por Bruno Ricardo Corrêa.").setFontSize(10).setItalic(), 297.5f, 20, pdfDoc.getNumberOfPages(), TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+        document.close();
     }
 
     private void loadPacientes() {
@@ -171,9 +250,6 @@ public class ReceitaMedicaView {
         panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pacienteComboBox = new JComboBox();
         panel2.add(pacienteComboBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        adicionarReceitaMedicaButton = new JButton();
-        adicionarReceitaMedicaButton.setText("Adicionar Receita Médica");
-        panel2.add(adicionarReceitaMedicaButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         removerReceitaMedicaButton = new JButton();
         removerReceitaMedicaButton.setText("Remover Receita Médica");
         panel2.add(removerReceitaMedicaButton, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -193,6 +269,12 @@ public class ReceitaMedicaView {
         observacoesTextArea = new JTextArea();
         observacoesTextArea.setText("");
         panel2.add(observacoesTextArea, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        adicionarReceitaMedicaButton = new JButton();
+        adicionarReceitaMedicaButton.setText("Adicionar Receita Médica");
+        panel2.add(adicionarReceitaMedicaButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gerarPdfButton = new JButton();
+        gerarPdfButton.setText("Gerar PDF da Receita Médica");
+        panel2.add(gerarPdfButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
