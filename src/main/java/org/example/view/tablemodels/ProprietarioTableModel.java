@@ -62,4 +62,13 @@ public class ProprietarioTableModel extends GenericTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex != 0;
     }
+
+    public boolean hasProprietarioWithCPF(String cpf) {
+        for (Object proprietario : vDados) {
+            if (((Proprietario) proprietario).getCpf().equals(cpf)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
