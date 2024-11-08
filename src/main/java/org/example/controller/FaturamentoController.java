@@ -35,4 +35,8 @@ public class FaturamentoController {
     public void removerFaturamento(Faturamento faturamento) throws SQLException {
         FaturamentoDAO.getInstance().excluir(faturamento.getId());
     }
+
+    public void removerFaturasPorProprietario(int proprietarioId) throws SQLException {
+        FaturamentoDAO.getInstance().excluirPorProprietario(proprietarioId);
+    }
 }

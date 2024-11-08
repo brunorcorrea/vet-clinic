@@ -35,4 +35,8 @@ public class HistoricoController {
     public void removerHistorico(Historico historico) throws SQLException {
         HistoricoDAO.getInstance().excluir(historico.getId());
     }
+
+    public void removerHistoricosPorPaciente(int pacienteId) throws SQLException {
+        HistoricoDAO.getInstance().excluirPorPaciente(pacienteId);
+    }
 }

@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.text.NumberFormat;
 
 import static org.example.utils.Formatter.createDecimalNumberFormatter;
 import static org.example.utils.Formatter.createIntegerNumberFormatter;
@@ -68,9 +69,11 @@ public class EstoqueView {
         try {
             String nome = nomeTextField.getText().trim();
             String tipo = tipoTextField.getText().trim();
-            double preco = Double.parseDouble(precoTextField.getText().trim());
-            int quantidade = Integer.parseInt(quantidadeTextField.getText().trim());
-            int quantidadeMinima = Integer.parseInt(quantidadeMinimaTextField.getText().trim());
+
+            NumberFormat format = NumberFormat.getInstance();
+            double preco = format.parse(precoTextField.getText().trim()).doubleValue();
+            int quantidade = format.parse(quantidadeTextField.getText().trim()).intValue();
+            int quantidadeMinima = format.parse(quantidadeMinimaTextField.getText().trim()).intValue();
 
             validateInputs(nome, tipo, preco, quantidade, quantidadeMinima);
 

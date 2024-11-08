@@ -8,8 +8,12 @@ import org.example.view.tablemodels.PacienteTableModel;
 import java.util.List;
 
 public class PacienteViewController {
+
+    private final AgendamentoController agendamentoController = AgendamentoController.getInstance();
+    private final HistoricoController historicoController = HistoricoController.getInstance();
     private final PacienteController pacienteController = PacienteController.getInstance();
     private final ProprietarioController proprietarioController = ProprietarioController.getInstance();
+    private final ReceitaMedicaController receitaMedicaController = ReceitaMedicaController.getInstance();
 
     public List<Proprietario> listarProprietarios() throws Exception {
         return proprietarioController.listarProprietarios();
@@ -32,10 +36,18 @@ public class PacienteViewController {
         Paciente paciente = new Paciente();
         paciente.setId(pacienteId);
         pacienteController.removerPaciente(paciente);
+
+        agendamentoController.removerAgendamentosPorPaciente(pacienteId);
+        historicoController.removerHistoricosPorPaciente(pacienteId);
+        receitaMedicaController.removerReceitasPorPaciente(pacienteId);
     }
 
     public List<Paciente> listarPacientes() throws Exception {
         return pacienteController.listarPacientes();
+    }
+
+    public List<Integer> listarPacientesIdsPorProprietario(int proprietarioId) throws Exception {
+        return pacienteController.listarPacientesIdsPorProprietario(proprietarioId);
     }
 
     public PacienteTableModel criarPacienteTableModel(String nomeProprietario) throws Exception {

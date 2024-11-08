@@ -31,6 +31,10 @@ public class FaturaViewController {
         faturamentoController.removerFaturamento(faturamento);
     }
 
+    public void removerFaturasPorProprietario(int proprietarioId) throws Exception {
+        faturamentoController.removerFaturasPorProprietario(proprietarioId);
+    }
+
     public List<Faturamento> listarFaturamentos() throws Exception {
         return faturamentoController.listarFaturamentos();
     }

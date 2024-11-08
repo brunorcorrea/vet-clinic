@@ -103,4 +103,18 @@ public class PacienteDAO extends DAO {
         }
         return paciente;
     }
+
+    public List<Integer> listarIdsPorProprietario(int proprietarioId) throws SQLException {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT id FROM paciente WHERE idProprietario = ?";
+        try (PreparedStatement stmt = DAO.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, proprietarioId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ids.add(rs.getInt("id"));
+                }
+            }
+        }
+        return ids;
+    }
 }
