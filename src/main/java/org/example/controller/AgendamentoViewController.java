@@ -38,6 +38,10 @@ public class AgendamentoViewController {
         agendamentoController.removerAgendamento(agendamento);
     }
 
+    public void removerAgendamentosPorVeterinario(int veterinarioId) throws Exception {
+        agendamentoController.removerAgendamentosPorVeterinario(veterinarioId);
+    }
+
     public List<Agendamento> listarAgendamentos() throws Exception {
         return agendamentoController.listarAgendamentos();
     }

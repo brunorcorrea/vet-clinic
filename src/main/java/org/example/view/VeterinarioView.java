@@ -2,6 +2,7 @@ package org.example.view;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.example.controller.AgendamentoViewController;
 import org.example.controller.VeterinarioViewController;
 import org.example.view.tablemodels.VeterinarioTableModel;
 
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 
 public class VeterinarioView {
     private final VeterinarioViewController viewController = new VeterinarioViewController();
+    private final AgendamentoViewController agendamentoViewController = new AgendamentoViewController();
     private JPanel mainPanel;
     private JTable veterinarioTable;
     private JButton adicionarVeterinarioButton;
@@ -83,6 +85,8 @@ public class VeterinarioView {
                 try {
                     int veterinarioId = tableModel.getVeterinario(i).getId();
                     viewController.removerVeterinario(veterinarioId);
+
+                    agendamentoViewController.removerAgendamentosPorVeterinario(veterinarioId);
                 } catch (Exception ex) {
                     handleException("Erro ao remover veterinário", ex);
                 }
