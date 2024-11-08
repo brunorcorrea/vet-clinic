@@ -80,15 +80,16 @@ public class HistoricoView {
 
     private void adicionarHistorico(ActionEvent e) {
         try {
-            Paciente paciente = pacientes.get(pacienteComboBox.getSelectedIndex());
             List<String> vacinas = List.of(vacinasTextArea.getText().split("\n"));
             List<String> doencas = List.of(doencasTextArea.getText().split("\n"));
             String peso = pesoTextField.getText().trim();
             List<String> observacoes = List.of(observacoesTextArea.getText().split("\n"));
             LocalDateTime dataHora = dataHoraDateTimePicker.getDateTimePermissive();
+            int pacienteIndex = pacienteComboBox.getSelectedIndex();
 
-            validateInputs(paciente, vacinas, doencas, peso, observacoes, dataHora);
+            validateInputs(pacienteIndex, vacinas, doencas, peso, observacoes, dataHora);
 
+            Paciente paciente = pacientes.get(pacienteIndex);
             viewController.adicionarHistorico(paciente, vacinas, doencas, peso, observacoes, dataHora);
             clearInputs();
             loadHistoricos(filtroPacienteNomeTextField.getText().trim());
@@ -126,8 +127,8 @@ public class HistoricoView {
         }
     }
 
-    private void validateInputs(Paciente paciente, List<String> vacinas, List<String> doencas, String peso, List<String> observacoes, LocalDateTime dataHora) {
-        if (paciente == null) {
+    private void validateInputs(int pacienteIndex, List<String> vacinas, List<String> doencas, String peso, List<String> observacoes, LocalDateTime dataHora) {
+        if (pacienteIndex < 0 || pacienteIndex >= pacientes.size()) {
             throw new IllegalArgumentException("Paciente inválido!");
         }
         if (vacinas.isEmpty()) {

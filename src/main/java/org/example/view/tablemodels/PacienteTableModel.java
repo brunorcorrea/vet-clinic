@@ -53,7 +53,16 @@ public class PacienteTableModel extends GenericTableModel {
 
         switch (columnIndex) {
             case 0 -> paciente.setNome((String) aValue);
-            case 1 -> paciente.setEstadoCastracao((EstadoCastracao) aValue);
+            case 1 -> {
+                String status = ((String) aValue).trim();
+                try {
+                    paciente.setEstadoCastracao(EstadoCastracao.fromDescricao(status));
+                } catch (IllegalArgumentException e) {
+                    String message = "Status inválido: " + status + ". Os status válidos são: " + EstadoCastracao.CASTRADO.getDescricao() + " ou " + EstadoCastracao.FERTIL.getDescricao() + ".";
+                    JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             case 2 -> paciente.setIdade((int) aValue);
             case 3 -> paciente.setRaca((String) aValue);
             case 4 -> paciente.setColoracao((String) aValue);
