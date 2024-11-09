@@ -49,8 +49,24 @@ public class AgendamentoTableModel extends GenericTableModel {
         Agendamento agendamento = (Agendamento) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 2 -> agendamento.setDataHora((LocalDateTime) aValue);
-            case 3 -> agendamento.setServico((String) aValue);
+            case 2 -> {
+                if (aValue instanceof LocalDateTime dataHora) {
+                    agendamento.setDataHora(dataHora);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Data e Hora inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            case 3 -> {
+                String servico = ((String) aValue).trim();
+
+                if (servico.isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Serviço não pode ser vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                agendamento.setServico(servico);
+            }
             case 4 -> {
                 String status = ((String) aValue).trim();
                 try {
