@@ -91,13 +91,13 @@ public class FaturaView {
         try {
             StatusPagamento status = StatusPagamento.fromDescricao((String) statusComboBox.getSelectedItem());
             LocalDateTime dataVencimento = dataVencimentoDateTimePicker.getDateTimePermissive();
+            String valorTotalString = valorTotalTextField.getText();
+            int proprietarioIndex = proprietarioComboBox.getSelectedIndex();
+
+            validateInputs(proprietarioIndex, valorTotalString, status, dataVencimento);
 
             NumberFormat format = NumberFormat.getInstance();
             double valorTotal = format.parse(valorTotalTextField.getText()).doubleValue();
-            int proprietarioIndex = proprietarioComboBox.getSelectedIndex();
-
-            validateInputs(proprietarioIndex, valorTotal, status, dataVencimento);
-
             Proprietario proprietario = proprietarios.get(proprietarioIndex);
             viewController.adicionarFatura(proprietario, valorTotal, status, dataVencimento);
             clearInputs();
@@ -143,11 +143,11 @@ public class FaturaView {
         }
     }
 
-    private void validateInputs(int proprietarioIndex, double valorTotal, StatusPagamento status, LocalDateTime dataVencimento) {
+    private void validateInputs(int proprietarioIndex, String valorTotalString, StatusPagamento status, LocalDateTime dataVencimento) {
         if (proprietarioIndex < 0 || proprietarioIndex >= proprietarios.size()) {
             throw new IllegalArgumentException("Proprietário inválido!");
         }
-        if (valorTotal <= 0) {
+        if (valorTotalString.isEmpty() || !valorTotalString.matches("\\d+(,\\d{3})*(\\.\\d+)?")) {
             throw new IllegalArgumentException("Valor total inválido!");
         }
         if (status == null) {
