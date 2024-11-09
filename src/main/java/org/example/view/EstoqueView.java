@@ -122,11 +122,11 @@ public class EstoqueView {
         if (preco <= 0) {
             throw new IllegalArgumentException("Preço deve ser maior que zero");
         }
-        if (quantidade <= 0) {
+        if (quantidade < 0) {
             throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
         }
         if (quantidadeMinima < 0) {
-            throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
+            throw new IllegalArgumentException("Quantidade mínima deve ser maior ou igual zero");
         }
     }
 

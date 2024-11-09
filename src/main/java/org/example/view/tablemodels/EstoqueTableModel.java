@@ -66,12 +66,20 @@ public class EstoqueTableModel extends GenericTableModel {
         try {
             switch (columnIndex) {
                 case 0 -> {
-                    produto.setNome((String) aValue);
-                    estoqueProduto.setNomeProduto((String) aValue);
+                    String nome = (String) aValue;
+
+                    if (nome.isBlank()) throw new IllegalArgumentException("Nome não pode ser vazio");
+
+                    produto.setNome(nome);
+                    estoqueProduto.setNomeProduto(nome);
                 }
                 case 1 -> {
-                    produto.setTipo((String) aValue);
-                    estoqueProduto.setTipoProduto((String) aValue);
+                    String tipo = (String) aValue;
+
+                    if (tipo.isBlank()) throw new IllegalArgumentException("Tipo não pode ser vazio");
+
+                    produto.setTipo(tipo);
+                    estoqueProduto.setTipoProduto(tipo);
                 }
                 case 2 -> {
                     double preco = Double.parseDouble(aValue.toString());
@@ -81,14 +89,14 @@ public class EstoqueTableModel extends GenericTableModel {
                 }
                 case 3 -> {
                     int quantidade = Integer.parseInt(aValue.toString());
-                    if (quantidade <= 0) throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
+                    if (quantidade < 0) throw new IllegalArgumentException("Quantidade deve ser maior ou igual zero");
                     estoque.setQuantidade(quantidade);
                     estoqueProduto.setQuantidade(quantidade);
                 }
                 case 4 -> {
                     int quantidadeMinima = Integer.parseInt(aValue.toString());
                     if (quantidadeMinima < 0)
-                        throw new IllegalArgumentException("Quantidade mínima deve ser maior que zero");
+                        throw new IllegalArgumentException("Quantidade mínima deve ser maior ou igual zero");
                     estoque.setQuantidadeMinima(quantidadeMinima);
                     estoqueProduto.setQuantidadeMinima(quantidadeMinima);
                 }
