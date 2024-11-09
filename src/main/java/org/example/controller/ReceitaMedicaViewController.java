@@ -34,8 +34,23 @@ public class ReceitaMedicaViewController {
         return receitaMedicaController.listarReceitasMedica();
     }
 
-    public ReceitaMedicaTableModel criarReceitaMedicaTableModel() throws Exception {
+    public ReceitaMedicaTableModel criarReceitaMedicaTableModel(String nomePaciente) throws Exception {
         List<ReceitaMedica> receitasMedicas = listarReceitasMedica();
+
+        if (nomePaciente != null && !nomePaciente.isEmpty()) {
+            filtrarReceitasMedicas(receitasMedicas, nomePaciente);
+        }
+
         return new ReceitaMedicaTableModel(receitasMedicas);
+    }
+
+    private void filtrarReceitasMedicas(List<ReceitaMedica> receitasMedicas, String nomePaciente) {
+        receitasMedicas.removeIf(receitaMedica -> shouldRemoveReceitasMedica(nomePaciente, receitaMedica));
+    }
+
+    private boolean shouldRemoveReceitasMedica(String nomePaciente, ReceitaMedica receitaMedica) {
+        return receitaMedica == null || receitaMedica.getPaciente() == null ||
+                receitaMedica.getPaciente().getNome() == null ||
+                !receitaMedica.getPaciente().getNome().toLowerCase().contains(nomePaciente.toLowerCase());
     }
 }

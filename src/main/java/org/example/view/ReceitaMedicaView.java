@@ -21,6 +21,8 @@ import org.example.model.ReceitaMedica;
 import org.example.view.tablemodels.ReceitaMedicaTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -41,6 +43,7 @@ public class ReceitaMedicaView {
     private JTextArea observacoesTextArea;
     private DateTimePicker dataEmissaoDateTimePicker;
     private JButton gerarPdfButton;
+    private JTextField filtroPacienteNomeTextField;
     private ReceitaMedicaTableModel tableModel;
 
     private List<Paciente> pacientes = new ArrayList<>();
@@ -49,7 +52,7 @@ public class ReceitaMedicaView {
         initializeComponents();
         configureListeners();
         loadPacientes();
-        loadReceitasMedicas();
+        loadReceitasMedicas(filtroPacienteNomeTextField.getText().trim());
     }
 
     private void initializeComponents() {
@@ -60,6 +63,28 @@ public class ReceitaMedicaView {
         adicionarReceitaMedicaButton.addActionListener(this::adicionarReceitaMedica);
         removerReceitaMedicaButton.addActionListener(this::removerReceitaMedica);
         gerarPdfButton.addActionListener(this::gerarPdf);
+
+        filtroPacienteNomeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterHistoricos();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterHistoricos();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterHistoricos();
+            }
+
+            private void filterHistoricos() {
+                String text = filtroPacienteNomeTextField.getText().trim();
+                loadReceitasMedicas(text);
+            }
+        });
     }
 
     private void gerarPdf(ActionEvent e) {
@@ -151,7 +176,7 @@ public class ReceitaMedicaView {
             handleException("Erro ao adicionar receita médica", ex);
         }
 
-        loadReceitasMedicas();
+        loadReceitasMedicas(filtroPacienteNomeTextField.getText().trim());
     }
 
     private void removerReceitaMedica(ActionEvent e) {
@@ -172,13 +197,13 @@ public class ReceitaMedicaView {
                     handleException("Erro ao remover receita médica", ex);
                 }
             }
-            loadReceitasMedicas();
+            loadReceitasMedicas(filtroPacienteNomeTextField.getText().trim());
         }
     }
 
-    private void loadReceitasMedicas() {
+    private void loadReceitasMedicas(String pacienteNome) {
         try {
-            tableModel = viewController.criarReceitaMedicaTableModel();
+            tableModel = viewController.criarReceitaMedicaTableModel(pacienteNome);
             receitaMedicaTable.setModel(tableModel);
         } catch (Exception e) {
             handleException("Erro ao listar receitas médicas", e);
@@ -236,7 +261,7 @@ public class ReceitaMedicaView {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, BorderLayout.CENTER);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -275,6 +300,14 @@ public class ReceitaMedicaView {
         gerarPdfButton = new JButton();
         gerarPdfButton.setText("Gerar PDF da Receita Médica");
         panel2.add(gerarPdfButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("Buscar por paciente:");
+        panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        filtroPacienteNomeTextField = new JTextField();
+        panel3.add(filtroPacienteNomeTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
