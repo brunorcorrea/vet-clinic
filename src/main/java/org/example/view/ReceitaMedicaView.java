@@ -94,6 +94,12 @@ public class ReceitaMedicaView {
             return;
         }
 
+        int selectedRowCount = receitaMedicaTable.getSelectedRowCount();
+        if (selectedRowCount > 1) {
+            JOptionPane.showMessageDialog(null, "Selecione apenas uma receita médica para gerar o PDF", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         ReceitaMedica receitaMedica = tableModel.getReceitaMedica(selectedRow);
 
         JFileChooser fileChooser = new JFileChooser();

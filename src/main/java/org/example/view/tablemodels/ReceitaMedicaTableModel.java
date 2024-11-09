@@ -47,7 +47,16 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
         ReceitaMedica receitaMedica = (ReceitaMedica) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 1 -> receitaMedica.setMedicamentos(List.of(((String) aValue).split(", ")));
+            case 1 -> {
+                String medicamentos = (String) aValue;
+
+                if (medicamentos.isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Medicamentos não podem ser vazios", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                receitaMedica.setMedicamentos(List.of(medicamentos.split(", ")));
+            }
             case 2 -> receitaMedica.setObservacoes(List.of(((String) aValue).split(", ")));
             case 3 -> receitaMedica.setDataEmissao((LocalDateTime) aValue);
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
