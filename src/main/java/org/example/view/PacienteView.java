@@ -95,14 +95,15 @@ public class PacienteView {
             String nome = nomeTextField.getText().trim();
             String estadoCastracao = estadoCastracaoComboBox.getSelectedItem().toString();
             String raca = racaTextField.getText().trim();
-            int idade = idadeTextField.getText().trim().isEmpty() ? -1 : Integer.parseInt(idadeTextField.getText().trim());
+            String idadeString = idadeTextField.getText().trim();
             String coloracao = coloracaoTextField.getText().trim();
             String especie = especieTextField.getText().trim();
             byte[] foto = (uploadedImageBytes != null) ? uploadedImageBytes : null;
             int proprietarioIndex = proprietarioComboBox.getSelectedIndex();
 
-            validateInputs(nome, estadoCastracao, raca, idade, coloracao, especie, proprietarioIndex);
+            validateInputs(nome, estadoCastracao, raca, idadeString, coloracao, especie, proprietarioIndex);
 
+            int idade = Integer.parseInt(idadeTextField.getText().trim());
             Proprietario proprietario = proprietarios.get(proprietarioIndex);
             viewController.adicionarPaciente(nome, estadoCastracao, raca, idade, coloracao, especie, foto, proprietario);
             clearInputs();
@@ -158,11 +159,11 @@ public class PacienteView {
         }
     }
 
-    private void validateInputs(String nome, String estadoCastracao, String raca, int idade, String coloracao, String especie, int proprietarioIndex) {
+    private void validateInputs(String nome, String estadoCastracao, String raca, String idadeString, String coloracao, String especie, int proprietarioIndex) {
         if (proprietarioIndex < 0 || proprietarioIndex >= proprietarios.size()) {
             throw new IllegalArgumentException("Proprietário inválido!");
         }
-        if (idade < 0) {
+        if (idadeString.isEmpty() || !idadeString.matches("\\d+")) {
             throw new IllegalArgumentException("Idade inválida!");
         }
         if (nome.isEmpty() || estadoCastracao.isEmpty() || raca.isEmpty() || coloracao.isEmpty() || especie.isEmpty()) {

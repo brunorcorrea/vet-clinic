@@ -52,7 +52,16 @@ public class PacienteTableModel extends GenericTableModel {
         Paciente paciente = (Paciente) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 0 -> paciente.setNome((String) aValue);
+            case 0 -> {
+                String nome = ((String) aValue).trim();
+
+                if (nome.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Nome não pode ser vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                paciente.setNome(nome);
+            }
             case 1 -> {
                 String status = ((String) aValue).trim();
                 try {
@@ -63,10 +72,46 @@ public class PacienteTableModel extends GenericTableModel {
                     return;
                 }
             }
-            case 2 -> paciente.setIdade((int) aValue);
-            case 3 -> paciente.setRaca((String) aValue);
-            case 4 -> paciente.setColoracao((String) aValue);
-            case 5 -> paciente.setEspecie((String) aValue);
+            case 2 -> {
+                int idade = (int) aValue;
+
+                if (idade < 0) {
+                    JOptionPane.showMessageDialog(null, "Idade não pode ser negativa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                paciente.setIdade(idade);
+            }
+            case 3 -> {
+                String raca = ((String) aValue).trim();
+
+                if (raca.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Raça não pode ser vazia.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                paciente.setRaca(raca);
+            }
+            case 4 -> {
+                String coloracao = ((String) aValue).trim();
+
+                if (coloracao.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Coloração não pode ser vazia.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                paciente.setColoracao(coloracao);
+            }
+            case 5 -> {
+                String especie = ((String) aValue).trim();
+
+                if (especie.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Espécie não pode ser vazia.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                paciente.setEspecie(especie);
+            }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
