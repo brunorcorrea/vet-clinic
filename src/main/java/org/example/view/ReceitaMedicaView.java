@@ -218,17 +218,17 @@ public class ReceitaMedicaView {
 
     private boolean validateInputs(int pacienteIndex, String medicamentos, LocalDateTime dataEmissao) {
         if (pacienteIndex < 0 || pacienteIndex >= pacientes.size()) {
-            JOptionPane.showMessageDialog(null, "Paciente inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar receita médica: Paciente inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (medicamentos == null || medicamentos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Medicamentos não podem ser vazios", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar receita médica: Medicamentos não podem ser vazios!", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (dataEmissao == null) {
-            JOptionPane.showMessageDialog(null, "Data e hora inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar receita médica: Data e hora inválidas!", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
