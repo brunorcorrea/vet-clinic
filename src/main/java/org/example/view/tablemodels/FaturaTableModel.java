@@ -6,6 +6,7 @@ import org.example.model.StatusPagamento;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -47,19 +48,43 @@ public class FaturaTableModel extends GenericTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Faturamento faturamento = (Faturamento) vDados.get(rowIndex);
 
-        if (columnIndex == 2) {
+        switch (columnIndex) {
+            case 1 -> {
+                try {
+                    double valor = Double.parseDouble(aValue.toString());
 
-            String status = ((String) aValue).trim();
-            try {
-                faturamento.setStatus(StatusPagamento.fromDescricao(status));
-            } catch (IllegalArgumentException e) {
-                String message = "Status inválido: " + status + ". Os status válidos são: " + StatusPagamento.EM_ATRASO.getDescricao() + ", " + StatusPagamento.PAGO.getDescricao() + " ou " + StatusPagamento.PENDENTE.getDescricao() + ".";
-                JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
+                    if (valor < 0) {
+                        JOptionPane.showMessageDialog(null, "Valor inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    faturamento.setValorTotal(valor);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Valor inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
-
-        } else {
-            throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            case 2 -> {
+                String status = ((String) aValue).trim();
+                try {
+                    faturamento.setStatus(StatusPagamento.fromDescricao(status));
+                } catch (IllegalArgumentException e) {
+                    String message = "Status inválido: " + status + ". Os status válidos são: " + StatusPagamento.EM_ATRASO.getDescricao() + ", " + StatusPagamento.PAGO.getDescricao() + " ou " + StatusPagamento.PENDENTE.getDescricao() + ".";
+                    JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            case 3 -> {
+                String dataHoraStr = ((String) aValue).trim();
+                try {
+                    LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                    faturamento.setDataVencimento(dataHora);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Data e Hora inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
         try {
@@ -71,7 +96,7 @@ public class FaturaTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 1, 3);
+        List<Integer> columnsNotEditable = List.of(0);
         return !columnsNotEditable.contains(columnIndex);
     }
 }

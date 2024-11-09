@@ -58,7 +58,17 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
                 receitaMedica.setMedicamentos(List.of(medicamentos.split(", ")));
             }
             case 2 -> receitaMedica.setObservacoes(List.of(((String) aValue).split(", ")));
-            case 3 -> receitaMedica.setDataEmissao((LocalDateTime) aValue);
+            case 3 -> {
+                String dataHoraStr = ((String) aValue).trim();
+
+                try {
+                    LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                    receitaMedica.setDataEmissao(dataHora);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Data e Hora inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
@@ -71,7 +81,7 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 3);
+        List<Integer> columnsNotEditable = List.of(0);
         return !columnsNotEditable.contains(columnIndex);
     }
 }

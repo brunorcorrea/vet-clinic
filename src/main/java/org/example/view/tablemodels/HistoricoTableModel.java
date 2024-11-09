@@ -67,7 +67,17 @@ public class HistoricoTableModel extends GenericTableModel {
             case 2 -> historico.setVacinas(List.of(((String) aValue).split(", ")));
             case 3 -> historico.setDoencas(List.of(((String) aValue).split(", ")));
             case 4 -> historico.setObservacoes(List.of(((String) aValue).split(", ")));
-            case 5 -> historico.setDataHora((LocalDateTime) aValue);
+            case 5 -> {
+                String dataHoraStr = ((String) aValue).trim();
+
+                try {
+                    LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                    historico.setDataHora(dataHora);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Data e Hora inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
 
@@ -80,7 +90,7 @@ public class HistoricoTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(0, 5);
+        List<Integer> columnsNotEditable = List.of(0);
         return !columnsNotEditable.contains(columnIndex);
     }
 }
