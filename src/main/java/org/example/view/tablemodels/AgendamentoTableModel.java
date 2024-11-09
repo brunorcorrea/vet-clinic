@@ -7,6 +7,7 @@ import org.example.model.StatusAgendamento;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AgendamentoTableModel extends GenericTableModel {
@@ -20,8 +21,7 @@ public class AgendamentoTableModel extends GenericTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 1, 3, 4 -> String.class;
-            case 2 -> LocalDateTime.class;
+            case 0, 1, 2, 3, 4 -> String.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -37,7 +37,7 @@ public class AgendamentoTableModel extends GenericTableModel {
         return switch (columnIndex) {
             case 0 -> agendamento.getPaciente().getNome();
             case 1 -> agendamento.getVeterinario().getNome();
-            case 2 -> agendamento.getDataHora();
+            case 2 -> agendamento.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
             case 3 -> agendamento.getServico();
             case 4 -> agendamento.getStatus().getDescricao();
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -50,9 +50,12 @@ public class AgendamentoTableModel extends GenericTableModel {
 
         switch (columnIndex) {
             case 2 -> {
-                if (aValue instanceof LocalDateTime dataHora) {
+                String dataHoraStr = ((String) aValue).trim();
+
+                try {
+                    LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
                     agendamento.setDataHora(dataHora);
-                } else {
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Data e Hora inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }

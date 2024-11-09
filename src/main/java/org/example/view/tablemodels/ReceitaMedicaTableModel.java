@@ -6,6 +6,7 @@ import org.example.model.ReceitaMedica;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ReceitaMedicaTableModel extends GenericTableModel {
@@ -19,8 +20,7 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 1, 2 -> String.class;
-            case 3 -> LocalDateTime.class;
+            case 0, 1, 2, 3 -> String.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -37,7 +37,7 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
             case 0 -> receitaMedica.getPaciente().getNome();
             case 1 -> String.join(", ", receitaMedica.getMedicamentos());
             case 2 -> String.join(", ", receitaMedica.getObservacoes());
-            case 3 -> receitaMedica.getDataEmissao();
+            case 3 -> receitaMedica.getDataEmissao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -71,6 +71,7 @@ public class ReceitaMedicaTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex != 0;
+        List<Integer> columnsNotEditable = List.of(0, 3);
+        return !columnsNotEditable.contains(columnIndex);
     }
 }

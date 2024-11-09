@@ -6,7 +6,7 @@ import org.example.model.StatusPagamento;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FaturaTableModel extends GenericTableModel {
@@ -20,9 +20,8 @@ public class FaturaTableModel extends GenericTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 2 -> String.class;
+            case 0, 2, 3 -> String.class;
             case 1 -> Double.class;
-            case 3 -> LocalDateTime.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -39,7 +38,7 @@ public class FaturaTableModel extends GenericTableModel {
             case 0 -> faturamento.getProprietario().getNomeCompleto();
             case 1 -> faturamento.getValorTotal();
             case 2 -> faturamento.getStatus().getDescricao();
-            case 3 -> faturamento.getDataVencimento();
+            case 3 -> faturamento.getDataVencimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }

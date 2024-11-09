@@ -6,6 +6,7 @@ import org.example.model.Historico;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class HistoricoTableModel extends GenericTableModel {
@@ -19,8 +20,7 @@ public class HistoricoTableModel extends GenericTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 1, 2, 3, 4 -> String.class;
-            case 5 -> LocalDateTime.class;
+            case 0, 1, 2, 3, 4, 5 -> String.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
@@ -39,7 +39,7 @@ public class HistoricoTableModel extends GenericTableModel {
             case 2 -> String.join(", ", historico.getVacinas());
             case 3 -> String.join(", ", historico.getDoencas());
             case 4 -> String.join(", ", historico.getObservacoes());
-            case 5 -> historico.getDataHora();
+            case 5 -> historico.getDataHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
     }
