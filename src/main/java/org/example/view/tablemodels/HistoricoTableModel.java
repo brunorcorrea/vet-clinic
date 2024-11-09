@@ -19,8 +19,7 @@ public class HistoricoTableModel extends GenericTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 2, 3, 4 -> String.class;
-            case 1 -> double.class;
+            case 0, 1, 2, 3, 4 -> String.class;
             case 5 -> LocalDateTime.class;
             default -> throw new IndexOutOfBoundsException("columnIndex out of bounds");
         };
@@ -50,7 +49,21 @@ public class HistoricoTableModel extends GenericTableModel {
         Historico historico = (Historico) vDados.get(rowIndex);
 
         switch (columnIndex) {
-            case 1 -> historico.setPeso((String) aValue);
+            case 1 -> {
+                try {
+                    String peso = (String) aValue;
+
+                    if (peso.isBlank()) {
+                        JOptionPane.showMessageDialog(null, "Peso inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    historico.setPeso(peso);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Peso inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             case 2 -> historico.setVacinas(List.of(((String) aValue).split(", ")));
             case 3 -> historico.setDoencas(List.of(((String) aValue).split(", ")));
             case 4 -> historico.setObservacoes(List.of(((String) aValue).split(", ")));
@@ -67,7 +80,7 @@ public class HistoricoTableModel extends GenericTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        List<Integer> columnsNotEditable = List.of(5);
+        List<Integer> columnsNotEditable = List.of(0, 5);
         return !columnsNotEditable.contains(columnIndex);
     }
 }
