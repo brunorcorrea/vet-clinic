@@ -44,7 +44,13 @@ public class VeterinarioTableModel extends GenericTableModel {
         Veterinario veterinario = (Veterinario) vDados.get(rowIndex);
 
         if (columnIndex == 0) {
-            veterinario.setNome((String) aValue);
+            String nome = (String) aValue;
+            if (nome.isBlank()) {
+                JOptionPane.showMessageDialog(null, "Nome do veterinário não pode ser vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            veterinario.setNome(nome);
         } else {
             throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
