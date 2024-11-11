@@ -97,7 +97,7 @@ public class FaturaView {
             validateInputs(proprietarioIndex, valorTotalString, status, dataVencimento);
 
             NumberFormat format = NumberFormat.getInstance();
-            double valorTotal = format.parse(valorTotalTextField.getText()).doubleValue();
+            double valorTotal = format.parse(valorTotalString).doubleValue();
             Proprietario proprietario = proprietarios.get(proprietarioIndex);
             viewController.adicionarFatura(proprietario, valorTotal, status, dataVencimento);
             clearInputs();
@@ -147,7 +147,7 @@ public class FaturaView {
         if (proprietarioIndex < 0 || proprietarioIndex >= proprietarios.size()) {
             throw new IllegalArgumentException("Proprietário inválido!");
         }
-        if (valorTotalString.isEmpty() || !valorTotalString.matches("\\d+(,\\d{3})*(\\.\\d+)?")) {
+        if (valorTotalString.isEmpty() || !valorTotalString.matches("\\d+(,\\d{3})*(\\.\\d+)?") || valorTotalString.matches(".*[^\\d,\\.].*")) {
             throw new IllegalArgumentException("Valor total inválido!");
         }
         if (status == null) {
