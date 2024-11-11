@@ -71,9 +71,26 @@ public class EstoqueView {
             String tipo = tipoTextField.getText().trim();
 
             NumberFormat format = NumberFormat.getInstance();
-            double preco = format.parse(precoTextField.getText().trim()).doubleValue();
-            int quantidade = format.parse(quantidadeTextField.getText().trim()).intValue();
-            int quantidadeMinima = format.parse(quantidadeMinimaTextField.getText().trim()).intValue();
+            double preco;
+            try {
+                preco = format.parse(precoTextField.getText().trim()).doubleValue();
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Preço deve ser um número válido");
+            }
+
+            int quantidade;
+            try {
+                quantidade = format.parse(quantidadeTextField.getText().trim()).intValue();
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Quantidade deve ser um número inteiro válido");
+            }
+
+            int quantidadeMinima;
+            try {
+                quantidadeMinima = format.parse(quantidadeMinimaTextField.getText().trim()).intValue();
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Quantidade mínima deve ser um número inteiro válido");
+            }
 
             validateInputs(nome, tipo, preco, quantidade, quantidadeMinima);
 
